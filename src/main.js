@@ -5,7 +5,6 @@ import App from './App'
 import router from './router'
 import request from './common/js/requestServerSetting'
 
-
 Vue.config.productionTip = false
 request(Vue)
 
