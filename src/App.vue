@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
 
     <router-view/>
   </div>
@@ -8,22 +7,19 @@
 
 <script>
   export default {
-    name: 'app',
-    components: {
-
-    },
-    methods: {
-      fecthHomeData () {
-        this.$request({
-          type: 'get',
-          url: '',
-          headers: {},
-          params: {},
-          success: function () {},
-          failed: function () {}
-        })
-      }
-    }
+    name: 'app'
+//    methods: {
+//      fecthHomeData () {
+//        this.$request({
+//          type: 'get',
+//          url: '',
+//          headers: {},
+//          params: {},
+//          success: function () {},
+//          failed: function () {}
+//        })
+//      }
+//    }
   }
 </script>
 
