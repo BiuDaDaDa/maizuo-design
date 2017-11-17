@@ -2,6 +2,7 @@
   <div id="app">
     <my-nav></my-nav>
     <router-view/>
+
   </div>
 </template>
 
@@ -28,6 +29,16 @@
 </script>
 
 <style>
+
 @import "./common/css/common-color.less";
 @import "./common/css/reset.less";
+  #app {
+    margin: 0;
+    padding: 0;
+  }
+
+  html, body {
+    padding: 0;
+    margin: 0;
+  }
 </style>
