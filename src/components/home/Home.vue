@@ -1,44 +1,49 @@
 <template>
-<div>
-  <div class="wrap">
-    <div class="top">
-      <mt-swipe :auto="4000"  :show-indicators="false">
-        <mt-swipe-item v-for="(val, index) in thisdata">
-          <img :src="val.imageUrl" alt="">
-        </mt-swipe-item>
-      </mt-swipe>
-    </div>
-    <div class="content">
-      <ul>
-        <li v-for="(val, index) in thisfilm">
-          <img :src="val.cover.origin" alt="">
-          <div class="film_name">
-            <p v-html="val.name"></p>
-            <p style="color: #9a9a9a;">{{val.cinemaCount}}家影院上映&nbsp;{{val.watchCount}}人购票</p>
-          </div>
-          <h2 class="film_grade">{{val.grade}}</h2>
-        </li>
-      </ul>
-      <button class="now_playing">更多热映电影</button>
-      <div class="coming_line">
-        <div class="upcoming">即将上映</div>
+  <div>
+    <div class="wrap">
+      <div class="top">
+        <mt-swipe :auto="4000" :show-indicators="false">
+          <mt-swipe-item v-for="(val, index) in thisdata">
+            <img :src="val.imageUrl" alt="">
+          </mt-swipe-item>
+        </mt-swipe>
       </div>
-      <ul>
-        <li v-for="(val, index) in thiscoming">
-          <img :src="val.cover.origin" alt="">
-          <div class="film_coming">
-            <div v-html="val.name" style="font-size: 13px;float: left;margin-left: 10px"></div>
-            <div v-html="getLocalTime(val.premiereAt) + '上映'" style="font-size: 14px;color: rgb(245, 162, 125);float: right;margin-right: 50px"></div>
-          </div>
-        </li>
-      </ul>
-      <button class="now_playing">更多即将上映电影</button>
+      <div class="content">
+        <ul>
+          <li v-for="(val, index) in thisfilm" ref="playing" @click="playingclicked(index)">
+            <router-link to="/film">
+              <img :src="val.cover.origin" alt="">
+              <div class="film_name">
+                <p v-html="val.name"></p>
+                <p style="color: #9a9a9a;">{{val.cinemaCount}}家影院上映&nbsp;{{val.watchCount}}人购票</p>
+              </div>
+              <h2 class="film_grade">{{val.grade}}</h2>
+            </router-link>
+          </li>
+        </ul>
+        <button class="now_playing">更多热映电影</button>
+        <div class="coming_line">
+          <div class="upcoming">即将上映</div>
+        </div>
+        <ul>
+          <li v-for="(val, index) in thiscoming">
+            <img :src="val.cover.origin" alt="">
+            <div class="film_coming">
+              <div v-html="val.name" style="font-size: 13px;float: left;margin-left: 10px"></div>
+              <div v-html="getLocalTime(val.premiereAt) + '上映'"
+                   style="font-size: 14px;color: rgb(245, 162, 125);float: right;margin-right: 50px"></div>
+            </div>
+          </li>
+        </ul>
+        <button class="now_playing">更多即将上映电影</button>
+      </div>
     </div>
   </div>
-</div>
 </template>
 
 <script>
+  import bus from '../../common/js/eventBus'
+
   export default {
     name: 'Home',
     data () {
@@ -46,15 +51,20 @@
         thisdata: '',
         time: '',
         thisfilm: '',
-        thiscoming: ''
+        thiscoming: '',
+        thisid: ''
       }
     },
     methods: {
       getLocalTime: function (nS) {
         return (new Date(parseInt(nS)).getMonth() + 1) + '月' + (new Date(parseInt(nS)).getDate() + '日')
+      },
+      playingclicked: function (index) {
+        this.thisid = this.thisfilm[index].id
+        bus.$emit('foundplayfilmid', this.thisid)
       }
     },
-    mounted  () {
+    mounted () {
       this.time = Date.parse(new Date())
       this.$request({
         type: 'get',
@@ -98,54 +108,66 @@
 
 <style scoped lang="less">
   @import "../../common/css/common-color";
-  .top{
+
+  .top {
     width: 100%;
     height: 232.88px;
   }
-  .top img{
+
+  .top img {
     width: 100%;
   }
-  mt-swipe{
+
+  mt-swipe {
     border: 0;
   }
-  .wrap{
+
+  .wrap {
     background-color: #ebebeb;
   }
-  ul{
+
+  ul {
     padding: 18px;
     padding-bottom: 0;
   }
-  li{
+
+  li {
     width: 380px;
     margin-bottom: 18px;
     background-color: #ffffff;
     overflow: hidden;
     box-shadow: 0.5px 0.5px 1px #a8a8a8;
   }
-  li img{
+
+  li img {
     width: 100%;
   }
-  .film_name p{
+
+  .film_name p {
     font-size: @font-size-small;
     line-height: 15px;
   }
-  .film_name{
+
+  .film_name {
     float: left;
     padding: 10px;
     text-align: left;
   }
-  h2{
+
+  h2 {
     float: right;
-    color:  #f78360;
+    color: #f78360;
     line-height: 50px;
     font-size: @font-size-large;
     margin-right: 15px;
   }
-  .content{
+
+  .content {
     width: 100%;
     text-align: center;
   }
-  .now_playing{
+
+  .now_playing {
     width: 160px;
     height: 30px;
     border: 1px solid #aaa;
@@ -157,7 +179,8 @@
     color: #616161;
     background-color: #ebebeb;
   }
-  .upcoming{
+
+  .upcoming {
     width: 65px;
     height: 20px;
     margin: 0 auto;
@@ -169,13 +192,15 @@
     color: #eee;
     background-color: #a7a7a7;
   }
-  .coming_line{
+
+  .coming_line {
     position: relative;
 
     margin-bottom: 30px;
     border-bottom: 1px solid #a8a8a8;
   }
-  .film_coming{
+
+  .film_coming {
     overflow: hidden;
     line-height: 35px;
   }

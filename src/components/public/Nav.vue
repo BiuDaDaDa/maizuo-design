@@ -11,7 +11,7 @@
     <div class="nav_desk"></div>
     <div class="list-content" :style="list_style">
       <ul v-for="val in this.lists" @click="list_show">
-        <li><router-link to="/">{{val.content}}</router-link></li>
+        <li><router-link :to="val.url">{{val.content}}</router-link></li>
       </ul>
     </div>
     <div class="desk" :style="desk_style" @click="list_show"></div>
@@ -24,19 +24,20 @@
     data () {
       return {
         lists: [
-          {'content': '首页'},
-          {'content': '影片'},
-          {'content': '影院'},
-          {'content': '商城'},
-          {'content': '我的'},
-          {'content': '卖座卡'}
+          {'content': '首页', 'url': '/'},
+          {'content': '影片', 'url': ''},
+          {'content': '影院', 'url': ''},
+          {'content': '商城', 'url': ''},
+          {'content': '我的', 'url': '/Login'},
+          {'content': '卖座卡', 'url': ''}
         ],
         list_style: {
           opacity: 0,
           right: 110 + '%'
         },
         desk_style: {
-          opacity: 0
+          opacity: 0,
+          display: 'none'
         }
       }
     },
@@ -46,10 +47,12 @@
           this.list_style.opacity = 1
           this.list_style.right = 110 + 'px'
           this.desk_style.opacity = 0.5
+          this.desk_style.display = 'block'
         } else {
           this.list_style.opacity = 0
           this.list_style.right = 100 + '%'
           this.desk_style.opacity = 0
+          this.desk_style.display = 'none'
         }
       },
       list_show: function () {
@@ -57,6 +60,7 @@
           this.list_style.opacity = 0
           this.list_style.right = 100 + '%'
           this.desk_style.opacity = 0
+          this.desk_style.display = 'none'
         }
       }
     }
@@ -161,10 +165,12 @@
     background-color: black;
     opacity: 0.5;
     position: fixed;
+    height: 100%;
     top: 0;
     right: 0;
     left: 0;
     bottom: 0;
     transition: all ease 0.4s;
+    display: none;
   }
 </style>
