@@ -1,13 +1,17 @@
 <template>
   <div id="app">
-
+    <my-nav></my-nav>
     <router-view/>
   </div>
 </template>
 
 <script>
+  import MyNav from './components/public/Nav'
   export default {
-    name: 'app'
+    name: 'app',
+    components: {
+      MyNav
+    }
 //    methods: {
 //      fecthHomeData () {
 //        this.$request({
@@ -24,12 +28,6 @@
 </script>
 
 <style>
-  #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    text-align: center;
-    color: #2c3e50;
-    margin-top: 60px;
-  }
+@import "./common/css/common-color.less";
+@import "./common/css/reset.less";
 </style>
