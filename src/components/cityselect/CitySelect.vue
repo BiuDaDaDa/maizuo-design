@@ -46,7 +46,7 @@
       <div>
         <div v-for="Item in cityItem">
           <ul class="cityItemLetterParent ">
-            <li :id="cityLetter" class="cityItemLetter CityTitle" v-for="cityLetter in Item.letter">
+            <li :id="cityLetter" :key="cityLetter" class="cityItemLetter CityTitle" v-for="cityLetter in Item.letter">
               {{cityLetter}}
             </li>
           </ul>
@@ -63,6 +63,7 @@
 </template>
 
 <script>
+  import Bus from '@/common/js/eventBus'
   export default {
     name: 'CitySelect',
     data () {
@@ -109,10 +110,7 @@
         })
         return cityobj
       },
-      setCookie (e) {
-        window.document.cookie = `cityId=${e.target.parentNode.lastChild.innerHTML}`
-        window.document.cookie = `cityName=${e.target.innerHTML}`
-      },
+//      滚动页面
       naver (id, event) {
 //        let obj = document.getElementById(id)
 //        let oPos = obj.offsetTop
@@ -130,6 +128,13 @@
             return window.scrollTo(0, nowTop)
           }
         }, 1)
+      },
+      setCookie (e) {
+        window.document.cookie = `cityId=${e.target.parentNode.lastChild.innerHTML}`
+        window.document.cookie = `cityName=${e.target.innerHTML}`
+        let cityName = e.target.innerHTML
+        Bus.$emit('GetCityName', cityName)
+        this.$router.push('/')
       }
     },
     mounted () {
