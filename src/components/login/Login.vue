@@ -17,14 +17,14 @@
         <!--end-->
         <!--密码和手机验证码-->
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="输入密码/验证码" ref="getCode" @input="getInputCode"/>
+          <input type="text" class="form-control" placeholder="输入密码/验证码" ref="postCode" @input="getInputCode"/>
           <div class="input-bg"></div>
         </div>
         <!--end-->
         <!--图片验证码-->
         <div class="form-group" v-show="isImgCode" @click="changImg">
-          <input type="text" class="form-control" placeholder="图形验证码" ref="getCode"/>
-          <img :src="this.imgData" width="100px" height="30px">
+          <input type="text" class="form-control" placeholder="图形验证码" ref="getInputImgCode"/>
+          <img :src="this.imgData" width="100px" height="30px" title="网络问题" alt="网络问题">
           <div class="input-bg"></div>
         </div>
         <!--end-->
@@ -55,8 +55,11 @@
         isNoAccount: false, // 账号不存在
         isErroAccountCode: false, // 账号密码不正确
         isChangeCodeContent: false, // 图形验证码不能为空
-        isImgCode: true, // 是否显示图片验证码
-        imgData: ''
+        isImgCode: false, // 是否显示图片验证码
+        imgData: '', // 验证码的图片数据
+        loginType: 0, //  判断是手机验证码登录还是账号密码登录
+        codeKey: '',  // 验证码的key
+        code: '' // 输入的验证码
       }
     },
     methods: {
@@ -64,7 +67,7 @@
       LoginData () {
         // 获取信息
         let phoneEmail = this.$refs.getPhoneEmail.value
-        let postCode = this.$refs.getCode.value
+        let postCode = this.$refs.postCode.value
         // 判断电话或邮箱是否为空
         if (phoneEmail === '' && postCode === '') {
           this.isNoPhone = true
@@ -99,17 +102,21 @@
       // 登入请求的函数
       requestInitLogin () {
         let phoneEmail = this.$refs.getPhoneEmail.value
-        let pass = this.$refs.getCode.value
+        let pass = this.$refs.postCode.value
         let md5Pass = md5(pass)
+        let modeType = this.loginType
+        let codeKey = this.codeKey
+        let code = this.$refs.getInputImgCode.value
+        console.log(code)
         console.log(md5Pass)
         let time = new Date().getTime()
         this.$request({
           type: 'post',
           url: `api/login?__t=${time}`,
           data: {
-            code: '',
-            codeKey: '',
-            loginType: 0,
+            code: code,
+            codeKey: codeKey,
+            loginType: modeType,
             password: md5Pass,
             username: phoneEmail
           },
@@ -118,6 +125,8 @@
             let msg = res.data.msg
             if (msg === 'ok') {
               alert('登入成功')
+              this.$router.push({name:
+                'Succeed'})
             }
             if (msg === '账号不存在') {
               this.isNoAccount = true
@@ -131,8 +140,16 @@
             }
             if (msg === '图形验证码不能为空') {
               this.isChangeCodeContent = true
+              this.isImgCode = true
+              this.requestInitImgCode()
             } else {
               this.isChangeCodeContent = false
+              this.isImgCode = false
+            }
+            if (msg === '图形验证码输入有误，请刷新重试') {
+              this.isChangeCodeContent = true
+              this.isImgCode = true
+              this.requestInitImgCode()
             }
           },
           failed: function (res) {
@@ -171,15 +188,16 @@
           type: 'get',
           url: `api/login/captcha?__t=${time}`,
           success: function (res) {
-            console.log(res.data.data.url)
+            console.log(res.data.data)
             _this.imgData = res.data.data.url
+            _this.codeKey = res.data.data.key
           },
           failed: function (res) {
             console.log(res)
           }
         })
       },
-      // 验证码是否显示
+      // 验证码图标是否显示
       getInput () {
         var sMobile = this.getPhone
         if (!(/^1[3|4|5|8][0-9]\d{8}$/.test(sMobile))) {
@@ -191,6 +209,7 @@
       // 验证码发送
       changCode () {
         this.requestInitCode()
+        this.loginType = 1
       },
       // 密码实时获取
       getInputCode () {},
