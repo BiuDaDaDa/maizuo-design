@@ -5,7 +5,9 @@
       <div class="nav_content" @click="list_show">
         <div class="title">卖座电影</div>
         <div class="me"></div>
-        <div class="city" ref="city">大连</div>
+        <router-link to="/CitySelect">
+            <div class="city" ref="city">大连</div>
+        </router-link>
       </div>
     </div>
     <div class="nav_desk"></div>
@@ -118,7 +120,7 @@
   }
 
   .city {
-    width: 65px;
+    width: 80px;
     font-size: @font-size-little;
     text-align: center;
     color: #999999;

@@ -1,9 +1,7 @@
 <template>
   <div>
-    <div class="wrap">
-      <div class="top" v-if="this.thisdata != ''">
-
-      </div>
+    <div class="wrap" v-if="thisdata != ''">
+      <img src="../../assets/logo.png" height="200" width="200"/>
     </div>
   </div>
 </template>
@@ -26,7 +24,7 @@
           params: {},
           success: function (res) {
             this.thisdata = res.data.data.film
-//            console.log(this.thisdata.cover.origin)
+            console.log(this.thisdata.cover.origin)
           },
           failed: function (err) {
             console.log(err)
@@ -42,6 +40,10 @@
     width: 100%;
   }
   .top{
+    height: 200px;
+  }
+  #asdf{
+    width: 200px;
     height: 200px;
   }
 </style>
