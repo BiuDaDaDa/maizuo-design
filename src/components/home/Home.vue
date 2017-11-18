@@ -3,7 +3,7 @@
     <div class="wrap">
       <div class="top">
         <mt-swipe :auto="4000" :show-indicators="false">
-          <mt-swipe-item v-for="(val, index) in thisdata">
+          <mt-swipe-item v-for="(val, index) in thisdata" :key="index">
             <img :src="val.imageUrl" alt="">
           </mt-swipe-item>
         </mt-swipe>

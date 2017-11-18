@@ -5,7 +5,9 @@
       <div class="nav_content" @click="list_show">
         <div class="title">卖座电影</div>
         <div class="me"></div>
-        <div class="city">大连</div>
+        <router-link to="/CitySelect">
+            <div class="city" ref="city">大连</div>
+        </router-link>
       </div>
     </div>
     <div class="nav_desk"></div>
@@ -19,6 +21,7 @@
 </template>
 
 <script>
+  import Bus from '../../common/js/eventBus'
   export default {
     name: 'Nav',
     data () {
@@ -63,7 +66,14 @@
           this.desk_style.display = 'none'
         }
       }
+    },
+    created () {
+      let that = this
+      Bus.$on('GetCityName', function (cityName) {
+        that.$refs.city.innerHTML = cityName
+      })
     }
+
   }
 </script>
 
@@ -110,7 +120,7 @@
   }
 
   .city {
-    width: 65px;
+    width: 80px;
     font-size: @font-size-little;
     text-align: center;
     color: #999999;
