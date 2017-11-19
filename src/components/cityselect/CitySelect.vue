@@ -94,7 +94,6 @@
       bulidCity () {
 //        调用函数 buildLetter 获取相应的对象
         let cityobj = this.buildLetter()
-        console.log(cityobj)
         for (let i = 0; i < cityobj.length; i++) {
           for (let j = 0; j < this.cities.length; j++) {
             let index = Number(this.GetFirstLetter(this.cities[j].pinyin).charCodeAt() - 65)
