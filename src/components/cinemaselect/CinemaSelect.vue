@@ -65,7 +65,9 @@
       },
 //      点击标砖
       GoToCinema (cinema) {
-        this.$router.push({path: `/${cinema.id}`})
+        console.log(cinema)
+        this.$router.push('/cinema/' + cinema.id)
+//        this.$router.push('/film/' + this.thisid)
       },
 //    找到所有的该城市的地区
       GetDistrict () {

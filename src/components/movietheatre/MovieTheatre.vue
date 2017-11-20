@@ -72,10 +72,10 @@
     mounted () {
       let time = new Date().getTime()
       console.log(this.$route.params.id)
-      console.log(`api/cinema/${this.$route.params.id}?__t=${time}`)
+      console.log('api/cinema/' + this.$route.params.id + '?__t=' + time)
       this.$request({
         type: 'get',
-        url: `api/cinema/${this.$route.params.id}?__t=${time}`,
+        url: '/api/cinema/' + this.$route.params.id + '?__t=' + time,
         success: function (res) {
           this.msg = res.data.data.cinema
         },

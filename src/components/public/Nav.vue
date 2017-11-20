@@ -30,7 +30,7 @@
 
           {'content': '首页', 'url': '/'},
           {'content': '影片', 'url': '/film/now-playing'},
-          {'content': '影院', 'url': ''},
+          {'content': '影院', 'url': '/cinema'},
           {'content': '商城', 'url': ''},
           {'content': '我的', 'url': '/Login'},
           {'content': '卖座卡', 'url': ''}
