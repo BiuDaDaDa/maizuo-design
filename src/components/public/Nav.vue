@@ -28,7 +28,7 @@
       return {
         lists: [
           {'content': '首页', 'url': '/'},
-          {'content': '影片', 'url': ''},
+          {'content': '影片', 'url': '/films/hotshowing'},
           {'content': '影院', 'url': ''},
           {'content': '商城', 'url': ''},
           {'content': '我的', 'url': '/Login'},

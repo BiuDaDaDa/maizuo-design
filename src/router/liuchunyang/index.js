@@ -1,10 +1,11 @@
 import BeBeing from '@/components/movie/BeBeing'
 import HotShowing from '@/components/movie/HotShowing'
 import BeAboutto from '@/components/movie/BeAboutto'
+import MyCard from '@/components/movie/MyCard'
 
 export default [
   {
-    path: '/film',
+    path: '/films',
     name: 'BeBeing',
     component: BeBeing,
     children: [
@@ -17,5 +18,10 @@ export default [
         component: BeAboutto
       }
     ]
+  },
+  {
+    path: '/card',
+    name: 'MyCard',
+    component: MyCard
   }
 ]

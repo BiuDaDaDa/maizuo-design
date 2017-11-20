@@ -30,7 +30,7 @@
     },
     data () {
       return {
-        userPath: '/film',
+        userPath: '/films',
         myHohtshowing: 'hotshowing',
         myBeaboutto: 'beaboutto',
         layout: 'header-left'
@@ -42,18 +42,6 @@
 <style scoped lang="less">
   @import "../../common/css/reset";
   @import "../../common/css/common-color";
-
-  .all-body {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #F9F9F9;
-    z-index: 1;
-  }
 
   .being-body {
     width: 345px;
