@@ -106,6 +106,7 @@
 
   .active {
     border-bottom: 5px solid #fe6e00;
+    transition: all 0.3s ease;
     color: #fe6e00;
   }
 
