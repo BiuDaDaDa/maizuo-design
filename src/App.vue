@@ -2,7 +2,6 @@
   <div id="app">
     <my-nav></my-nav>
     <router-view/>
-
   </div>
 </template>
 

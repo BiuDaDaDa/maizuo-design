@@ -12,8 +12,8 @@
     </div>
     <div class="nav_desk"></div>
     <div class="list-content" :style="list_style">
-      <ul v-for="val in this.lists" @click="list_show">
-        <li><router-link :to="val.url">{{val.content}}</router-link></li>
+      <ul v-for="val in this.lists" >
+        <router-link :to="val.url"><li @click="list_show">{{val.content}}</li></router-link>
       </ul>
     </div>
     <div class="desk" :style="desk_style" @click="list_show"></div>
@@ -27,7 +27,7 @@
     data () {
       return {
         lists: [
-          {'content': '首页', 'url': '/'},
+          {'content': '首页', 'url': '/film'},
           {'content': '影片', 'url': ''},
           {'content': '影院', 'url': ''},
           {'content': '商城', 'url': ''},
