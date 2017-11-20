@@ -192,11 +192,6 @@
     margin: 10px 0;
   }
 
-
-  .TabTag {
-    margin: ;
-  }
-
   .tabNav{
 
   }
