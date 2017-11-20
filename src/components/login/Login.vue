@@ -10,7 +10,8 @@
           <!--发送验证码-->
           <span class="sms" v-show="isChangCode" @click="changCode">
               <i class="sms-code-row"></i>
-              <i class="sms-code-tex">发送验证码</i>
+              <i class="sms-code-tex" v-show="isSendTime">发送验证码</i>
+             <i class="sms-code-tex" v-show="isRepeatSend">重发({{time}})</i>
             </span>
           <div class="input-bg"></div>
         </div>
@@ -59,7 +60,10 @@
         imgData: '', // 验证码的图片数据
         loginType: 0, //  判断是手机验证码登录还是账号密码登录
         codeKey: '',  // 验证码的key
-        code: '' // 输入的验证码
+        code: '', // 输入的验证码
+        isSendTime: true, // 发送时间
+        isRepeatSend: false,
+        time: ''
       }
     },
     methods: {
@@ -107,8 +111,6 @@
         let modeType = this.loginType
         let codeKey = this.codeKey
         let code = this.$refs.getInputImgCode.value
-        console.log(code)
-        console.log(md5Pass)
         let time = new Date().getTime()
         this.$request({
           type: 'post',
@@ -121,12 +123,20 @@
             username: phoneEmail
           },
           success: function (res) {
-            console.log(res.data)
-            let msg = res.data.msg
+            // console.log(res.data.data.data)
+            let userData = JSON.stringify(res.data.data) // 用户的json数据
+            let msg = res.data.msg // 返回的错误信息
+            // 登入成功
             if (msg === 'ok') {
-              alert('登入成功')
-              this.$router.push({name:
-                'Succeed'})
+              localStorage.setItem('user', userData) // 存入本地
+              this.$router.push({name: 'Succeed'}) // 路由跳转
+              let isMainAccount = res.data.data.data.isMainAccount // 判断登入的状态
+              let mobile = res.data.data.data.mobile // 电话号
+              let userId = res.data.data.data.id // userId
+              // 设置cookie
+              window.document.cookie = `isMainAccount=${isMainAccount}`
+              window.document.cookie = `mobile=${mobile}`
+              window.document.cookie = `userId=${userId}`
             }
             if (msg === '账号不存在') {
               this.isNoAccount = true
@@ -171,8 +181,9 @@
           success: function (res) {
             console.log(res.data.msg)
             let msg = res.data.msg
-            if (msg === 'ok') {
-              alert('验证码成功')
+            if (msg === 'ok') {}
+            if (msg === '亲,验证码已经发送到您的手机上') {
+              alert('亲,验证码已经发送到您的手机上')
             }
           },
           failed: function (res) {
@@ -206,9 +217,10 @@
           this.isChangCode = true
         }
       },
-      // 验证码发送
+      // 短信验证码发送
       changCode () {
         this.requestInitCode()
+        this.sendCodeTime() // 时间函数
         this.loginType = 1
       },
       // 密码实时获取
@@ -216,6 +228,23 @@
       // 图片验证码切换图片
       changImg () {
         this.requestInitImgCode()
+      },
+      // 发送时间函数
+      sendCodeTime () {
+        let CutDown
+        let _this = this
+        this.isSendTime = false
+        this.isRepeatSend = true
+        var time = 60
+        CutDown = setInterval(function () {
+          time--
+          _this.time = time
+          if (time === 0) {
+            clearInterval(CutDown)
+            _this.isSendTime = true
+            _this.isRepeatSend = false
+          }
+        }, 1000)
       }
     }
   }
@@ -227,7 +256,6 @@
   /*变量*/
   @bgwidth: 100%;
   @bgHight: 100%;
-
   section {
     margin: 0;
     padding: 0;
@@ -315,6 +343,8 @@
     border-radius: 3px;
     cursor: pointer;
     font-size: 12px;
+    background-color: #29a097;
+    border: 0px;
   }
 
   /*错误信息显示*/
@@ -344,6 +374,7 @@
     margin-right: auto;
     margin-left: auto;
   }
+
   .form-group img {
     position: absolute;
     vertical-align: top;
