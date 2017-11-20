@@ -14,7 +14,7 @@ export default [
     component: Home
   },
   {
-    path: '/film',
+    path: '/film/:id',
     name: 'PlayFilm',
     component: PlayFilm
   }
