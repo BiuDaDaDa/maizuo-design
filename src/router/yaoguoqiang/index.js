@@ -13,7 +13,7 @@ export default [
     component: CinemaSelect
   },
   {
-    path: 'cinema/:id',
+    path: '/cinema/:id',
     name: 'MovieTheatre',
     component: MovieTheatre
   }

@@ -36,26 +36,16 @@
       </div>
       <button class="buy">立即订座</button>
     </div>
+
     <div class="TabTag">
-        <div class="tabNav">
-          <ul class="mynav">
-            <li>
-              <i class="iconfont icon-piaowu"></i>
+        <ul class="tabBody">
+            <li class="box" v-for="(item,index) in 5">
+              <div class="liwrap">
+                  <i class="iconfont" :class="iName[index]"></i>
+                  <div :class="{active:isActive}">{{spanName[index]}}</div>
+              </div>
             </li>
-            <li>
-              <i class="iconfont icon-glass"></i>
-            </li>
-            <li>
-              <i class="iconfont icon-tingche"></i>
-            </li>
-            <li>
-              <i class="iconfont icon-shengrilibao-copy"></i>
-            </li>
-            <li>
-              <i class="iconfont icon-gongjiaoche"></i>
-            </li>
-          </ul>
-        </div>
+        </ul>
     </div>
   </div>
 </template>
@@ -66,16 +56,19 @@
     data () {
       return {
         msg: '',
-        active: 'tab-container2'
+        iName: ['icon-piaowu', 'icon-piaowu', 'icon-tingche', 'icon-shengrilibao-copy', 'icon-piaowu'],
+        spanName: ['取票', '3D', '停车', '优惠', '交通'],
+        isActive: true
       }
+    },
+    methods: {
     },
     mounted () {
       let time = new Date().getTime()
       console.log(this.$route.params.id)
-      console.log('api/cinema/' + this.$route.params.id + '?__t=' + time)
       this.$request({
         type: 'get',
-        url: '/api/cinema/' + this.$route.params.id + '?__t=' + time,
+        url: `/api/cinema/${this.$route.params.id}/?__t=${time}`,
         success: function (res) {
           this.msg = res.data.data.cinema
         },
@@ -97,6 +90,10 @@
 
   .image img {
     width: 100%;
+  }
+
+  .wrap{
+    background-color: rgb(230,230,230);
   }
 
   .wrapMiddle {
@@ -186,24 +183,51 @@
     padding-bottom: 25px;
   }
 
-  .phone-right h4{
+  .phone-right h4 {
     font-size: 14px;
     color: #000;
     margin: 10px 0;
   }
 
-  .tabNav{
-
+  .TabTag{
+    width: 100%;
+    margin-top: 15px;
+    background-color: #f9f9f9;
+    padding: 15px 40px;
+    box-sizing: border-box;
   }
-  .mynav{
+
+  .myTag{
+    width: 80%;
     display: flex;
     justify-content: space-between;
-    padding: 0 30px;
   }
 
-  .mynav li i{
+.active{
+  color: red;
+}
+
+  .tabBody{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border-bottom:1px solid #ccc;
+  }
+
+  .tabBody li{
+    padding: 0 12px;
+  }
+
+  .liwrap i{
     font-size: 38px;
     color: #ccc;
+  }
+
+  .liwrap div{
+    text-align: center;
+    padding: 10px 0;
+    font-size: 13px;
+    color: #737373;
   }
 
 </style>
