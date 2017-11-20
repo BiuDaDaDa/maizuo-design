@@ -66,6 +66,8 @@
 //      点击标砖
       GoToCinema (cinema) {
         this.$router.push({path: `cinema/${cinema.id}`})
+        console.log(cinema)
+        this.$router.push('/cinema/' + cinema.id)
       },
 //    找到所有的该城市的地区
       GetDistrict () {
