@@ -29,11 +29,7 @@
         lists: [
 
           {'content': '首页', 'url': '/'},
-          {'content': '影片', 'url': '/films/hotshowing'},
-
-          {'content': '首页', 'url': '/film'},
-          {'content': '影片', 'url': ''},
-
+          {'content': '影片', 'url': '/film/now-playing'},
           {'content': '影院', 'url': ''},
           {'content': '商城', 'url': ''},
           {'content': '我的', 'url': '/Login'},

@@ -9,7 +9,7 @@ Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
 export default [
   {
-    path: '/film',
+    path: '/',
     name: 'Home',
     component: Home
   },

@@ -30,9 +30,9 @@
     },
     data () {
       return {
-        userPath: '/films',
-        myHohtshowing: 'hotshowing',
-        myBeaboutto: 'beaboutto',
+        userPath: '/film',
+        myHohtshowing: 'now-playing',
+        myBeaboutto: 'coming-soon',
         layout: 'header-left'
       }
     }

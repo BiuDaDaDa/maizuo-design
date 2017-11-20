@@ -5,16 +5,16 @@ import MyCard from '@/components/movie/MyCard'
 
 export default [
   {
-    path: '/films',
+    path: '/film',
     name: 'BeBeing',
     component: BeBeing,
     children: [
       {
-        path: 'hotshowing',
+        path: 'now-playing',
         component: HotShowing
       },
       {
-        path: 'beaboutto',
+        path: 'coming-soon',
         component: BeAboutto
       }
     ]
