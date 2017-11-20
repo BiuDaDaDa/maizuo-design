@@ -28,9 +28,8 @@
 </script>
 
 <style>
-
-@import "./common/css/common-color.less";
-@import "./common/css/reset.less";
+@import "common/css/common-color.less";
+@import "common/css/reset.less";
   #app {
     margin: 0;
     padding: 0;
