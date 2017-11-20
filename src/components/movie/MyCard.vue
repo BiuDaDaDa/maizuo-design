@@ -113,7 +113,7 @@
   .material, .exchange {
     width: 85%;
     margin: 0 auto;
-    margin-top: 20px;
+    margin-top:  20px;
   }
 
   .material-div > div {
