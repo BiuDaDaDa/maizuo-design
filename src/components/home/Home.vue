@@ -42,8 +42,6 @@
 </template>
 
 <script>
-  import bus from '../../common/js/eventBus'
-
   export default {
     name: 'Home',
     data () {
@@ -61,7 +59,7 @@
       },
       playingclicked: function (index) {
         this.thisid = this.thisfilm[index].id
-        bus.$emit('foundplayfilmid', this.thisid)
+        this.$router.push('/film/' + this.thisid)
       }
     },
     mounted () {

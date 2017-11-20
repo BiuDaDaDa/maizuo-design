@@ -3,15 +3,17 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import { InfiniteScroll } from 'mint-ui'
 import request from './common/js/requestServerSetting'
 
 Vue.config.productionTip = false
 request(Vue)
+Vue.use(InfiniteScroll)
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
   template: '<App/>',
-  components: { App }
+  components: {App, InfiniteScroll}
 })
