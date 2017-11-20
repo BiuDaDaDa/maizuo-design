@@ -31,7 +31,7 @@
           {'content': '影片', 'url': ''},
           {'content': '影院', 'url': ''},
           {'content': '商城', 'url': ''},
-          {'content': '我的', 'url': '/Login'},
+          {'content': '我的', 'url': '/login'},
           {'content': '卖座卡', 'url': ''}
         ],
         list_style: {
