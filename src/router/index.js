@@ -9,5 +9,6 @@ Vue.use(Router)
 
 let routers = YaoRoutes.concat(LiuRoutes).concat(ZhangRoutes).concat(LiRoutes)
 export default new Router({
+  mode: 'history',
   routes: routers
 })
