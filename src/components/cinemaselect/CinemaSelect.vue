@@ -7,21 +7,21 @@
         <!--表示一个地区的名字-->
         <div class="disTitle">
           <ul>
-            <li>{{districts[index].name}}</li>
+            <li @click="ShowCinema">{{districts[index].name}}</li>
           </ul>
         </div>
         <!--地区的所有电影院-->
         <div class="disBody">
           <ul>
-            <li class="box" v-for="cinema in district.cinemaList">
+            <li class="box" v-for="(cinema,index) in district.cinemaList" v-show="showDisBody"
+                @click="GoToCinema(cinema)">
               <div class="liLeft">
                 <!--电影院名字-->
                 <div class="liLeft-top">
                   <span>{{cinema.name}}</span>
-                  <span>
-                    <i class="iconfont icon-zuowei zuo"></i>
-                    <i class="iconfont icon-tong tong"></i>
-                  </span>
+                  <span style="display: none">{{cinema.id}}</span>
+                  <i class="iconfont icon-zuowei zuo"></i>
+                  <i class="iconfont icon-tong tong"></i>
                 </div>
                 <!--电影院的优惠活动-->
                 <div class="liLeft-middle">
@@ -39,7 +39,7 @@
                 </div>
               </div>
               <div class="liRight">
-                  <i class="iconfont icon-xiangyou"></i>
+                <i class="iconfont icon-xiangyou"></i>
               </div>
             </li>
           </ul>
@@ -55,11 +55,19 @@
     data () {
       return {
         cinemas: '',
-        districts: ''
+        districts: '',
+        showDisBody: false
       }
     },
     methods: {
-//        找到所有的该城市的地区
+      ShowCinema (e) {
+        this.showDisBody = !this.showDisBody
+      },
+//      点击标砖
+      GoToCinema (cinema) {
+        this.$router.push({path: `/${cinema.id}`})
+      },
+//    找到所有的该城市的地区
       GetDistrict () {
         let district = []
         for (let i = 0; i < this.cinemas.length; i++) {
@@ -104,7 +112,6 @@
         success: function (res) {
           this.cinemas = res.data.data.cinemas
           this.districts = this.GetDistrictCinemaFenqu()
-          console.log(this.districts)
         },
         failed: function (error) {
           console.log(error)
@@ -117,7 +124,8 @@
 <style scoped lang="less">
   @import '../../common/css/reset';
   @import '../../common/css/common-color';
-    /*地区的名字*/
+
+  /*地区的名字*/
   .disTitle {
     height: 40px;
     line-height: 40px;
@@ -130,13 +138,13 @@
   }
 
   .disBody {
-    display: none;
     cursor: pointer
   }
 
   .disBody ul {
     overflow: hidden;
   }
+
   /*一个地区的全部电影院信息*/
   .box {
     padding: 10px 0 12px 16px;
@@ -147,8 +155,9 @@
     cursor: pointer;
     overflow: hidden;
   }
-    /*影院信息*/
-  .liLeft{
+
+  /*影院信息*/
+  .liLeft {
     width: 75%;
     float: left;
   }
@@ -158,27 +167,27 @@
     margin-top: 5px;
   }
 
-  .liLeft-top span:nth-child(1){
+  .liLeft-top span:nth-child(1) {
     display: inline-block;
     max-width: 80%;
-    font:@font-size-normal;
+    font: @font-size-normal;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
   }
 
-  .liLeft-top .zuo{
+  .liLeft-top .zuo {
     color: #fc8558;
     font-size: 18px;
   }
 
-  .liLeft-top .tong{
-    color:#88aec8;
+  .liLeft-top .tong {
+    color: #88aec8;
     font-size: 18px;
   }
 
   /*优惠活动*/
-  .liLeft-middle{
+  .liLeft-middle {
     margin-top: 10px;
     font-size: @font-size-small;
     color: @background-color-white;
@@ -190,12 +199,12 @@
     height: 15px;
     border-radius: 3px;
     text-align: center;
-    line-height:15px;
+    line-height: 15px;
     margin: 0 5px;
     background-color: #51add0;
   }
 
-    /*地址*/
+  /*地址*/
   .liLeft-bottom {
     margin-top: 10px;
     font-size: 12px;
@@ -204,14 +213,16 @@
     text-overflow: ellipsis;
     overflow: hidden;
   }
+
   /*距离*/
-  .distance{
+  .distance {
     margin-top: 10px;
     font-size: 12px;
     color: @background-color-gray;
   }
-    /*下拉箭头*/
-  .liRight{
+
+  /*下拉箭头*/
+  .liRight {
     margin-top: 5px;
     width: 20%;
     float: right;
