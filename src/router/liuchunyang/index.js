@@ -2,6 +2,7 @@ import BeBeing from '@/components/movie/BeBeing'
 import HotShowing from '@/components/movie/HotShowing'
 import BeAboutto from '@/components/movie/BeAboutto'
 import MyCard from '@/components/movie/MyCard'
+import MyStore from '../../components/movie/store/MyStore'
 
 export default [
   {
@@ -23,5 +24,10 @@ export default [
     path: '/card',
     name: 'MyCard',
     component: MyCard
+  },
+  {
+    path: '/mystore',
+    name: 'MyStore',
+    component: MyStore
   }
 ]
