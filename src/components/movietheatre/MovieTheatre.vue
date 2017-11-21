@@ -34,18 +34,25 @@
           </h4>
         </div>
       </div>
-      <button class="buy">立即订座</button>
+      <button class="buy" @click="GoToMovieSelect">立即订座</button>
     </div>
 
     <div class="TabTag">
-        <ul class="tabBody">
-            <li class="box" v-for="(item,index) in 5">
-              <div class="liwrap">
+      <ul class="tabBody">
+        <li class="box" v-for="(item,index) in 5" @click="clickTab(index)" :class="{active:index === num}">
+          <div class="liwrap">
+                <span :class="{isActive: index === num}">
                   <i class="iconfont" :class="iName[index]"></i>
-                  <div :class="{active:isActive}">{{spanName[index]}}</div>
-              </div>
-            </li>
-        </ul>
+                </span>
+            <div>{{spanName[index]}}</div>
+          </div>
+        </li>
+      </ul>
+      <div class="tabcontainer">
+        <div class="selectTab" v-for="(item,index) in 5" v-show="index === num">
+          <p></p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -56,12 +63,32 @@
     data () {
       return {
         msg: '',
-        iName: ['icon-piaowu', 'icon-piaowu', 'icon-tingche', 'icon-shengrilibao-copy', 'icon-piaowu'],
+        iName: ['icon-piaowu', 'icon-piaowu', 'icon-wode-tingche', 'icon-shengrilibao-copy', 'icon-piaowu'],
         spanName: ['取票', '3D', '停车', '优惠', '交通'],
-        isActive: true
+        num: 0,
+        bodyContainer: ''
       }
     },
     methods: {
+      clickTab (index) {
+        this.num = index
+      },
+      GetData () {
+//        let arr = []
+//        for (let i = 0; i < this.msg.services.length; i++) {
+//          for (let j = 0; j < 5; j++) {
+//            if (this.spanName.indexOf(this.msg.services[i].name) === -1) {
+//              arr.push('暂无信息')
+//            } else {
+//              arr.push(this.msg.services[i].description)
+//            }
+//          }
+//        }
+//        console.log(arr)
+      },
+      GoToMovieSelect () {
+        this.$router.push(`cinema/${this.$route.params.id}`)
+      }
     },
     mounted () {
       let time = new Date().getTime()
@@ -71,6 +98,7 @@
         url: `/api/cinema/${this.$route.params.id}/?__t=${time}`,
         success: function (res) {
           this.msg = res.data.data.cinema
+          this.GetData()
         },
         failed: function (error) {
           console.log(error)
@@ -92,8 +120,9 @@
     width: 100%;
   }
 
-  .wrap{
-    background-color: rgb(230,230,230);
+  .wrap {
+    background-color: rgb(230, 230, 230);
+    overflow: hidden;
   }
 
   .wrapMiddle {
@@ -114,6 +143,7 @@
     right: 15px;
     background-color: #fe8233;
     color: @background-color-white;
+    outline: none;
   }
 
   .wrapMiddle > div {
@@ -150,6 +180,7 @@
 
   /*电影院地址*/
   .address-left {
+    box-sizing: border-box;
     color: #7bafe1;
     font-size: 28px;
     width: 10%;
@@ -157,7 +188,8 @@
   }
 
   .address-right {
-    width: 85%;
+    box-sizing: border-box;
+    width: 100%;
     text-align: left;
     padding-bottom: 25px;
     border-bottom: 1px #d6d6d6 dotted;
@@ -189,7 +221,7 @@
     margin: 10px 0;
   }
 
-  .TabTag{
+  .TabTag {
     width: 100%;
     margin-top: 15px;
     background-color: #f9f9f9;
@@ -197,37 +229,47 @@
     box-sizing: border-box;
   }
 
-  .myTag{
+  .myTag {
     width: 80%;
     display: flex;
     justify-content: space-between;
   }
 
-.active{
-  color: red;
-}
+  .active {
+    border-bottom: 3px solid #fe8233;
 
-  .tabBody{
+  }
+
+  .liwrap .isActive i {
+    color: #fe8233;
+  }
+
+  .tabBody {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    border-bottom:1px solid #ccc;
+    border-bottom: 1px solid #ccc;
   }
 
-  .tabBody li{
+  .tabBody li {
     padding: 0 12px;
   }
 
-  .liwrap i{
+  .liwrap i {
     font-size: 38px;
     color: #ccc;
   }
 
-  .liwrap div{
+  .liwrap div {
     text-align: center;
     padding: 10px 0;
     font-size: 13px;
     color: #737373;
   }
+
+  .tabcontainer {
+    margin-top: 15px;
+  }
+
 
 </style>

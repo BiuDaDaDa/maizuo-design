@@ -7,7 +7,7 @@
         <!--表示一个地区的名字-->
         <div class="disTitle">
           <ul>
-            <li @click="ShowCinema()">{{districts[index].name}}</li>
+            <li @click="ShowCinema(index)">{{districts[index].name}}</li>
           </ul>
         </div>
         <!--地区的所有电影院-->
@@ -65,8 +65,6 @@
       },
 //      点击标砖
       GoToCinema (cinema) {
-//        this.$router.push({path: `cinema/${cinema.id}`})
-//        console.log(cinema)
         this.$router.push('/cinema/' + cinema.id)
       },
 //    找到所有的该城市的地区

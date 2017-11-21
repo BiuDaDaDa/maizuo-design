@@ -1,6 +1,8 @@
 import CitySelect from '@/components/cityselect/CitySelect'
 import CinemaSelect from '@/components/cinemaselect/CinemaSelect'
 import MovieTheatre from '@/components/movietheatre/MovieTheatre'
+import MovieSelect from '@/components/movietheatre/MovieSelect'
+
 export default [
   {
     path: '/cityselect',
@@ -16,5 +18,10 @@ export default [
     path: '/cinema/:id',
     name: 'MovieTheatre',
     component: MovieTheatre
+  },
+  {
+    path: '/cinema/:id/film',
+    name: 'MovieSelect',
+    component: MovieSelect
   }
 ]
