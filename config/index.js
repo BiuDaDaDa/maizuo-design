@@ -16,6 +16,13 @@ module.exports = {
         pathRewrite: {
           '^/api': '/v4/api'
         }
+      },
+      '/app': {
+        target: 'https://aura.maizuo.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/app': 'api/'
+        }
       }
     },
 
