@@ -92,10 +92,8 @@
     },
     mounted () {
       let time = new Date().getTime()
-<<<<<<< HEAD
-=======
+
       console.log(this.$route.params.id)
->>>>>>> 21114ca18d03259d3ec13c8b279f2e05ca4f5175
       this.$request({
         type: 'get',
         url: `/api/cinema/${this.$route.params.id}/?__t=${time}`,
