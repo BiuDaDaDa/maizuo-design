@@ -46,7 +46,7 @@
       <div>
         <div v-for="Item in cityItem">
           <ul class="cityItemLetterParent ">
-            <li :id="cityLetter" :key="cityLetter" class="cityItemLetter CityTitle" v-for="cityLetter in Item.letter">
+            <li :id="cityLetter" class="cityItemLetter CityTitle" v-for="cityLetter in Item.letter">
               {{cityLetter}}
             </li>
           </ul>
@@ -142,7 +142,7 @@
       let time = new Date().getTime()
       this.$request({
         type: 'get',
-        url: `api/city?__t=${time}`,
+        url: `/api/city?__t=${time}`,
         success: function (res) {
           this.cities = res.data.data.cities
           this.cityItem = this.bulidCity()
@@ -168,6 +168,7 @@
   .wrap {
     width: 100%;
     background-color: #fff;
+    overflow: hidden;
   }
 
   .CityTitle {
