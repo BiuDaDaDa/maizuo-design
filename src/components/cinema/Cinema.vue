@@ -20,8 +20,8 @@
                 <div class="liLeft-top">
                   <span>{{cinema.name}}</span>
                   <span style="display: none">{{cinema.id}}</span>
-                  <i class="iconfont icon-zuowei zuo"></i>
-                  <i class="iconfont icon-tong tong"></i>
+                  <span class="zuo"></span>
+                  <span class="tong"></span>
                 </div>
                 <!--电影院的优惠活动-->
                 <div class="liLeft-middle">
@@ -203,7 +203,7 @@
     text-align: center;
     line-height: 15px;
     margin: 0 5px;
-    background-color: #51add0;
+    background-color: #ff9658;
   }
 
   /*地址*/
@@ -230,5 +230,27 @@
     float: right;
     color: #c6c6c6;
     text-align: center;
+  }
+
+  .zuo{
+    display: inline-block;
+    background-image: url(../../assets/liimg/zuo.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    -webkit-background-size: 16px;
+    background-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .tong{
+    display: inline-block;
+    background-image: url(../../assets/liimg/tong.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    -webkit-background-size: 16px;
+    background-size: 16px;
+    width: 16px;
+    height: 16px;
   }
 </style>

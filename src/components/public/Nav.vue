@@ -13,7 +13,7 @@
     <div class="nav_desk"></div>
     <div class="list-content" :style="list_style">
       <ul v-for="val in this.lists" >
-        <router-link :to="val.url"><li @click="list_show">{{val.content}}</li></router-link>
+        <router-link :to="val.url"><li @click="list_show" :style="li_style">{{val.content}}</li></router-link>
       </ul>
     </div>
     <div class="desk" :style="desk_style" @click="list_show"></div>
@@ -37,11 +37,15 @@
         ],
         list_style: {
           opacity: 0,
-          right: 110 + '%'
+          right: 100 + '%'
         },
         desk_style: {
           opacity: 0,
           display: 'none'
+        },
+        li_style: {
+          paddingLeft: 16 + 'px',
+          paddingRight: 16 + 'px'
         }
       }
     },
@@ -50,6 +54,8 @@
         if (this.list_style.opacity === 0) {
           this.list_style.opacity = 1
           this.list_style.right = 110 + 'px'
+          this.li_style.paddingLeft = 16 + 'px'
+          this.li_style.paddingRight = 16 + 'px'
           this.desk_style.opacity = 0.5
           this.desk_style.display = 'block'
         } else {
@@ -57,6 +63,8 @@
           this.list_style.right = 100 + '%'
           this.desk_style.opacity = 0
           this.desk_style.display = 'none'
+          this.li_style.paddingLeft = 0
+          this.li_style.paddingRight = 0
         }
       },
       list_show: function () {
@@ -65,6 +73,8 @@
           this.list_style.right = 100 + '%'
           this.desk_style.opacity = 0
           this.desk_style.display = 'none'
+          this.li_style.paddingLeft = 0
+          this.li_style.paddingRight = 0
         }
       }
     },
@@ -163,7 +173,6 @@
   li {
     color: #999;
     font-size: @font-size-little;
-    padding: 0 16px;
     border-bottom: 1px dotted #333;
     line-height: 50px;
     background-image: url(../../assets/liimg/right.png);

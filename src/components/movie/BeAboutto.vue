@@ -58,7 +58,7 @@
     mounted () {
       this.$request({
         type: 'get',
-        url: 'api/film/coming-soon?page=' + this.lists + '&count=7',
+        url: '/api/film/coming-soon?page=' + this.lists + '&count=7',
         headers: {},
         params: {},
         success: function (res) {
@@ -81,7 +81,7 @@
           console.log(this.lists)
           this.$request({
             type: 'get',
-            url: 'api/film/coming-soon?page=' + this.lists + '&count=7',
+            url: '/api/film/coming-soon?page=' + this.lists + '&count=7',
             headers: {},
             params: {},
             success: function (res) {

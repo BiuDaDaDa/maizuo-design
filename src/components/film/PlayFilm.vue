@@ -23,8 +23,8 @@
           <p class="film_word">{{thisdata.synopsis}}</p>
         </div>
       </div>
-      <div class="button">
-        <button>立即购票</button>
+      <div class="button" v-if="buy"  >
+        <router-link :to="'/film/' + thisid + '/cinema'"><button @click="cinemaclicked">立即购票</button></router-link>
       </div>
     </div>
   </div>
@@ -36,7 +36,10 @@
     data () {
       return {
         thisdata: '',
-        time: ''
+        time: '',
+        now: '',
+        buy: false,
+        thisid: ''
       }
     },
     mounted () {
@@ -45,12 +48,14 @@
         type: 'get',
         url: '/api/film/' + this.$route.params.id + '?__t=' + this.time,
         headers: {},
-        params: {
-
-        },
+        params: {},
         success: function (res) {
           this.thisdata = res.data.data.film
-          console.log(this.thisdata)
+//          console.log(this.thisdata)
+          this.thisid = this.thisdata.id
+          if (this.thisdata.premiereAt <= this.time) {
+            this.buy = true
+          }
         },
         failed: function (err) {
           console.log(err)
@@ -60,6 +65,9 @@
     methods: {
       getLocalTime: function (nS) {
         return (new Date(parseInt(nS)).getMonth() + 1) + '月' + (new Date(parseInt(nS)).getDate() + '日')
+      },
+      cinemaclicked: function () {
+        this.$router.push('/film/' + this.thisid + '/cinema')
       }
     }
   }
@@ -106,12 +114,14 @@
     border-radius: 18px;
     color: #fff;
     -webkit-transition: 0.5s ease;
+    outline: none;
   }
   .button{
+    width: 100%;
     position: fixed;
     left: 0;
     bottom: 20px;
-    width: 100%;
     text-align: center;
+    margin: 0 auto;
   }
 </style>

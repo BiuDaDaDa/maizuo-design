@@ -26,13 +26,15 @@
           <div class="upcoming">即将上映</div>
         </div>
         <ul>
-          <li v-for="(val, index) in thiscoming">
-            <img :src="val.cover.origin" alt="">
-            <div class="film_coming">
-              <div v-html="val.name" style="font-size: 13px;float: left;margin-left: 10px"></div>
-              <div v-html="getLocalTime(val.premiereAt) + '上映'"
-                   style="font-size: 14px;color: rgb(245, 162, 125);float: right;margin-right: 50px"></div>
-            </div>
+          <li v-for="(val, index) in thiscoming" @click="comingclicked(index)">
+            <router-link to="/film">
+              <img :src="val.cover.origin" alt="">
+              <div class="film_coming">
+                <div v-html="val.name" style="font-size: 13px;float: left;margin-left: 10px"></div>
+                <div v-html="getLocalTime(val.premiereAt) + '上映'"
+                     style="font-size: 14px;color: rgb(245, 162, 125);float: right;margin-right: 50px"></div>
+              </div>
+            </router-link>
           </li>
         </ul>
         <button class="now_playing">更多即将上映电影</button>
@@ -59,6 +61,10 @@
       },
       playingclicked: function (index) {
         this.thisid = this.thisfilm[index].id
+        this.$router.push('/film/' + this.thisid)
+      },
+      comingclicked: function (index) {
+        this.thisid = this.thiscoming[index].id
         this.$router.push('/film/' + this.thisid)
       }
     },
