@@ -103,10 +103,8 @@
     }
   }
 </script>
-
 <style scoped lang="less">
   @import "../../common/css/common-color";
-
   .top {
     width: 100%;
     height: 232.88px;
