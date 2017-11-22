@@ -6,6 +6,9 @@
           <mt-swipe-item v-for="(val, index) in thisdata" :key="index">
             <img :src="val.imageUrl" alt="">
           </mt-swipe-item>
+          <mt-swipe-item v-for="(val, index) in thisdata" :key="index">
+            <img :src="val.imageUrl" alt="">
+          </mt-swipe-item>
         </mt-swipe>
       </div>
       <div class="content">

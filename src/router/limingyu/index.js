@@ -1,12 +1,12 @@
 import Home from '@/components/home/Home'
-import { Swipe, SwipeItem } from 'mint-ui'
 import Vue from 'vue'
 import Router from 'vue-router'
 import PlayFilm from '@/components/playfilm/PlayFilm'
-
-Vue.use(Router)
+import { Swipe, SwipeItem } from 'mint-ui'
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
+Vue.use(Router)
+
 export default [
   {
     path: '/',
