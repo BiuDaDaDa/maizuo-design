@@ -1,5 +1,4 @@
 <template>
-
   <!--header展示-->
   <section class="main-succeed">
     <!--导航-->
@@ -30,7 +29,6 @@
                 <span>张</span>
               </span>
             <i class="iconfont icon-xiayibu"></i>
-
           </div>
         </div>
       </div>
@@ -72,7 +70,6 @@
                 <span>张</span>
               </span>
             <i class="iconfont icon-xiayibu"></i>
-
           </div>
         </div>
       </div>
@@ -86,7 +83,6 @@
                 <span>张</span>
               </span>
             <i class="iconfont icon-xiayibu"></i>
-
           </div>
         </div>
       </div>
@@ -100,11 +96,11 @@
                 <span>张</span>
               </span>
             <i class="iconfont icon-xiayibu"></i>
-
           </div>
         </div>
       </div>
       <div class="menu-wrapper">
+        <router-link :to="{name:'Setting'}">
         <div class="menu">
           <i class="iconfont icon-shezhi" style="font-size: 24px; color:#95C0EA;"></i>
           <span class="title">设置</span>
@@ -112,6 +108,7 @@
             <i class="iconfont icon-xiayibu"></i>
           </div>
         </div>
+        </router-link>
       </div>
     </section>
     <!--end-->
@@ -129,7 +126,7 @@
     },
     created () {
       this.userData = JSON.parse(window.localStorage['user'])
-      console.log(JSON.parse(window.localStorage['user']))
+   //   console.log(JSON.parse(window.localStorage['user']))
     },
     methods: {
       // 登出
@@ -288,7 +285,6 @@
     color: #222;
     vertical-align: baseline;
   }
-
   .center-block {
     display: block;
   }

@@ -1,5 +1,4 @@
 <template>
-
   <div class="">
     <!--专区内容-->
     <div class="products-contain">
@@ -16,7 +15,6 @@
           <div class="top">
             <img :src="productsData['2'].imageSrc">
           </div>
-
         </div>
       </div>
     </div>

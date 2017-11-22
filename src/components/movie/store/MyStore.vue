@@ -15,12 +15,14 @@
         <div class="item clearfix even">
           <!--这里可以跳转下一页面-->
           <a :href="'#!/item/'+ item.id">
-            <div v-if="item.skuList.length >= 0" class="logo">
-              <img :src="item.skuList[0].image" alt="">
-              <div class="name">{{item.masterName}}</div>
-              <div class="content">
-                <span class="price">{{item.skuList[0].price / 100}}.00</span>
-                <span class="inventory">已售{{item.displaySalesCount}}</span>
+            <div v-if="item.skuList" class="logo">
+              <div v-if="item.skuList.length >= 0" class="logo">
+                <img :src="item.skuList[0].image" alt="">
+                <div class="name">{{item.masterName}}</div>
+                <div class="content">
+                  <span class="price">{{item.skuList[0].price / 100}}.00</span>
+                  <span class="inventory">已售{{item.displaySalesCount}}</span>
+                </div>
               </div>
             </div>
           </a>

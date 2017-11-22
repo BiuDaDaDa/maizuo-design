@@ -89,7 +89,7 @@
         console.log(arrshow)
       },
       GoToMovieSelect () {
-        this.$router.push(`cinema/${this.$route.params.id}`)
+        this.$router.push(`/cinema/${this.$route.params.id}/film`)
       }
     },
     mounted () {
