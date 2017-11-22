@@ -1,19 +1,32 @@
 <template>
-  <div class="wrap">
-    <!--页面上方展示区域-->
-    <div class="container">
-
-    </div>
-  </div>
-
+  <iscroll-view id="scroller" @scrollStart="log">
+    <ul id="title_ul">
+      <li v-for="(img,index) in msg.filmList">
+        <div>
+          <img :src="img.posterAddress" alt="">
+        </div>
+        <span class="mask" ref='mask'>{{1111}}</span>
+      </li>
+    </ul>
+  </iscroll-view>
 </template>
 
 <script>
+  import Vue from 'vue'
+  import IScrollView from 'vue-iscroll-view'
+  import IScroll from 'iscroll'
+
+  Vue.use(IScrollView, IScroll)
   export default {
     name: 'MovieSelect',
     data () {
       return {
         msg: ''
+      }
+    },
+    methods: {
+      log (iscroll) {
+        console.log(iscroll)
       }
     },
     mounted () {
@@ -23,6 +36,7 @@
         url: `/api/cinema/${this.$route.params.id}/film?__t=${time}`,
         success: function (res) {
           this.msg = res.data.data
+          console.log(this.msg)
         },
         failed: function (error) {
           console.log(error)
@@ -36,22 +50,67 @@
   @import '../../common/css/reset';
   @import '../../common/css/common-color';
 
-  @mainWidth: 100%;
-  /*页面包裹层*/
-  .wrap {
-    width: @mainWidth;
-    overflow: hidden;
+  * {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+
   }
 
-  /*页面上方展示区域*/
-  .filmImg {
-    overflow: hidden;
+  html {
+    -ms-touch-action: none;
   }
 
-  .img-body {
+  body,
+  ul,
+  li {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    border: 0;
+  }
+
+  #scroller {
+    position: absolute;
+    z-index: 1;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    width: 1760px;
+    padding: 20px;
+    padding-left: 150px;
+    background-color: #38403e;
+    height: 150px;
+  }
+
+  #scroller ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+
+  #scroller li {
+    position: relative;
+    display: block;
     float: left;
-
+    height: 100%;
+    width: 92px;
+    padding: 0 10px;
+    color: white;
+    font-size: 14px;
   }
 
+  #scroller li img {
+    border: 1px solid #fff;
+    width: 100%
+  }
 
+  .mask {
+    background-color: rgba(0, 0, 0, 0.6);
+    position: absolute;
+    top: 0;
+    left: 10px;
+    right: 10px;
+    bottom: 0;
+  }
 </style>

@@ -11,16 +11,18 @@
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="100"
       class="being-list-s">
-      <div v-for="item in update" class="clearfix">
+      <div v-for="item in updatea" class="clearfix">
         <div class="item clearfix even">
           <!--这里可以跳转下一页面-->
           <a :href="'#!/item/'+ item.id">
-            <div class="logo">
-              <img :src="item.skuList[0].image" alt="">
-              <div class="name">{{item.masterName}}</div>
-              <div class="content">
-                <span class="price">{{item.skuList[0].price / 100}}.00</span>
-                <span class="inventory">已售{{item.displaySalesCount}}</span>
+            <div v-if="item.skuList" class="logo">
+              <div v-if="item.skuList.length >= 0" class="logo">
+                <img :src="item.skuList[0].image" alt="">
+                <div class="name">{{item.masterName}}</div>
+                <div class="content">
+                  <span class="price">{{item.skuList[0].price / 100}}.00</span>
+                  <span class="inventory">已售{{item.displaySalesCount}}</span>
+                </div>
               </div>
             </div>
           </a>
@@ -39,21 +41,33 @@
         showing: '',
         showing1: '',
         showing2: '',
-        update: [],
+        updatea: [],
         lists: 1,
         loading: false
       }
     },
     mounted () {
-      let userId = window.location.href.split('=')[1]
+      let userId1 = window.location.href.split('=')[1]
       this.$request({
         type: 'get',
-        url: 'app/category?id=' + userId + '&page=' + this.lists,
+        url: 'app/category?id=' + userId1 + '&page=' + this.lists,
         headers: {},
         params: {},
         success: function (res) {
           this.showing2 = res.data.data
-          this.update = this.showing2
+        },
+        failed: function (res) {
+          console.log(res)
+        }
+      })
+      this.$request({
+        type: 'get',
+        url: 'app/category/items?id=' + userId1 + '&page=' + this.lists + '&num=20',
+        headers: {},
+        params: {},
+        success: function (res) {
+          this.showing = res.data.data.list
+          this.updatea = this.showing
         },
         failed: function (res) {
           console.log(res)
@@ -62,18 +76,17 @@
     },
     methods: {
       loadMore () {
-        let userId = window.location.href.split('=')[1]
+        let userId2 = window.location.href.split('=')[1]
         this.loading = true
         this.lists++
-        // console.log(this.lists)
         this.$request({
           type: 'get',
-          url: 'app/category/items?id=' + userId + '&page=' + this.lists + '&num=20',
+          url: 'app/category/items?id=' + userId2 + '&page=' + this.lists + '&num=20',
           headers: {},
           params: {},
           success: function (res) {
             this.showing1 = res.data.data.list
-            this.update = this.update.concat(this.showing1)
+            this.updatea = this.updatea.concat(this.showing1)
           },
           failed: function (res) {
             console.log(res)
