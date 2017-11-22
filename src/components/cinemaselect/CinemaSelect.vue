@@ -11,9 +11,9 @@
           </ul>
         </div>
         <!--地区的所有电影院-->
-        <div class="disBody">
+        <div class="disBody" ref="show" v-show="false">
           <ul>
-            <li class="box" v-for="(cinema,index) in district.cinemaList" v-show="showDisBody"
+            <li class="box" v-for="(cinema,index) in district.cinemaList"
                 @click="GoToCinema(cinema)">
               <div class="liLeft">
                 <!--电影院名字-->
@@ -55,13 +55,16 @@
     data () {
       return {
         cinemas: '',
-        districts: '',
-        showDisBody: false
+        districts: ''
       }
     },
     methods: {
-      ShowCinema () {
-        this.showDisBody = !this.showDisBody
+      ShowCinema (index) {
+        if (this.$refs.show[index].style.display === 'block') {
+          this.$refs.show[index].style.display = 'none'
+        } else {
+          this.$refs.show[index].style.display = 'block'
+        }
       },
 //      点击标砖
       GoToCinema (cinema) {
