@@ -3,8 +3,8 @@
   <section class="main-center">
     <div class="menu-wrapper">
       <div class="menu">
-        <i class="iconfont icon-yingpiaodingdan" style="font-size: 24px; color:#7BCDCC;"></i>
-        <span class="title">影票订单</span>
+        <img src="../../common/img/bindPone.png"/>
+        <span class="title">手机绑定</span>
         <div class="pull-right">
               <span class="value-wrap">
                <span class="value">0</span>
@@ -17,8 +17,8 @@
     </div>
     <div class="menu-wrapper">
       <div class="menu">
-        <i class="iconfont icon-dingdan1" style="font-size: 24px; color:#BBCEA5;"></i>
-        <span class="title">影票待付订单</span>
+        <img src="../../common/img/post.png">
+        <span class="title">修改安全密码</span>
         <div class="pull-right">
               <span class="value-wrap">
                <span class="value">0</span>
@@ -31,8 +31,8 @@
     </div>
     <div class="menu-wrapper">
       <div class="menu">
-        <i class="iconfont icon-shangchengdingdan" style="font-size: 24px; color:#95C0EA;"></i>
-        <span class="title">商城订单</span>
+        <img src="../../common/img/clearCash.png">
+        <span class="title">清除缓存</span>
         <div class="pull-right">
               <span class="value-wrap">
                <span class="value">0</span>
@@ -135,6 +135,10 @@
 
   .menu {
     margin: 0 12px;
+    vertical-align:super;
+  }
+  .menu img {
+     margin-top: 10px;
   }
 
   .iconfont {
