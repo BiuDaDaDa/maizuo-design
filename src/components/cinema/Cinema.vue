@@ -3,43 +3,52 @@
     <!--主页-->
     <div class="city">
       <!--表示一个地区-->
-      <div class="district" v-for="(district,index) in districts">
+      <div class="district" v-for="(district,ind) in districts" ref="cinemas">
         <!--表示一个地区的名字-->
         <div class="disTitle">
           <ul>
-            <li @click="ShowCinema(index)">{{districts[index].name}}</li>
+            <li @click="ShowCinema(ind)">{{districts[ind].name}}</li>
           </ul>
         </div>
         <!--地区的所有电影院-->
-        <div class="disBody">
+        <div class="disBody" ref="show">
           <ul>
-            <li class="box" v-for="(cinema,index) in district.cinemaList" v-show="showDisBody"
-                @click="GoToCinema(cinema)">
-              <div class="liLeft">
-                <!--电影院名字-->
-                <div class="liLeft-top">
-                  <span>{{cinema.name}}</span>
-                  <span style="display: none">{{cinema.id}}</span>
-                  <i class="iconfont icon-zuowei zuo"></i>
-                  <i class="iconfont icon-tong tong"></i>
-                </div>
-                <!--电影院的优惠活动-->
-                <div class="liLeft-middle">
+            <li class="box" v-for="(cinema,index) in district.cinemaList" ref="price" @click="showprice(ind, index)">
+              <div class="all">
+                <div class="liLeft">
+                  <!--电影院名字-->
+                  <div class="liLeft-top">
+                    <span>{{cinema.name}}</span>
+                    <span style="display: none">{{cinema.id}}</span>
+                    <span class="zuo"></span>
+                    <span class="tong"></span>
+                  </div>
+                  <!--电影院的优惠活动-->
+                  <div class="liLeft-middle">
                   <span v-for="(label,index) in cinema.labels">
                     <span>{{label.name}}</span>
                   </span>
+                  </div>
+                  <!--电影院的地址-->
+                  <div class="liLeft-bottom">
+                    {{cinema.address}}
+                  </div>
+                  <!--电影院的距离-->
+                  <div class="distance">
+                    <span>距离未知</span> | <span>剩余{{cinema.avaliableSchedule}}场</span>
+                  </div>
                 </div>
-                <!--电影院的地址-->
-                <div class="liLeft-bottom">
-                  {{cinema.address}}
-                </div>
-                <!--电影院的距离-->
-                <div class="distance">
-                  <span>距离未知</span>
+                <div class="liRight">
+                  <span class="price">￥{{cinema.minimumPrice}}</span>
                 </div>
               </div>
-              <div class="liRight" >
-                <span class="price"></span>
+              <div class="jiage">
+                <div class="date">
+
+                </div>
+                <div class="showat">
+
+                </div>
               </div>
             </li>
           </ul>
@@ -56,16 +65,36 @@
       return {
         cinemas: '',
         districts: '',
-        showDisBody: false
+        time: '',
+        cinemasPrice: '',
+        dates: ['今天', '明天', '后天']
       }
     },
     methods: {
-      ShowCinema () {
-        this.showDisBody = !this.showDisBody
+      ShowCinema (ind) {
+        if (this.$refs.show[ind].firstChild.style.display === 'block') {
+          this.$refs.show[ind].firstChild.style.display = 'none'
+        } else {
+          this.$refs.show[ind].firstChild.style.display = 'block'
+        }
       },
-//      点击标砖
-      GoToCinema (cinema) {
-        this.$router.push('/cinema/' + cinema.id)
+      showprice: function (ind, index) {
+        if (this.$refs.cinemas[ind].lastChild.firstChild.childNodes[index].lastChild.style.display === 'block') {
+          this.$refs.cinemas[ind].lastChild.firstChild.childNodes[index].lastChild.style.display = 'none'
+        } else {
+          this.$refs.cinemas[ind].lastChild.firstChild.childNodes[index].lastChild.style.display = 'block'
+        }
+        this.$request({
+          type: 'get',
+          url: '/api/schedule?__t=' + this.time + '&film=' + this.$route.params.id + '&cinema=' + this.cinemas[index].id,
+          success: function (res) {
+            this.cinemasPrice = res.data.data.schedules
+            console.log(this.cinemasPrice)
+          },
+          failed: function (error) {
+            console.log(error)
+          }
+        })
       },
 //    找到所有的该城市的地区
       GetDistrict () {
@@ -105,10 +134,10 @@
       }
     },
     mounted () {
-      let time = new Date().getTime()
+      this.time = new Date().getTime()
       this.$request({
         type: 'get',
-        url: `/api/cinema?__t=${time}`,
+        url: '/api/film/' + this.$route.params.id + '/cinema?__t=' + this.time,
         success: function (res) {
           this.cinemas = res.data.data.cinemas
           this.districts = this.GetDistrictCinemaFenqu()
@@ -143,6 +172,7 @@
 
   .disBody ul {
     overflow: hidden;
+    display: none;
   }
 
   /*一个地区的全部电影院信息*/
@@ -153,7 +183,6 @@
     min-width: 230px;
     float: left;
     cursor: pointer;
-    overflow: hidden;
   }
 
   /*影院信息*/
@@ -201,7 +230,7 @@
     text-align: center;
     line-height: 15px;
     margin: 0 5px;
-    background-color: #51add0;
+    background-color: #ff9658;
   }
 
   /*地址*/
@@ -228,5 +257,44 @@
     float: right;
     color: #c6c6c6;
     text-align: center;
+  }
+
+  .zuo{
+    display: inline-block;
+    background-image: url(../../assets/liimg/zuo.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    -webkit-background-size: 16px;
+    background-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .tong{
+    display: inline-block;
+    background-image: url(../../assets/liimg/tong.png);
+    background-repeat:no-repeat;
+    background-position: center center;
+    -webkit-background-size: 16px;
+    background-size: 16px;
+    width: 16px;
+    height: 16px;
+  }
+
+  .jiage{
+    display: none;
+    width: 100%;
+    height: 500px;
+    background-color: #ccc;
+  }
+
+  .all{
+    overflow: hidden;
+  }
+
+  .price{
+    font-size: 16px;
+    color: #fc8637;
+    margin-right: 25px;
   }
 </style>
