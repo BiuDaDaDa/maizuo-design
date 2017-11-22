@@ -78,7 +78,7 @@
         } else {
           this.loading = true
           this.lists++
-          console.log(this.lists)
+       //   console.log(this.lists)
           this.$request({
             type: 'get',
             url: '/api/film/coming-soon?page=' + this.lists + '&count=7',

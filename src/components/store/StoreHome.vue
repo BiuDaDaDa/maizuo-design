@@ -9,8 +9,8 @@
       </div>
     </div>
     <ul class="shops">
-      <li class="shop" v-for="item in this.shopList">
-        <a href=""><img :src="item.imageSrc"></a>
+      <li class="shop" v-for="(item,index) in this.shopList">
+        <a @click="shopGo(index)"><img :src="item.imageSrc"></a>
         <div class="category-name">{{item.name}}</div>
       </li>
     </ul>
@@ -57,7 +57,8 @@
     data () {
       return {
         slider: '', // 轮播数据
-        shopList: []// 导航列表数据
+        shopList: [], // 导航列表数据
+        id: []
       }
     },
     components: {
@@ -71,16 +72,26 @@
         type: 'get',
         url: 'app/ad/list',
         success: function (res) {
+          // console.log(res.data.data)
           this.slider = res.data.data[8].imageSrc
           let allData = res.data.data
           for (var i = 0; i < 8; i++) {
             this.shopList.push(allData[i])
+            let str = allData[i].url
+            this.id.push(str.split('category/')[1])
           }
+         // console.log(this.id)
         },
         failed: function (err) {
           console.log(err)
         }
       })
+    },
+    methods: {
+      shopGo: function (index) {
+        // console.log(index)
+        this.$router.push({name: 'MyStore', query: {Id: this.id[index]}})
+      }
     }
   }
 </script>
@@ -89,6 +100,7 @@
   .clear {
     clear: both;
   }
+
   /*内容*/
   .app-store {
     overflow-x: hidden;
@@ -134,19 +146,22 @@
   .app-products {
 
   }
+
   .line {
     height: 8px;
     background: #f2f2f2;
   }
+
   /*产品专区*/
-   .active-title {
-     height: 13px;
-     font-size: 13px;
-     line-height: 13px;
-     text-align: center;
-     margin-top: 10px;
-     color: #323232;
-   }
+  .active-title {
+    height: 13px;
+    font-size: 13px;
+    line-height: 13px;
+    text-align: center;
+    margin-top: 10px;
+    color: #323232;
+  }
+
   .app-subject {
     width: 100%;
   }
