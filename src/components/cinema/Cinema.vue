@@ -43,10 +43,13 @@
                 </div>
               </div>
               <div class="jiage">
-                <div class="date">
-
+                <div class="date" v-if="thisday != 0">
+                  <span v-if="today != ''">今天({{thismonth + 1}}/{{thisday}})</span>
+                  <span v-if="tomorrow != ''">明天({{thismonth + 1}}/{{thisday + 1}})</span>
+                  <span v-if="aftertomorrow != ''">后天({{thismonth + 1}}/{{thisday + 2}})</span>
+                  <span v-if="showat - thisday > 3">{{showat - thisday}}天后</span>
                 </div>
-                <div class="showat">
+                <div class="showlist">
 
                 </div>
               </div>
@@ -67,7 +70,14 @@
         districts: '',
         time: '',
         cinemasPrice: '',
-        dates: ['今天', '明天', '后天']
+        dates: ['今天', '明天', '后天'],
+        today: [],
+        tomorrow: [],
+        aftertomorrow: [],
+        later: [],
+        showat: '',
+        thisday: '',
+        thismonth: ''
       }
     },
     methods: {
@@ -84,12 +94,32 @@
         } else {
           this.$refs.cinemas[ind].lastChild.firstChild.childNodes[index].lastChild.style.display = 'block'
         }
+        if (this.today.length !== 0) {
+          this.today = []
+        }
         this.$request({
           type: 'get',
           url: '/api/schedule?__t=' + this.time + '&film=' + this.$route.params.id + '&cinema=' + this.cinemas[index].id,
           success: function (res) {
             this.cinemasPrice = res.data.data.schedules
-            console.log(this.cinemasPrice)
+//            console.log(this.cinemasPrice)
+            this.thismonth = new Date(parseInt(this.time)).getMonth()
+            for (let i = 0; i < this.cinemasPrice.length; i++) {
+              this.showat = new Date(parseInt(this.cinemasPrice[i].showAt)).getDate()
+              this.thisday = new Date(parseInt(this.time)).getDate()
+              if (this.showat === this.thisday) {
+                this.today.push(this.cinemasPrice[i])
+              }
+              if (this.showat === this.thisday + 1) {
+                this.tomorrow.push(this.cinemasPrice[i])
+              }
+              if (this.showat === this.thisday + 2) {
+                this.aftertomorrow.push(this.cinemasPrice[i])
+              }
+              if (this.showat > this.thisday + 2) {
+                this.later.push(this.cinemasPrice[i])
+              }
+            }
           },
           failed: function (error) {
             console.log(error)
@@ -141,6 +171,15 @@
         success: function (res) {
           this.cinemas = res.data.data.cinemas
           this.districts = this.GetDistrictCinemaFenqu()
+          this.thismonth = new Date(parseInt(this.time)).getMonth()
+//          for (let i = 0; i < this.cinemasPrice.length; i++) {
+//          console.log(this.cinemasPrice[i].showAt)
+//            this.showat = new Date(parseInt(this.cinemasPrice[i].showAt)).getDate()
+//            this.thisday = new Date(parseInt(this.time)).getDate()
+//            if (this.showat === this.thisday) {
+//              this.today.push(this.cinemasPrice[i])
+//            }
+//          }
         },
         failed: function (error) {
           console.log(error)
