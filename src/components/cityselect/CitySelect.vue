@@ -9,7 +9,7 @@
       </div>
       <div>
         <ul>
-          <li class="GPS-city CityBody">深圳</li>
+          <li class="GPS-city CityBody">大连</li>
         </ul>
       </div>
       <!--热门城市-->
@@ -17,10 +17,7 @@
     <div class="HotCity">
       <div class="CityTitle">热门城市</div>
       <ul class="Hot-city">
-        <li class="CityBody">北京</li>
-        <li class="CityBody">上海</li>
-        <li class="CityBody">广州</li>
-        <li class="CityBody">深圳</li>
+        <li class="CityBody" v-for="(hot,index) in HotCity" @click="hotSetcookie(index)">{{hot}}</li>
       </ul>
     </div>
     <!--按字母排序选择城市-->
@@ -64,13 +61,16 @@
 
 <script>
   import Bus from '@/common/js/eventBus'
+
   export default {
     name: 'CitySelect',
     data () {
       return {
         cities: '',
         cityItem: '',
-        myHref: ''
+        myHref: '',
+        HotCity: ['北京', '上海', '广州', '深圳'],
+        HotId: []
       }
     },
     methods: {
@@ -134,6 +134,23 @@
         let cityName = e.target.innerHTML
         Bus.$emit('GetCityName', cityName)
         this.$router.push('/')
+      },
+      hotGet () {
+        for (let j = 0; j < this.HotCity.length; j++) {
+          for (let i = 0; i < this.cities.length; i++) {
+            if (this.cities[i].name === this.HotCity[j]) {
+              this.HotId[j] = this.cities[i].id
+            }
+          }
+        }
+      },
+      hotSetcookie (index) {
+        console.log(this.HotId)
+        window.document.cookie = `cityId=${this.HotId[index]}`
+        window.document.cookie = `cityName=${this.HotCity[index]}`
+        console.log(this.HotId[index])
+        Bus.$emit('GetCityName', this.HotCity[index])
+        this.$router.push('/')
       }
     },
     mounted () {
@@ -145,7 +162,9 @@
         url: `/api/city?__t=${time}`,
         success: function (res) {
           this.cities = res.data.data.cities
+//          console.log(this.cities)
           this.cityItem = this.bulidCity()
+          this.hotGet()
         },
         failed: function (error) {
           console.log(error)

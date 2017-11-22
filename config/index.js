@@ -14,7 +14,7 @@ module.exports = {
         target: 'https://m.maizuo.com',
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/v4/api'
+          '^/api': '/v4/api',
         }
       },
       '/app': {
@@ -23,6 +23,13 @@ module.exports = {
         pathRewrite: {
           '^/app': 'api/'
         }
+      },
+      '/apt': {
+        target: 'https://m.maizuo.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/apt': 'act/active/api'
+        },
       }
     },
 

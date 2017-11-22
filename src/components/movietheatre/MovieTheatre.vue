@@ -65,6 +65,7 @@
         msg: '',
         iName: ['icon-piaowu', 'icon-piaowu', 'icon-wode-tingche', 'icon-shengrilibao-copy', 'icon-piaowu'],
         spanName: ['取票', '3D', '停车', '优惠', '交通'],
+        container: [],
         num: 0,
         bodyContainer: ''
       }
@@ -74,17 +75,18 @@
         this.num = index
       },
       GetData () {
-//        let arr = []
-//        for (let i = 0; i < this.msg.services.length; i++) {
-//          for (let j = 0; j < 5; j++) {
-//            if (this.spanName.indexOf(this.msg.services[i].name) === -1) {
-//              arr.push('暂无信息')
-//            } else {
-//              arr.push(this.msg.services[i].description)
-//            }
-//          }
-//        }
-//        console.log(arr)
+        let arr = this.msg.services
+        let arrshow = []
+        console.log(arr)
+        for (let j = 0; j < this.spanName.length; j++) {
+          for (let i = 0; i < arr.length; i++) {
+            if (arr[i].name === this.spanName[j]) {
+              arrshow.push(this.spanName[j])
+            }
+          }
+          arrshow.push('暂无信息')
+        }
+        console.log(arrshow)
       },
       GoToMovieSelect () {
         this.$router.push(`cinema/${this.$route.params.id}`)
@@ -92,8 +94,6 @@
     },
     mounted () {
       let time = new Date().getTime()
-
-      console.log(this.$route.params.id)
       this.$request({
         type: 'get',
         url: `/api/cinema/${this.$route.params.id}/?__t=${time}`,
