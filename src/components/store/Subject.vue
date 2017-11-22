@@ -1,0 +1,132 @@
+<template>
+  <div>
+    <!--主题专区-->
+    <div v-for="ite in subjectDataT">
+      <div class="line"></div>
+      <div class="subject-center">
+        <img :src="ite.imageSrc">
+        <div class="pic-list">
+          <div class="subject-container">
+            <div class="subject-item" v-for="item in ite.products">
+              <div class="item-box">
+                <div class="pic-area">
+                  <div class="control-pic">
+                    <img :src="item.image">
+                  </div>
+                </div>
+                <p class="control-name">{{item.name}}}</p>
+                <p class="control-price">￥{{item.price}}</p>
+              </div>
+            </div>
+            <div class="subject-item subject-all">
+              <span class="pic-list-right">全部</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--end-->
+
+  </div>
+</template>
+
+<script>
+  export default {
+    name: '',
+    data () {
+      return {
+        subjectDataT: []
+      }
+    },
+    mounted () {
+      this.$request({
+        type: 'get',
+        url: 'app/ad/list',
+        success: function (res) {
+          var Data = res.data.data
+          for (var i = 14; i < 19; i++) {
+            this.subjectDataT.push(Data[i])
+          }
+        },
+        failed: function (err) {
+          console.log(err)
+        }
+      })
+    }
+  }
+</script>
+
+<style scoped lang="less">
+
+  .line {
+    height: 8px;
+    background: #f2f2f2;
+  }
+  .subject-center {
+    padding: 10px;
+    background: #fff;
+  }
+  .subject-center img{
+    width: 100%;
+  }
+  /*主题产品*/
+  .pic-list {
+    width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+  .subject-container {
+
+  }
+  .subject-item {
+    display: inline-block;
+    width: 30%;
+  }
+  .item-box {
+    width: 85px;
+    height: 85px;
+  }
+  .pic-area {
+    width: 85px;
+    height: 85px;
+  }
+  .control-pic {
+    width: 100%;
+  }
+  .control-name {
+    font-size: 12px;
+    color: #323232;
+    height: 11px;
+  }
+  .control-price {
+    font-size: 13px;
+    color: #ff6640;
+  }
+  .item-box p {
+    display: block;
+    overflow: hidden;
+    height: 12px;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+  }
+  .subject-all {
+    line-height: 151px;
+    vertical-align: top;
+    text-align: center;
+  }
+  .pic-list-right {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 1px solid #ccc;
+    line-height: 50px;
+    text-align: center;
+    font-size: 12px;
+    color: #ccc;
+    display: inline-block;
+    margin-top: 30px;
+  }
+</style>
