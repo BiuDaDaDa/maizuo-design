@@ -3,7 +3,7 @@
     <div class="nav">
       <div class="list" @click="list_content_clicked"></div>
       <div class="nav_content" @click="list_show">
-        <div class="title">卖座电影</div>
+        <div class="title"></div>
         <div class="me"></div>
         <router-link to="/CitySelect">
             <div class="city" ref="city">大连</div>
@@ -35,6 +35,7 @@
           {'content': '我的', 'url': '/login'},
           {'content': '卖座卡', 'url': ''}
         ],
+        titles: ['全部影院', '卖座商城'],
         list_style: {
           opacity: 0,
           right: 100 + '%'

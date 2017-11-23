@@ -13,8 +13,8 @@
         <!--地区的所有电影院-->
         <div class="disBody" ref="show">
           <ul>
-            <li class="box" v-for="(cinema,index) in district.cinemaList" ref="price" @click="showprice(ind, index)">
-              <div class="all">
+            <li class="box" v-for="(cinema,index) in district.cinemaList" ref="price">
+              <div class="all" @click="showprice(ind, index)">
                 <div class="liLeft">
                   <!--电影院名字-->
                   <div class="liLeft-top">
@@ -49,16 +49,23 @@
                   <span v-if="aftertomorrow != ''">后天({{thismonth + 1}}/{{thisday + 2}})</span>
                   <span v-if="showat - thisday > 3">{{showat - thisday}}天后</span>
                 </div>
-                <div class="showlist">
-                  <ul>
-                    <li v-for="(val, index) in today">
-                      <div class="priceleft">
-                        <div class="priceleft_top">
-                          <span></span> : <span></span>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
+                <div class="showlist" v-for="val in today">
+                  <div class="showlist_top">
+                    <div class="showlist_top_left">
+                      <span>{{filmhours(val.showAt)}}</span>:<span>{{filmminutes(val.showAt)}}</span>
+                    </div>
+                    <div class="showlist_top_right">￥{{val.price.min + val.price.premium}}.00</div>
+                  </div>
+                  <div class="showlist_bottom">
+                    <div class="showlist_bottom_left">
+                      <span>预计</span><span>{{filmhours(val.showAt) + 2}}</span>:<span>{{filmminutes(val.showAt)}}</span>
+                      <span>结束</span>/<span>{{val.film.language}}</span>
+                      <span>{{val.imagery}}</span>/<span>{{val.hall.name}}</span>
+                    </div>
+                    <div class="showlist_bottom_right">
+                      <span>￥{{val.price.cinema}}.00</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </li>
@@ -88,6 +95,16 @@
       }
     },
     methods: {
+      filmhours (time) {
+        return new Date(parseInt(time)).getHours()
+      },
+      filmminutes (time) {
+        if (new Date(parseInt(time)).getMinutes() < 10) {
+          return new Date(parseInt(time)).getMinutes() + '0'
+        } else {
+          return new Date(parseInt(time)).getMinutes()
+        }
+      },
       ShowCinema (ind) {
         if (this.$refs.show[ind].firstChild.style.display === 'block') {
           this.$refs.show[ind].firstChild.style.display = 'none'
@@ -100,38 +117,39 @@
           this.$refs.cinemas[ind].lastChild.firstChild.childNodes[index].lastChild.style.display = 'none'
         } else {
           this.$refs.cinemas[ind].lastChild.firstChild.childNodes[index].lastChild.style.display = 'block'
-        }
-        if (this.today.length !== 0) {
-          this.today = []
-        }
-        this.$request({
-          type: 'get',
-          url: '/api/schedule?__t=' + this.time + '&film=' + this.$route.params.id + '&cinema=' + this.cinemas[index].id,
-          success: function (res) {
-            this.cinemasPrice = res.data.data.schedules
+
+          this.$request({
+            type: 'get',
+            url: '/api/schedule?__t=' + this.time + '&film=' + this.$route.params.id + '&cinema=' + this.cinemas[index].id,
+            success: function (res) {
+              this.cinemasPrice = res.data.data.schedules
+              console.log(this.cinemas[index].id)
 //            console.log(this.cinemasPrice)
-            this.thismonth = new Date(parseInt(this.time)).getMonth()
-            for (let i = 0; i < this.cinemasPrice.length; i++) {
-              this.showat = new Date(parseInt(this.cinemasPrice[i].showAt)).getDate()
-              this.thisday = new Date(parseInt(this.time)).getDate()
-              if (this.showat === this.thisday) {
-                this.today.push(this.cinemasPrice[i])
+              this.thismonth = new Date(parseInt(this.time)).getMonth()
+              this.today = []
+              for (let i = 0; i < this.cinemasPrice.length; i++) {
+                this.showat = new Date(parseInt(this.cinemasPrice[i].showAt)).getDate()
+                this.thisday = new Date(parseInt(this.time)).getDate()
+                if (this.showat === this.thisday) {
+                  this.today.push(this.cinemasPrice[i])
+                }
+                console.log(this.today)
+                if (this.showat === this.thisday + 1) {
+                  this.tomorrow.push(this.cinemasPrice[i])
+                }
+                if (this.showat === this.thisday + 2) {
+                  this.aftertomorrow.push(this.cinemasPrice[i])
+                }
+                if (this.showat > this.thisday + 2) {
+                  this.later.push(this.cinemasPrice[i])
+                }
               }
-              if (this.showat === this.thisday + 1) {
-                this.tomorrow.push(this.cinemasPrice[i])
-              }
-              if (this.showat === this.thisday + 2) {
-                this.aftertomorrow.push(this.cinemasPrice[i])
-              }
-              if (this.showat > this.thisday + 2) {
-                this.later.push(this.cinemasPrice[i])
-              }
+            },
+            failed: function (error) {
+              console.log(error)
             }
-          },
-          failed: function (error) {
-            console.log(error)
-          }
-        })
+          })
+        }
       },
 //    找到所有的该城市的地区
       GetDistrict () {
@@ -223,7 +241,6 @@
 
   /*一个地区的全部电影院信息*/
   .box {
-    padding: 10px 0 12px 16px;
     border-bottom: 1px solid #e1e1e1;
     width: 100%;
     min-width: 230px;
@@ -330,12 +347,11 @@
   .jiage{
     display: none;
     width: 100%;
-    height: 500px;
-    background-color: #ccc;
   }
 
   .all{
     overflow: hidden;
+    padding: 10px 0 12px 16px;
   }
 
   .price{
@@ -357,5 +373,50 @@
     line-height: 35px;
     text-align: center;
     cursor: pointer;
+  }
+
+  .date{
+    padding-left: 15px;
+  }
+
+  .showlist{
+    width: 370px;
+    padding: 11px 20px 20px;
+  }
+
+  .showlist_top_left, .showlist_bottom_left{
+    float: left;
+  }
+
+  .showlist_top_right, .showlist_bottom_right{
+    float: right;
+  }
+
+  .showlist_top, .showlist_bottom{
+    overflow: hidden;
+  }
+
+  .showlist_bottom_left{
+    color: #959595;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 90%;
+    font-size: 12px;
+  }
+
+  .showlist_top_right{
+    font-size: 16px;
+    color: #f67222;
+  }
+
+  .showlist_bottom_right{
+    text-decoration: line-through;
+    font-size: 8px;
+    color: #c6c6c6;
+    font-weight: bolder;
+  }
+
+  .showlist_top{
+    margin-bottom: 10px;
   }
 </style>
