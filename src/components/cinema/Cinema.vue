@@ -50,7 +50,15 @@
                   <span v-if="showat - thisday > 3">{{showat - thisday}}天后</span>
                 </div>
                 <div class="showlist">
-
+                  <ul>
+                    <li v-for="(val, index) in today">
+                      <div class="priceleft">
+                        <div class="priceleft_top">
+                          <span></span> : <span></span>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </li>
@@ -70,7 +78,6 @@
         districts: '',
         time: '',
         cinemasPrice: '',
-        dates: ['今天', '明天', '后天'],
         today: [],
         tomorrow: [],
         aftertomorrow: [],
@@ -335,5 +342,20 @@
     font-size: 16px;
     color: #fc8637;
     margin-right: 25px;
+  }
+
+  .date span{
+    display: inline-block;
+    background-color: #ff6a19;
+    color: #eee;
+    height: 35px;
+    width: 65px;
+    margin: 5px 0 10px 0;
+    padding: 0 15px;
+    border-radius: 35px;
+    font-size: 10px;
+    line-height: 35px;
+    text-align: center;
+    cursor: pointer;
   }
 </style>
