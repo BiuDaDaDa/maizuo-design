@@ -20,6 +20,7 @@
     <!--center列表-->
     <section class="main-center">
       <div class="menu-wrapper">
+        <router-link :to="{name:'Ticket'}">
         <div class="menu">
           <i class="iconfont icon-yingpiaodingdan" style="font-size: 24px; color:#7BCDCC;"></i>
           <span class="title">影票订单</span>
@@ -31,6 +32,7 @@
             <i class="iconfont icon-xiayibu"></i>
           </div>
         </div>
+        </router-link>
       </div>
       <div class="menu-wrapper">
         <div class="menu">
