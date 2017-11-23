@@ -1,17 +1,11 @@
 <template>
-
   <section class="main-center">
     <div class="menu-wrapper">
       <div class="menu">
         <img src="../../common/img/bindPone.png"/>
         <span class="title">手机绑定</span>
         <div class="pull-right">
-              <span class="value-wrap">
-               <span class="value">0</span>
-                <span>张</span>
-              </span>
           <i class="iconfont icon-xiayibu"></i>
-
         </div>
       </div>
     </div>
@@ -20,12 +14,7 @@
         <img src="../../common/img/post.png">
         <span class="title">修改安全密码</span>
         <div class="pull-right">
-              <span class="value-wrap">
-               <span class="value">0</span>
-                <span>张</span>
-              </span>
           <i class="iconfont icon-xiayibu"></i>
-
         </div>
       </div>
     </div>
@@ -34,12 +23,7 @@
         <img src="../../common/img/clearCash.png">
         <span class="title">清除缓存</span>
         <div class="pull-right">
-              <span class="value-wrap">
-               <span class="value">0</span>
-                <span>张</span>
-              </span>
           <i class="iconfont icon-xiayibu"></i>
-
         </div>
       </div>
     </div>
