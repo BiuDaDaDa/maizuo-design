@@ -4,9 +4,11 @@
     <!--内容-->
     <div class="active-contain">
       <div class="active-center">
-        <div class="active-left" v-for="item in activeData">
-          <div class="active-left-content" >
-            <img :src="item.imageSrc">
+        <div class="active-left" v-for="(item,index) in activeData">
+          <div class="active-left-content">
+            <a @click="activeGo(index)">
+              <img :src="item.imageSrc">
+            </a>
           </div>
         </div>
       </div>
@@ -21,7 +23,8 @@
     name: '',
     data () {
       return {
-        activeData: []
+        activeData: [],
+        id: []
       }
     },
     mounted () {
@@ -32,12 +35,20 @@
           let allData = res.data.data
           for (var i = 9; i < 11; i++) {
             this.activeData.push(allData[i])
+            console.log(allData[i])
+            let str = allData[i].url
+            this.id.push(str.split('active/')[1])
           }
         },
         failed: function (err) {
           console.log(err)
         }
       })
+    },
+    methods: {
+      activeGo: function (index) {
+        this.$router.push({name: 'MyStore', query: {Id: this.id[index]}})
+      }
     }
   }
 </script>
