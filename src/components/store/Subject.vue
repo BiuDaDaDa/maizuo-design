@@ -9,20 +9,24 @@
         </a>
         <div class="pic-list">
           <div class="subject-container">
-            <div class="subject-item" v-for="item in ite.products">
-              <div class="item-box">
-                <div class="pic-area">
-                  <div class="control-pic">
-                    <img :src="item.image">
+            <div class="subject-item" v-for="(item,id) in ite.products">
+              <a @click="detailGotoD(id)">
+                <div class="item-box">
+                  <div class="pic-area">
+                    <div class="control-pic">
+                      <img :src="item.image">
+                    </div>
                   </div>
+                  <p class="control-name">{{item.name}}}</p>
+                  <p class="control-price">￥{{item.price}}</p>
                 </div>
-                <p class="control-name">{{item.name}}}</p>
-                <p class="control-price">￥{{item.price}}</p>
-              </div>
+              </a>
             </div>
+            <!--全部更多-->
             <div class="subject-item subject-all">
               <span class="pic-list-right">全部</span>
             </div>
+            <!--end-->
           </div>
         </div>
       </div>
@@ -38,7 +42,8 @@
     data () {
       return {
         subjectDataT: [],
-        id: []
+        id: [],
+        idL: []
       }
     },
     mounted () {
@@ -50,8 +55,14 @@
           for (var i = 14; i < 19; i++) {
             this.subjectDataT.push(Data[i])
             let str = Data[i].url
+            let strD = Data[i].products
             this.id.push(str.split('active/')[1])
+            let _this = this
+            strD.forEach(function (item) {
+              _this.idL.push(item.id)
+            })
           }
+          console.log(this.idL)
         },
         failed: function (err) {
           console.log(err)
@@ -61,6 +72,12 @@
     methods: {
       subjectGo (index) {
         this.$router.push({name: 'MyStore2', query: {Id: this.id[index]}})
+      },
+      detailGotoD (id) {
+        console.log(id)
+        // console.log(this.subjectDataT)
+        console.log(this.idL[id])
+        this.$router.push({name: 'MyStoremsage', query: {Id: this.idL[id]}})
       }
     }
   }

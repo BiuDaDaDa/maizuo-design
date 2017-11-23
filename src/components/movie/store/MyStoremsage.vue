@@ -103,10 +103,10 @@
       }
     },
     mounted () {
+      let idL = window.location.href.split('=')[1]
       this.$request({
         type: 'get',
-//        + this.$route.params.id
-        url: 'app/item?id=1604',
+        url: 'app/item?id=' + idL,
         headers: {},
         params: {},
         success: function (res) {
@@ -120,7 +120,7 @@
       })
       this.$request({
         type: 'get',
-        url: '/app/item/desc?id=1604',
+        url: '/app/item/desc?id=' + idL,
         headers: {},
         params: {},
         success: function (res) {
@@ -140,9 +140,10 @@
         }
         this.$refs.thisstyle[index].style.border = '1px solid #ff5000'
         this.$refs.thisstyle[index].style.color = '#ff5000'
+        let idL = window.location.href.split('=')[1]
         this.$request({
           type: 'get',
-          url: 'app/item?id=1604',
+          url: 'app/item?id=' + idL,
           headers: {},
           params: {},
           success: function (res) {

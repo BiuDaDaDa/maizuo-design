@@ -12,10 +12,14 @@
         </div>
         <div class="active-left" v-if="productsData.length===3">
           <div class="top">
-            <img :src="productsData['0'].imageSrc">
+            <a @click="detalGOto">
+              <img :src="productsData['0'].imageSrc">
+            </a>
           </div>
           <div class="top">
-            <img :src="productsData['2'].imageSrc">
+            <a @click="detalGotoD">
+              <img :src="productsData['2'].imageSrc">
+            </a>
           </div>
         </div>
       </div>
@@ -30,7 +34,9 @@
     data () {
       return {
         productsData: [],
-        id: 0
+        id: 0,
+        idL: 0,
+        idD: 0
       }
     },
     mounted () {
@@ -42,9 +48,13 @@
           for (var i = 11; i < 14; i++) {
             this.productsData.push(allData[i])
           }
-          console.log(allData[12].url)
+          console.log(allData[13].url)
           let str = allData[12].url
+          let strL = allData[11].url
+          let strD = allData[13].url
           this.id = str.split('active/')[1]
+          this.idL = strL.split('item/')[1]
+          this.idD = strD.split('item/')[1]
         },
         failed: function (err) {
           console.log(err)
@@ -54,6 +64,13 @@
     methods: {
       detailGo: function () {
         this.$router.push({name: 'MobilePhoneShell', query: {Id: this.id}})
+      },
+      detalGOto: function () {
+        this.$router.push({name: 'MyStoremsage', query: {Id: this.idL}})
+      },
+      detalGotoD: function () {
+        console.log(this.idD)
+        this.$router.push({name: 'MyStoremsage', query: {Id: this.idD}})
       }
     }
   }
