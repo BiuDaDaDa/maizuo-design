@@ -12,9 +12,10 @@
       }
     },
     mounted () {
+      let Id = window.location.href.split('=')[1]
       this.$request({
         type: 'GET',
-        url: '/apt/active-detail?id=1190',
+        url: '/apt/active-detail?id=' + Id,
         success: function (res) {
           this.msg = res.data.data.data.content
         },

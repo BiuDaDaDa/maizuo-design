@@ -80,7 +80,6 @@
             let str = allData[i].url
             this.id.push(str.split('category/')[1])
           }
-         // console.log(this.id)
         },
         failed: function (err) {
           console.log(err)
@@ -89,7 +88,6 @@
     },
     methods: {
       shopGo: function (index) {
-        // console.log(index)
         this.$router.push({name: 'MyStore', query: {Id: this.id[index]}})
       }
     }

@@ -1,27 +1,27 @@
 <template>
   <div>
-  <div
-    v-infinite-scroll="loadMore"
-    infinite-scroll-disabled="loading"
-    infinite-scroll-distance="100"
-    class="being-list-s">
-    <div v-for="item in updatea" class="clearfix">
-      <div class="item clearfix even">
-        <!--这里可以跳转下一页面-->
-        <a :href="'#!/item/'+ item.id">
-          <div class="logo">
-            <img :src="item.image" alt="">
-            <div class="name">{{item.name}}</div>
-            <div class="content">
-              <span class="price">{{item.price / 100}}.00</span>
-              <span class="inventory">已售{{item.salesCount}}</span>
+    <div
+      v-infinite-scroll="loadMore"
+      infinite-scroll-disabled="loading"
+      infinite-scroll-distance="100"
+      class="being-list-s">
+      <div v-for="item in updatea" class="clearfix">
+        <div class="item clearfix even">
+          <!--这里可以跳转下一页面-->
+          <a :href="'#!/item/'+ item.id">
+            <div class="logo">
+              <img :src="item.image" alt="">
+              <div class="name">{{item.name}}</div>
+              <div class="content">
+                <span class="price">{{item.price / 100}}.00</span>
+                <span class="inventory">已售{{item.salesCount}}</span>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="loading">貌似没有更多了~</div>
+    <div class="loading">貌似没有更多了~</div>
   </div>
 </template>
 
@@ -39,10 +39,10 @@
       }
     },
     mounted () {
-//      let userId1 = window.location.href.split('=')[1]
+      let userId1 = window.location.href.split('=')[1]
       this.$request({
         type: 'get',
-        url: 'app/active?id=' + 10 + '&page=' + this.lists + '&pageSize=20',
+        url: 'app/active?id=' + userId1 + '&page=' + this.lists + '&pageSize=20',
         headers: {},
         params: {},
         success: function (res) {
@@ -56,12 +56,12 @@
     },
     methods: {
       loadMore () {
-//        let userId2 = window.location.href.split('=')[1]
+        let userId2 = window.location.href.split('=')[1]
         this.loading = true
         this.lists++
         this.$request({
           type: 'get',
-          url: 'app/active?id=' + 10 + '&page=' + this.lists + '&pageSize=20',
+          url: 'app/active?id=' + userId2 + '&page=' + this.lists + '&pageSize=20',
           headers: {},
           params: {},
           success: function (res) {
