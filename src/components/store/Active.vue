@@ -35,7 +35,6 @@
           let allData = res.data.data
           for (var i = 9; i < 11; i++) {
             this.activeData.push(allData[i])
-            console.log(allData[i])
             let str = allData[i].url
             this.id.push(str.split('active/')[1])
           }
@@ -47,7 +46,7 @@
     },
     methods: {
       activeGo: function (index) {
-        this.$router.push({name: 'MyStore', query: {Id: this.id[index]}})
+        this.$router.push({name: 'MyStore2', query: {Id: this.id[index]}})
       }
     }
   }
