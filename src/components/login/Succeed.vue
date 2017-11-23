@@ -21,17 +21,17 @@
     <section class="main-center">
       <div class="menu-wrapper">
         <router-link :to="{name:'Ticket'}">
-        <div class="menu">
-          <i class="iconfont icon-yingpiaodingdan" style="font-size: 24px; color:#7BCDCC;"></i>
-          <span class="title">影票订单</span>
-          <div class="pull-right">
+          <div class="menu">
+            <i class="iconfont icon-yingpiaodingdan" style="font-size: 24px; color:#7BCDCC;"></i>
+            <span class="title">影票订单</span>
+            <div class="pull-right">
               <span class="value-wrap">
                <span class="value">0</span>
                 <span>张</span>
               </span>
-            <i class="iconfont icon-xiayibu"></i>
+              <i class="iconfont icon-xiayibu"></i>
+            </div>
           </div>
-        </div>
         </router-link>
       </div>
       <div class="menu-wrapper">
@@ -103,13 +103,13 @@
       </div>
       <div class="menu-wrapper">
         <router-link :to="{name:'Setting'}">
-        <div class="menu">
-          <i class="iconfont icon-shezhi" style="font-size: 24px; color:#95C0EA;"></i>
-          <span class="title">设置</span>
-          <div class="pull-right">
-            <i class="iconfont icon-xiayibu"></i>
+          <div class="menu">
+            <i class="iconfont icon-shezhi" style="font-size: 24px; color:#95C0EA;"></i>
+            <span class="title">设置</span>
+            <div class="pull-right">
+              <i class="iconfont icon-xiayibu"></i>
+            </div>
           </div>
-        </div>
         </router-link>
       </div>
     </section>
@@ -128,7 +128,7 @@
     },
     created () {
       this.userData = JSON.parse(window.localStorage['user'])
-   //   console.log(JSON.parse(window.localStorage['user']))
+      //   console.log(JSON.parse(window.localStorage['user']))
     },
     methods: {
       // 登出
@@ -139,11 +139,12 @@
           var cookieArr = document.cookie.split(';')
           for (var i = 0; i < cookieArr.length; i++) {
             var newDate = new Date()
-            newDate.setDate(newDate.getDate() - 200)
+            newDate.setDate(newDate.getDate() - 100)
             var item = cookieArr[i]
-            console.log(`${item};expries=` + newDate.toGMTString())
-            window.document.cookie = `${item};expries=` + newDate.toGMTString()
+            document.cookie = item + ';expries=' + newDate.toGMTString()
+            console.log(item + ';expries=' + newDate.toGMTString())
           }
+          document.cookie = 'isMainAccount' + '=' + true + ';expries=' + newDate.toGMTString()
         }
       }
     }
@@ -287,6 +288,7 @@
     color: #222;
     vertical-align: baseline;
   }
+
   .center-block {
     display: block;
   }
