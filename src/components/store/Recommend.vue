@@ -70,12 +70,11 @@
       },
       getRequstData () {
         this.pageNum++
-        console.log(this.pageNum)
         this.$request({
           type: 'get',
           url: 'app/recommend/home?page=' + this.pageNum + '&num=20',
           success: function (res) {
-            console.log(res)
+           // console.log(res)
             this.total = res.data.data.total
             this.show = res.data.data.list
             this.RecommendData = this.RecommendData.concat(this.show)
