@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from '../store/store'
 import { InfiniteScroll } from 'mint-ui'
 import request from './common/js/requestServerSetting'
 
@@ -14,6 +15,7 @@ Vue.use(InfiniteScroll)
 new Vue({
   el: '#app',
   router,
+  store,
   template: '<App/>',
   components: {App, InfiniteScroll}
 })

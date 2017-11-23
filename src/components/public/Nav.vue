@@ -3,17 +3,19 @@
     <div class="nav">
       <div class="list" @click="list_content_clicked"></div>
       <div class="nav_content" @click="list_show">
-        <div class="title">卖座电影</div>
+        <div class="title">{{title}}</div>
         <div class="me"></div>
         <router-link to="/CitySelect">
-            <div class="city" ref="city">大连</div>
+            <div class="city" ref="city" @click="cityTitle">{{city}}</div>
         </router-link>
       </div>
     </div>
     <div class="nav_desk"></div>
     <div class="list-content" :style="list_style">
-      <ul v-for="val in this.lists" >
-        <router-link :to="val.url"><li @click="list_show" :style="li_style">{{val.content}}</li></router-link>
+      <ul v-for="(val, index) in this.lists">
+        <router-link :to="val.url">
+            <li @click="list_show" :style="li_style"><div @click="changeNavTitle(val.title)"><span>{{val.content}}</span></div></li>
+        </router-link>
       </ul>
     </div>
     <div class="desk" :style="desk_style" @click="list_show"></div>
@@ -21,19 +23,20 @@
 </template>
 
 <script>
-  import Bus from '../../common/js/eventBus'
+  import { mapState, mapMutations } from 'vuex'
+
+//  import Bus from '../../common/js/eventBus'
   export default {
     name: 'Nav',
     data () {
       return {
         lists: [
-
-          {'content': '首页', 'url': '/'},
-          {'content': '影片', 'url': '/film/now-playing'},
-          {'content': '影院', 'url': '/cinema'},
-          {'content': '商城', 'url': '/store'},
-          {'content': '我的', 'url': '/login'},
-          {'content': '卖座卡', 'url': ''}
+          {'content': '首页', 'url': '/', 'title': '卖座电影'},
+          {'content': '影片', 'url': '/film/now-playing', 'title': '卖座电影'},
+          {'content': '影院', 'url': '/cinema', 'title': '全部影院'},
+          {'content': '商城', 'url': '/store', 'title': '卖座商城'},
+          {'content': '我的', 'url': '/login', 'title': '我的'},
+          {'content': '卖座卡', 'url': '', 'title': '查询/绑定/激活卖座卡'}
         ],
         list_style: {
           opacity: 0,
@@ -49,7 +52,14 @@
         }
       }
     },
+    computed: {
+      ...mapState([
+        'city',
+        'title'
+      ])
+    },
     methods: {
+      ...mapMutations(['cityTitle', 'changeNavTitle']),
       list_content_clicked: function () {
         if (this.list_style.opacity === 0) {
           this.list_style.opacity = 1
@@ -77,14 +87,7 @@
           this.li_style.paddingRight = 0
         }
       }
-    },
-    created () {
-      let that = this
-      Bus.$on('GetCityName', function (cityName) {
-        that.$refs.city.innerHTML = cityName
-      })
     }
-
   }
 </script>
 
@@ -125,9 +128,10 @@
   .title {
     color: white;
     font-size: @font-size-little;
-    width: 84px;
+    max-width: 200px;
     text-align: center;
     float: left;
+    padding-left: 15px;
   }
 
   .city {
