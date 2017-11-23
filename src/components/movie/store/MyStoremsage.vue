@@ -39,7 +39,7 @@
             <div class="box-sku-info">
               <div class="box-sku-head clearfix">
                 <div class="sku-pic">
-                  <img :src="msagedata2.images" alt="">
+                  <img :src="msagedata2.images[0]" alt="">
                 </div>
                 <div class="sku-context">
                   <div class="price">￥{{msagedata2.marketPrice / 100}}.00</div>
@@ -53,9 +53,11 @@
             <!--款式-->
             <div class="sku-select">
               <div class="box-shu-list">
+                <div v-if="msagedata1.options.length != 0">
                 <div class="option-name">{{msagedata4.name}}</div>
                 <div v-for="(options, index) in msagedata4.item" @click="transform(index)" class="option-list">
                   <span ref="thisstyle">{{options}}</span>
+                </div>
                 </div>
               </div>
             </div>
@@ -106,7 +108,7 @@
       this.$request({
         type: 'get',
 //        + this.$route.params.id
-        url: 'app/item?id=1604',
+        url: 'app/item?id=1462',
         headers: {},
         params: {},
         success: function (res) {
@@ -120,7 +122,7 @@
       })
       this.$request({
         type: 'get',
-        url: '/app/item/desc?id=1604',
+        url: '/app/item/desc?id=1462',
         headers: {},
         params: {},
         success: function (res) {
@@ -142,7 +144,7 @@
         this.$refs.thisstyle[index].style.color = '#ff5000'
         this.$request({
           type: 'get',
-          url: 'app/item?id=1604',
+          url: 'app/item?id=1462',
           headers: {},
           params: {},
           success: function (res) {
