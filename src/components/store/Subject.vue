@@ -67,7 +67,6 @@
         this.$router.push({name: 'MyStore2', query: {Id: this.id[index]}})
       },
       detailGotoD (index, key) {
-        console.log(this.subjectDataT[index].products[key].id)
         let idL = this.subjectDataT[index].products[key].id
         this.$router.push({name: 'MyStoremsage', query: {Id: idL}})
       }
@@ -98,9 +97,7 @@
     overflow-y: hidden;
     white-space: nowrap;
   }
-
   .subject-container {
-
   }
 
   .subject-item {
