@@ -7,23 +7,21 @@
       class="being-list-s">
 
       <div v-for="(item, index) in updatea" class="clearfix" @click="clicked(index)">
-        <div v-if="updatea.length != 0">
-          <router-link to="">
-            <div class="item clearfix even">
-              <!--这里可以跳转下一页面-->
-              <a :href="'#!/item/'+ item[index].id">
-                <div class="logo">
-                  <img :src="item.image" alt="">
-                  <div class="name">{{item.name}}</div>
-                  <div class="content">
-                    <span class="price">{{item.price / 100}}.00</span>
-                    <span class="inventory">已售{{item.salesCount}}</span>
-                  </div>
+        <router-link to="">
+          <div class="item clearfix even">
+            <!--这里可以跳转下一页面-->
+            <a :href="'#!/item/'+ item.id">
+              <div class="logo">
+                <img :src="item.image" alt="">
+                <div class="name">{{item.name}}</div>
+                <div class="content">
+                  <span class="price">{{item.price / 100}}.00</span>
+                  <span class="inventory">已售{{item.salesCount}}</span>
                 </div>
-              </a>
-            </div>
-          </router-link>
-        </div>
+              </div>
+            </a>
+          </div>
+        </router-link>
       </div>
     </div>
     <div class="loading">~貌似没有更多了~</div>
