@@ -10,7 +10,7 @@
         <div class="pic-list">
           <div class="subject-container">
             <div class="subject-item" v-for="(item,id) in ite.products">
-              <a @click="detailGotoD(id)">
+              <a @click="detailGotoD(index)">
                 <div class="item-box">
                   <div class="pic-area">
                     <div class="control-pic">
