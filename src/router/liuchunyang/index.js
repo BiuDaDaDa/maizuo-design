@@ -38,7 +38,7 @@ export default [
     component: MyStore2
   },
   {
-    path: '/mymsage',
+    path: '/mymsage/:id',
     name: 'MyStoremsage',
     component: MyStoremsage
   }

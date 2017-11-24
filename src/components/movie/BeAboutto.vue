@@ -23,7 +23,7 @@
         <div class="premiere-data">
           <span class="">{{getLocalTime(as.premiereAt)}}上映</span>
           &nbsp;&nbsp;
-          <span>星期五</span>
+          <span>{{week.content}}</span>
         </div>
 
       </div>

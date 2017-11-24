@@ -11,10 +11,11 @@
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="100"
       class="being-list-s">
-      <div v-for="item in updatea" class="clearfix">
-        <div class="item clearfix even">
+
+      <div v-for="(item, index) in updatea" class="clearfix" @click="clickA(index)">
+        <router-link to="">
+        <div @click="clicked" class="item clearfix even">
           <!--这里可以跳转下一页面-->
-          <a :href="'#!/item/'+ item.id">
             <div v-if="item.skuList" class="logo">
               <div v-if="item.skuList.length >= 0" class="logo">
                 <img :src="item.skuList[0].image" alt="">
@@ -25,11 +26,12 @@
                 </div>
               </div>
             </div>
-          </a>
         </div>
+        </router-link>
       </div>
-      <div class="loading">页面正在加载中，请稍后...</div>
+
     </div>
+    <div class="loading">~貌似没有更多了~</div>
   </div>
 </template>
 
@@ -43,7 +45,8 @@
         showing2: '',
         updatea: [],
         lists: 1,
-        loading: false
+        loading: false,
+        thisids: ''
       }
     },
     mounted () {
@@ -75,6 +78,10 @@
       })
     },
     methods: {
+      clickA: function (index) {
+        let ids = this.updatea[index].id
+        this.$router.push(`mymsage/${ids}`)
+      },
       loadMore () {
         let userId2 = window.location.href.split('=')[1]
         this.loading = true
@@ -93,6 +100,9 @@
           }
         })
         this.loading = false
+      },
+      clicked: function () {
+
       }
     }
   }
@@ -190,8 +200,8 @@
     height: 20px;
     text-align: center;
     line-height: 20px;
-    color: gray;
-    font-size: 14px;
+    color: #999999;
+    font-size: 12px;
     font-weight: 800;
   }
 </style>
