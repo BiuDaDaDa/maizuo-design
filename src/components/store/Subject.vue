@@ -71,6 +71,11 @@
         // console.log(this.subjectDataT)
         console.log(this.idL[id])
         this.$router.push(`mymsage/${this.idL[id]}`)
+=======
+      detailGotoD (index, key) {
+        let idL = this.subjectDataT[index].products[key].id
+        this.$router.push({name: 'MyStoremsage', query: {Id: idL}})
+>>>>>>> 75d51b2c6121d48f25431756d1cc46739bec92b8
       }
     }
   }
@@ -99,9 +104,7 @@
     overflow-y: hidden;
     white-space: nowrap;
   }
-
   .subject-container {
-
   }
 
   .subject-item {

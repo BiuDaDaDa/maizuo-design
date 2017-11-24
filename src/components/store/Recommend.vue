@@ -128,7 +128,7 @@
 
   .items {
     background-color: #f2f2f2;
-    min-height: 100%;
+    min-height:400px;
     padding-right: 10px;
     padding-left: 10px;
     width: 100%;
