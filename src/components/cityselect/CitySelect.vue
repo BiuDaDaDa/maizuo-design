@@ -49,7 +49,7 @@
           </ul>
           <ul class="cityItemNameParent">
             <li class="cityItemName CityBody" v-for="cityEvery in Item.citylist">
-              <span @click="setCookie">{{cityEvery.name}}</span>
+              <div @click.stop.prevent="changeCity">{{cityEvery.name}}</div>
               <span style="display: none">{{cityEvery.id}}</span>
             </li>
           </ul>
@@ -61,6 +61,7 @@
 
 <script>
   import Bus from '@/common/js/eventBus'
+  import {mapMutations} from 'vuex'
 
   export default {
     name: 'CitySelect',
@@ -74,6 +75,8 @@
       }
     },
     methods: {
+      ...mapMutations(['changeCity']
+      ),
 //      获得城市拼音的首字母
       GetFirstLetter (str) {
         str = str.charAt(0)
@@ -131,9 +134,9 @@
       setCookie (e) {
         window.document.cookie = `cityId=${e.target.parentNode.lastChild.innerHTML}`
         window.document.cookie = `cityName=${e.target.innerHTML}`
-        let cityName = e.target.innerHTML
-        Bus.$emit('GetCityName', cityName)
         this.$router.push('/')
+//        let cityName = e.target.innerHTML
+//        Bus.$emit('GetCityName', cityName)
       },
       hotGet () {
         for (let j = 0; j < this.HotCity.length; j++) {

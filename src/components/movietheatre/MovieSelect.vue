@@ -1,11 +1,15 @@
 <template>
-  <iscroll-view id="scroller" @scrollStart="log">
+  <iscroll-view id="scroller" @scrollStart="log" ref="iscroll">
     <ul id="title_ul">
-      <li v-for="(img,index) in msg.filmList">
-        <div>
-          <img :src="img.posterAddress" alt="">
+      <li class="boxItem" v-for="(img, index) in msg.filmList" @click="light(index)">
+        <div class="filmImage">
+          <p style="display: none">{{index}}</p>
+          <img :src="img.posterAddress" alt="" ref="myimg">
+          <span class="mask" ref='mask'></span>
         </div>
-        <span class="mask" ref='mask'>{{1111}}</span>
+        <div class="filmName">
+         <p>{{img.filmName}}</p>
+        </div>
       </li>
     </ul>
   </iscroll-view>
@@ -15,7 +19,6 @@
   import Vue from 'vue'
   import IScrollView from 'vue-iscroll-view'
   import IScroll from 'iscroll'
-
   Vue.use(IScrollView, IScroll)
   export default {
     name: 'MovieSelect',
@@ -25,8 +28,11 @@
       }
     },
     methods: {
-      log (iscroll) {
-        console.log(iscroll)
+      log () {},
+      light (index) {
+        if (this.$refs.myimg[index].offsetWidth === 150) {
+          this.$refs.mask[index].style.backgroundColor = 'rgba(0,0,0,0)'
+        }
       }
     },
     mounted () {
@@ -77,7 +83,7 @@
     padding: 20px;
     padding-left: 150px;
     background-color: #38403e;
-    height: 150px;
+    height: 155px;
   }
 
   #scroller ul {
@@ -105,12 +111,27 @@
     width: 100%
   }
 
+  .filmImage{
+    position: relative;
+    width: 100%;
+  }
+
   .mask {
     background-color: rgba(0, 0, 0, 0.6);
     position: absolute;
     top: 0;
-    left: 10px;
-    right: 10px;
+    left: 0;
+    right: 0;
     bottom: 0;
+    z-index: 2;
   }
+
+  .filmName p{
+    /*display: none;*/
+    margin: 10px -20px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
 </style>

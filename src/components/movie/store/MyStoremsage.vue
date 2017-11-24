@@ -14,8 +14,8 @@
         </div>
         <!--商品介绍-->
         <div class="item-info">
-          <div class="name">{{msagedata2.masterName}}</div>
-          <div class="subname">{{msagedata2.slaveName}}</div>
+          <div class="name">{{msagedata1.masterName}}&nbsp;{{"&nbsp;" + msagedata5}}</div>
+          <div class="subname">{{msagedata1.slaveName}}</div>
           <div class="price">
             <div class="price">￥{{msagedata2.marketPrice / 100}}.00</div>
           </div>
@@ -28,7 +28,7 @@
         <!--选择样式-->
         <div @click="attribute = true" class="sku-pick">
           <span>已选择:{{msagedata2.masterName}}</span>
-          <span class="count-num">x 1</span>
+          <span class="count-num">×{{amount}}</span>
           <div class="iconfont icon-arrow-right">&gt;</div>
         </div>
         <!--下边的图片展示-->
@@ -54,10 +54,10 @@
             <div class="sku-select">
               <div class="box-shu-list">
                 <div v-if="msagedata1.options.length != 0">
-                <div class="option-name">{{msagedata4.name}}</div>
-                <div v-for="(options, index) in msagedata4.item" @click="transform(index)" class="option-list">
-                  <span ref="thisstyle">{{options}}</span>
-                </div>
+                  <div class="option-name">{{msagedata4.name}}</div>
+                  <div v-for="(options, index) in msagedata4.item" @click="transform(index)" class="option-list">
+                    <span ref="thisstyle">{{options}}</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -82,7 +82,7 @@
               <div class="foot-icon-text">首页</div>
             </div>
           </div>
-          <div class="item-footer-right">立即购买</div>
+          <div class="item-footer-right" :style="StatusStyle">{{Status}}</div>
         </div>
       </div>
     </div>
@@ -98,9 +98,12 @@
         msagedata2: '',
         msagedata3: '',
         msagedata4: '',
+        msagedata5: '',
         attribute: false,
         xiabiao: 0,
         amount: 0,
+        Status: '',
+        StatusStyle: '',
         jianstyle: 'border: 1px solid rgba(0, 0, 0, .4);color: #000;border-right: none;'
       }
     },
@@ -115,6 +118,12 @@
           this.msagedata1 = res.data.data
           this.msagedata2 = res.data.data.skuList[0]
           this.msagedata4 = res.data.data.options[0]
+          if (this.msagedata1.productStatus === 0) {
+            this.Status = '已下架'
+            this.StatusStyle = 'background-color: hsla(0,0%,78%,.8);'
+          } else if (this.msagedata1.productStatus === 1) {
+            this.Status = '立即购买'
+          }
         },
         failed: function (err) {
           console.log(err)
@@ -150,6 +159,7 @@
           params: {},
           success: function (res) {
             this.msagedata2 = res.data.data.skuList[this.xiabiao]
+            this.msagedata5 = res.data.data.options[0].item[this.xiabiao]
           },
           failed: function (err) {
             console.log(err)
