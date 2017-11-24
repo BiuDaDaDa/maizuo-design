@@ -42,8 +42,7 @@
     data () {
       return {
         subjectDataT: [],
-        id: [],
-        idL: []
+        id: []
       }
     },
     mounted () {
@@ -55,14 +54,8 @@
           for (var i = 14; i < 19; i++) {
             this.subjectDataT.push(Data[i])
             let str = Data[i].url
-            let strD = Data[i].products
             this.id.push(str.split('active/')[1])
-            let _this = this
-            strD.forEach(function (item) {
-              _this.idL.push(item.id)
-            })
           }
-          console.log(this.idL)
         },
         failed: function (err) {
           console.log(err)

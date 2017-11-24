@@ -14,7 +14,7 @@
         <div class="disBody" ref="show" v-show="false">
           <ul>
             <li class="box" v-for="(cinema,index) in district.cinemaList"
-                @click="GoToCinema(cinema)">
+                @click="changeTitle(cinema)">
               <div class="liLeft">
                 <!--电影院名字-->
                 <div class="liLeft-top">
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+  import {mapMutations} from 'vuex'
   export default {
     name: '',
     data () {
@@ -59,16 +60,13 @@
       }
     },
     methods: {
+      ...mapMutations(['changeTitle']),
       ShowCinema (index) {
         if (this.$refs.show[index].style.display === 'block') {
           this.$refs.show[index].style.display = 'none'
         } else {
           this.$refs.show[index].style.display = 'block'
         }
-      },
-//      点击标砖
-      GoToCinema (cinema) {
-        this.$router.push('/cinema/' + cinema.id)
       },
 //    找到所有的该城市的地区
       GetDistrict () {
