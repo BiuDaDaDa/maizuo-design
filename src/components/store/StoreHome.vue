@@ -70,7 +70,7 @@
     mounted () {
       this.$request({
         type: 'get',
-        url: 'app/ad/list',
+        url: '/app/ad/list',
         success: function (res) {
           // console.log(res.data.data)
           this.slider = res.data.data[8].imageSrc

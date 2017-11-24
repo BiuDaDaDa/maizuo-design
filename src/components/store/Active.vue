@@ -30,7 +30,7 @@
     mounted () {
       this.$request({
         type: 'get',
-        url: 'app/ad/list',
+        url: '/app/ad/list',
         success: function (res) {
           let allData = res.data.data
           for (var i = 9; i < 11; i++) {
