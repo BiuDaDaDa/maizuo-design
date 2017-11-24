@@ -108,9 +108,18 @@
       }
     },
     mounted () {
+//      this.$router.go()
+      let idL = window.location.href.split('=')[1]
+      let idA = this.$route.params.id
+      if (idL === undefined) {
+        idL = ''
+      }
+      if (idA === undefined) {
+        idA = ''
+      }
       this.$request({
         type: 'get',
-        url: '/app/item?id=' + this.$route.params.id,
+        url: '/app/item?id=' + idA + idL,
         headers: {},
         params: {},
         success: function (res) {
@@ -130,12 +139,12 @@
       })
       this.$request({
         type: 'get',
-        url: '/app/item/desc?id=' + this.$route.params.id,
+        url: '/app/item/desc?id=' + idA + idL,
         headers: {},
         params: {},
         success: function (res) {
           this.msagedata3 = res.data.data
-          console.log(this.$route.params.id)
+//          console.log(this.$route.params.id)
         },
         failed: function (err) {
           console.log(err)
@@ -144,6 +153,14 @@
     },
     methods: {
       transform: function (index) {
+        let idL = window.location.href.split('=')[1]
+        let idA = this.$route.params.id
+        if (idL === undefined) {
+          idL = ''
+        }
+        if (idA === undefined) {
+          idA = ''
+        }
         this.xiabiao = index
         for (let i in this.msagedata4.item) {
           this.$refs.thisstyle[i].style.border = '1px solid rgba(0, 0, 0, 0.3)'
@@ -153,7 +170,7 @@
         this.$refs.thisstyle[index].style.color = '#ff5000'
         this.$request({
           type: 'get',
-          url: '/app/item?id=' + this.$route.params.id,
+          url: '/app/item?id=' + idA + idL,
           headers: {},
           params: {},
           success: function (res) {

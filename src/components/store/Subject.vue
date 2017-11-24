@@ -9,8 +9,8 @@
         </a>
         <div class="pic-list">
           <div class="subject-container">
-            <div class="subject-item" v-for="(item,id) in ite.products" @click="detailGotoD(id)">
-              <router-link to="">
+            <div class="subject-item" v-for="(item, key) in ite.products">
+              <a @click="detailGotoD(index,key)">
                 <div class="item-box">
                   <div class="pic-area">
                     <div class="control-pic">
@@ -18,9 +18,9 @@
                     </div>
                   </div>
                   <p class="control-name">{{item.name}}}</p>
-                  <p class="control-price">￥{{item.price}}</p>
+                  <p class="control-price">￥{{item.price/100}}.00</p>
                 </div>
-              </router-link>
+              </a>
             </div>
             <!--全部更多-->
             <div class="subject-item subject-all">
@@ -66,16 +66,9 @@
       subjectGo (index) {
         this.$router.push({name: 'MyStore2', query: {Id: this.id[index]}})
       },
-      detailGotoD (id) {
-        console.log(id)
-        // console.log(this.subjectDataT)
-        console.log(this.idL[id])
-        this.$router.push(`mymsage/${this.idL[id]}`)
-=======
       detailGotoD (index, key) {
         let idL = this.subjectDataT[index].products[key].id
         this.$router.push({name: 'MyStoremsage', query: {Id: idL}})
->>>>>>> 75d51b2c6121d48f25431756d1cc46739bec92b8
       }
     }
   }
