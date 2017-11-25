@@ -4,34 +4,34 @@
     infinite-scroll-disabled="loading"
     infinite-scroll-distance="100"
     class="being-list-s">
-    <div v-for="as in update" class="being-list">
-      <div class="being-itme-img">
-        <div class="being-itme-url">
-          <img :src="as.poster.origin" alt="">
-        </div>
-      </div>
-
-      <div class="being-desc">
-        <div class="being-next">
-          <div class="being-name">{{as.name}}</div>
-          <div class="being-grade">
-            <span>{{as.grade}}</span>
-            <span class="being-symbol" style="font-weight: 100;color: #c6c6c6;line-height: 29px">&gt;</span>
+    <div v-for="(as, index) in update" @click="clicked(index)" class="being-list">
+        <div class="being-itme-img">
+          <div class="being-itme-url">
+            <img :src="as.poster.origin" alt="">
           </div>
         </div>
-        <div class="being-intro">{{as.intro}}</div>
 
-        <div class="being-counts">
+        <div class="being-desc">
+          <div class="being-next">
+            <div class="being-name">{{as.name}}</div>
+            <div class="being-grade">
+              <span>{{as.grade}}</span>
+              <span class="being-symbol" style="font-weight: 100;color: #c6c6c6;line-height: 29px">&gt;</span>
+            </div>
+          </div>
+          <div class="being-intro">{{as.intro}}</div>
 
-          <span class="being-color1">{{as.scheduleCount}}</span>
-          <span>家影院上映</span>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <span class="being-color1">{{as.watchCount}}</span>
-          <span>人购票</span>
+          <div class="being-counts">
+
+            <span class="being-color1">{{as.scheduleCount}}</span>
+            <span>家影院上映</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="being-color1">{{as.watchCount}}</span>
+            <span>人购票</span>
+
+          </div>
 
         </div>
-
-      </div>
     </div>
   </div>
 </template>
@@ -45,7 +45,8 @@
         showing1: '',
         lists: 1,
         loading: false,
-        update: []
+        update: [],
+        indexid: ''
       }
     },
     mounted () {
@@ -82,6 +83,10 @@
           }
         })
         this.loading = false
+      },
+      clicked: function (index) {
+        this.indexid = this.update[index].id
+        this.$router.push('/film/' + this.indexid)
       }
     }
   }
@@ -118,7 +123,7 @@
   .being-itme-url {
     background-size: 100%;
     background: url("beijing.png") no-repeat;
-    height: auto;
+    height: 82px;
     width: 100%;
   }
 

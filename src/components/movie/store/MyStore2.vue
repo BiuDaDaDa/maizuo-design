@@ -7,7 +7,6 @@
       class="being-list-s">
 
       <div v-for="(item, index) in updatea" class="clearfix" @click="clicked(index)">
-        <router-link to="">
           <div class="item clearfix even">
             <!--这里可以跳转下一页面-->
             <a :href="'#!/item/'+ item.id">
@@ -21,7 +20,6 @@
               </div>
             </a>
           </div>
-        </router-link>
       </div>
     </div>
     <div class="loading">~貌似没有更多了~</div>

@@ -13,7 +13,6 @@
       class="being-list-s">
 
       <div v-for="(item, index) in updatea" class="clearfix" @click="clickA(index)">
-        <router-link to="">
         <div @click="clicked" class="item clearfix even">
           <!--这里可以跳转下一页面-->
             <div v-if="item.skuList" class="logo">
@@ -27,7 +26,6 @@
               </div>
             </div>
         </div>
-        </router-link>
       </div>
     </div>
     <div class="loading">~貌似没有更多了~</div>

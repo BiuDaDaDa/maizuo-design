@@ -4,7 +4,7 @@
     infinite-scroll-disabled="loading"
     infinite-scroll-distance="100"
     class="being-list-s">
-    <div v-for="as in update" class="being-list">
+    <div v-for="(as, index) in update" @click="clicked(index)" class="being-list">
       <div class="being-itme-img">
         <div class="being-itme-url">
           <img :src="as.poster.origin" alt="">
@@ -52,7 +52,8 @@
           {'content': '星期日'}
         ],
         week: '',
-        urly: ''
+        urly: '',
+        indexid: ''
       }
     },
     mounted () {
@@ -70,6 +71,14 @@
           console.log(res)
         }
       })
+//      window.addEventListener('popstate', function () {
+//        this.$router.go(-1)
+//      }, false)
+//      let state = {
+//        title: 'title',
+//        url: ''
+//      }
+//      window.history.pushState(state, 'title', '')
     },
     methods: {
       loadMores () {
@@ -94,6 +103,10 @@
           })
           this.loading = false
         }
+      },
+      clicked: function (index) {
+        this.indexid = this.update[index].id
+        this.$router.push('/film/' + this.indexid)
       },
       // 时间戳转换
       getLocalTime: function (nS) {
@@ -135,7 +148,7 @@
   .being-itme-url {
     background-size: 100%;
     background: url("beijing.png") no-repeat;
-    height: auto;
+    height: 82px;
     width: 100%;
   }
 
