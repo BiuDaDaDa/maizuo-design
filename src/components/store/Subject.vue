@@ -18,7 +18,7 @@
                     </div>
                   </div>
                   <p class="control-name">{{item.name}}}</p>
-                  <p class="control-price">￥{{item.price}}</p>
+                  <p class="control-price">￥{{item.price/100}}.00</p>
                 </div>
               </a>
             </div>
