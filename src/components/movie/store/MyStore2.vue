@@ -5,23 +5,24 @@
       infinite-scroll-disabled="loading"
       infinite-scroll-distance="100"
       class="being-list-s">
-      <div v-for="item in updatea" class="clearfix">
-        <div class="item clearfix even">
-          <!--这里可以跳转下一页面-->
-          <a :href="'#!/item/'+ item.id">
-            <div class="logo">
-              <img :src="item.image" alt="">
-              <div class="name">{{item.name}}</div>
-              <div class="content">
-                <span class="price">{{item.price / 100}}.00</span>
-                <span class="inventory">已售{{item.salesCount}}</span>
+
+      <div v-for="(item, index) in updatea" class="clearfix" @click="clicked(index)">
+          <div class="item clearfix even">
+            <!--这里可以跳转下一页面-->
+            <a :href="'#!/item/'+ item.id">
+              <div class="logo">
+                <img :src="item.image" alt="">
+                <div class="name">{{item.name}}</div>
+                <div class="content">
+                  <span class="price">{{item.price / 100}}.00</span>
+                  <span class="inventory">已售{{item.salesCount}}</span>
+                </div>
               </div>
-            </div>
-          </a>
-        </div>
+            </a>
+          </div>
       </div>
     </div>
-    <div class="loading">貌似没有更多了~</div>
+    <div class="loading">~貌似没有更多了~</div>
   </div>
 </template>
 
@@ -48,6 +49,7 @@
         success: function (res) {
           this.showing = res.data.data.products
           this.updatea = this.showing
+          console.log('我是数据' + this.updatea)
         },
         failed: function (res) {
           console.log(res)
@@ -55,6 +57,10 @@
       })
     },
     methods: {
+      clicked: function (index) {
+        let ids = this.updatea[index].id
+        this.$router.push(`mymsage/${ids}`)
+      },
       loadMore () {
         let userId2 = window.location.href.split('=')[1]
         this.loading = true

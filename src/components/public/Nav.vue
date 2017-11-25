@@ -12,7 +12,7 @@
     </div>
     <div class="nav_desk"></div>
     <div class="list-content" :style="list_style">
-      <ul v-for="(val, index) in this.lists">
+      <ul v-for="(val, index) in lists">
         <router-link :to="val.url">
             <li @click="list_show" :style="li_style"><div @click="changeNavTitle(val.title)"><span>{{val.content}}</span></div></li>
         </router-link>
@@ -28,14 +28,6 @@
     name: 'Nav',
     data () {
       return {
-        lists: [
-          {'content': '首页', 'url': '/', 'title': '卖座电影'},
-          {'content': '影片', 'url': '/film/now-playing', 'title': '卖座电影'},
-          {'content': '影院', 'url': '/cinema', 'title': '全部影院'},
-          {'content': '商城', 'url': '/store', 'title': '卖座商城'},
-          {'content': '我的', 'url': '/login', 'title': '我的'},
-          {'content': '卖座卡', 'url': '', 'title': '查询/绑定/激活卖座卡'}
-        ],
         titles: ['全部影院', '卖座商城'],
         list_style: {
           opacity: 0,
@@ -54,10 +46,14 @@
     computed: {
       ...mapState([
         'city',
-        'title'
+        'title',
+        'lists'
       ])
     },
     methods: {
+      skip: function (index) {
+        console.log(111111)
+      },
       ...mapMutations(['cityTitle', 'changeNavTitle']),
       list_content_clicked: function () {
         if (this.list_style.opacity === 0) {

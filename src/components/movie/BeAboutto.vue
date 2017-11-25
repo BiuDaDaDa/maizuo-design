@@ -4,7 +4,7 @@
     infinite-scroll-disabled="loading"
     infinite-scroll-distance="100"
     class="being-list-s">
-    <div v-for="as in update" class="being-list">
+    <div v-for="(as, index) in update" @click="clicked(index)" class="being-list">
       <div class="being-itme-img">
         <div class="being-itme-url">
           <img :src="as.poster.origin" alt="">
@@ -23,7 +23,7 @@
         <div class="premiere-data">
           <span class="">{{getLocalTime(as.premiereAt)}}上映</span>
           &nbsp;&nbsp;
-          <span>星期五</span>
+          <span>{{week.content}}</span>
         </div>
 
       </div>
@@ -52,7 +52,8 @@
           {'content': '星期日'}
         ],
         week: '',
-        urly: ''
+        urly: '',
+        indexid: ''
       }
     },
     mounted () {
@@ -78,7 +79,6 @@
         } else {
           this.loading = true
           this.lists++
-       //   console.log(this.lists)
           this.$request({
             type: 'get',
             url: '/api/film/coming-soon?page=' + this.lists + '&count=7',
@@ -94,6 +94,10 @@
           })
           this.loading = false
         }
+      },
+      clicked: function (index) {
+        this.indexid = this.update[index].id
+        this.$router.push('/film/' + this.indexid)
       },
       // 时间戳转换
       getLocalTime: function (nS) {
@@ -135,7 +139,7 @@
   .being-itme-url {
     background-size: 100%;
     background: url("beijing.png") no-repeat;
-    height: auto;
+    height: 82px;
     width: 100%;
   }
 

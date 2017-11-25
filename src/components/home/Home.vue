@@ -14,14 +14,12 @@
       <div class="content">
         <ul>
           <li v-for="(val, index) in thisfilm" ref="playing" @click="playingclicked(index)">
-            <router-link to="/film">
-              <img :src="val.cover.origin" alt="">
-              <div class="film_name">
-                <p v-html="val.name"></p>
-                <p style="color: #9a9a9a;">{{val.cinemaCount}}家影院上映&nbsp;{{val.watchCount}}人购票</p>
-              </div>
-              <h2 class="film_grade">{{val.grade}}</h2>
-            </router-link>
+            <img :src="val.cover.origin" alt="">
+            <div class="film_name">
+              <p v-html="val.name"></p>
+              <p style="color: #9a9a9a;">{{val.cinemaCount}}家影院上映&nbsp;{{val.watchCount}}人购票</p>
+            </div>
+            <h2 class="film_grade">{{val.grade}}</h2>
           </li>
         </ul>
         <button class="now_playing">更多热映电影</button>
@@ -30,14 +28,12 @@
         </div>
         <ul>
           <li v-for="(val, index) in thiscoming" @click="comingclicked(index)">
-            <router-link to="/film">
               <img :src="val.cover.origin" alt="">
               <div class="film_coming">
                 <div v-html="val.name" style="font-size: 13px;float: left;margin-left: 10px"></div>
                 <div v-html="getLocalTime(val.premiereAt) + '上映'"
                      style="font-size: 14px;color: rgb(245, 162, 125);float: right;margin-right: 50px"></div>
               </div>
-            </router-link>
           </li>
         </ul>
         <button class="now_playing">更多即将上映电影</button>
@@ -114,6 +110,7 @@
 </script>
 <style scoped lang="less">
   @import "../../common/css/common-color";
+
   .top {
     width: 100%;
     height: 232.88px;

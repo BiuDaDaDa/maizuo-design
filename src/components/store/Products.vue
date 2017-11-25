@@ -12,14 +12,18 @@
         </div>
         <div class="active-left" v-if="productsData.length===3">
           <div class="top">
-            <a @click="detalGOto">
+            <div @click="detalGOto">
+            <router-link to="">
               <img :src="productsData['0'].imageSrc">
-            </a>
+            </router-link>
+            </div>
           </div>
           <div class="top">
-            <a @click="detalGotoD">
+            <div @click="detalGotoD">
+            <router-link to="">
               <img :src="productsData['2'].imageSrc">
-            </a>
+            </router-link>
+            </div>
           </div>
         </div>
       </div>
@@ -66,11 +70,11 @@
         this.$router.push({name: 'MobilePhoneShell', query: {Id: this.id}})
       },
       detalGOto: function () {
-        this.$router.push({name: 'MyStoremsage', query: {Id: this.idL}})
+        this.$router.push(`mymsage/${this.idL}`)
       },
       detalGotoD: function () {
         console.log(this.idD)
-        this.$router.push({name: 'MyStoremsage', query: {Id: this.idD}})
+        this.$router.push(`mymsage/${this.idD}`)
       }
     }
   }
