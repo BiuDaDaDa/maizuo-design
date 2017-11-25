@@ -71,14 +71,6 @@
           console.log(res)
         }
       })
-//      window.addEventListener('popstate', function () {
-//        this.$router.go(-1)
-//      }, false)
-//      let state = {
-//        title: 'title',
-//        url: ''
-//      }
-//      window.history.pushState(state, 'title', '')
     },
     methods: {
       loadMores () {
@@ -87,7 +79,6 @@
         } else {
           this.loading = true
           this.lists++
-       //   console.log(this.lists)
           this.$request({
             type: 'get',
             url: '/api/film/coming-soon?page=' + this.lists + '&count=7',
