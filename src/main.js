@@ -4,12 +4,13 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from '../store/store'
+import VueAwesomeSwiper from 'vue-awesome-swiper'
 import { InfiniteScroll } from 'mint-ui'
 import request from './common/js/requestServerSetting'
-
 Vue.config.productionTip = false
 request(Vue)
 Vue.use(InfiniteScroll)
+Vue.use(VueAwesomeSwiper)
 
 /* eslint-disable no-new */
 new Vue({

@@ -14,7 +14,7 @@
     <div class="list-content" :style="list_style">
       <ul v-for="(val, index) in this.lists">
         <router-link :to="val.url">
-            <li @click="list_show" :style="li_style"><div @click="changeNavTitle(val.title)"><span>{{val.content}}</span></div></li>
+          <li @click="list_show" :style="li_style"><div @click="changeNavTitle(val.title)"><span>{{val.content}}</span></div></li>
         </router-link>
       </ul>
     </div>
