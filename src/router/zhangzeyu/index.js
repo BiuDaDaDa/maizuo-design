@@ -38,7 +38,7 @@ export default [
     component: Ticket
   },
   {
-    path: '/chooseseat/',
+    path: '/chooseseat',
     name: 'Chooseseat',
     component: Chooseseat
   }
