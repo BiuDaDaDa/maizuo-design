@@ -9,8 +9,8 @@
         </a>
         <div class="pic-list">
           <div class="subject-container">
-            <div class="subject-item" v-for="(item,id) in ite.products">
-              <a @click="detailGotoD(id)">
+            <div class="subject-item" v-for="(item, key) in ite.products">
+              <a @click="detailGotoD(index,key)">
                 <div class="item-box">
                   <div class="pic-area">
                     <div class="control-pic">
@@ -18,7 +18,7 @@
                     </div>
                   </div>
                   <p class="control-name">{{item.name}}}</p>
-                  <p class="control-price">￥{{item.price}}</p>
+                  <p class="control-price">￥{{item.price/100}}.00</p>
                 </div>
               </a>
             </div>
@@ -42,27 +42,20 @@
     data () {
       return {
         subjectDataT: [],
-        id: [],
-        idL: []
+        id: []
       }
     },
     mounted () {
       this.$request({
         type: 'get',
-        url: 'app/ad/list',
+        url: '/app/ad/list',
         success: function (res) {
           var Data = res.data.data
           for (var i = 14; i < 19; i++) {
             this.subjectDataT.push(Data[i])
             let str = Data[i].url
-            let strD = Data[i].products
             this.id.push(str.split('active/')[1])
-            let _this = this
-            strD.forEach(function (item) {
-              _this.idL.push(item.id)
-            })
           }
-          console.log(this.idL)
         },
         failed: function (err) {
           console.log(err)
@@ -73,11 +66,9 @@
       subjectGo (index) {
         this.$router.push({name: 'MyStore2', query: {Id: this.id[index]}})
       },
-      detailGotoD (id) {
-        console.log(id)
-        // console.log(this.subjectDataT)
-        console.log(this.idL[id])
-        this.$router.push({name: 'MyStoremsage', query: {Id: this.idL[id]}})
+      detailGotoD (index, key) {
+        let idL = this.subjectDataT[index].products[key].id
+        this.$router.push({name: 'MyStoremsage', query: {Id: idL}})
       }
     }
   }
@@ -106,9 +97,7 @@
     overflow-y: hidden;
     white-space: nowrap;
   }
-
   .subject-container {
-
   }
 
   .subject-item {

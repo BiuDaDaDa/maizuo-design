@@ -36,7 +36,7 @@
       // 数据请求
       this.$request({
         type: 'get',
-        url: 'app/recommend/home?page=' + this.pageNum + '&num=20',
+        url: '/app/recommend/home?page=' + this.pageNum + '&num=20',
         success: function (res) {
           this.total = res.data.data.total
           this.RecommendData = res.data.data.list
@@ -72,7 +72,7 @@
         this.pageNum++
         this.$request({
           type: 'get',
-          url: 'app/recommend/home?page=' + this.pageNum + '&num=20',
+          url: '/app/recommend/home?page=' + this.pageNum + '&num=20',
           success: function (res) {
            // console.log(res)
             this.total = res.data.data.total
@@ -128,7 +128,7 @@
 
   .items {
     background-color: #f2f2f2;
-    min-height: 100%;
+    min-height:400px;
     padding-right: 10px;
     padding-left: 10px;
     width: 100%;

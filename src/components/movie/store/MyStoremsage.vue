@@ -17,7 +17,7 @@
           <div class="name">{{msagedata1.masterName}}&nbsp;{{"&nbsp;" + msagedata5}}</div>
           <div class="subname">{{msagedata1.slaveName}}</div>
           <div class="price">
-            <div class="price">￥{{msagedata2.marketPrice / 100}}.00</div>
+            <div class="price">￥{{msagedata2.price / 100}}.00</div>
           </div>
           <div class="tips">
             <div class="express-fee" style="text-align: left">快递:{{msagedata2.score}}.00&nbsp;元</div>
@@ -42,7 +42,7 @@
                   <img :src="msagedata2.images[0]" alt="">
                 </div>
                 <div class="sku-context">
-                  <div class="price">￥{{msagedata2.marketPrice / 100}}.00</div>
+                  <div class="price">￥{{msagedata2.price / 100}}.00</div>
                   <div class="name">选择&nbsp;&nbsp;规格&nbsp;&nbsp;数量</div>
                 </div>
                 <div>
@@ -108,10 +108,18 @@
       }
     },
     mounted () {
+//      this.$router.go()
       let idL = window.location.href.split('=')[1]
+      let idA = this.$route.params.id
+      if (idL === undefined) {
+        idL = ''
+      }
+      if (idA === undefined) {
+        idA = ''
+      }
       this.$request({
         type: 'get',
-        url: 'app/item?id=' + idL,
+        url: '/app/item?id=' + idA + idL,
         headers: {},
         params: {},
         success: function (res) {
@@ -131,11 +139,12 @@
       })
       this.$request({
         type: 'get',
-        url: '/app/item/desc?id=' + idL,
+        url: '/app/item/desc?id=' + idA + idL,
         headers: {},
         params: {},
         success: function (res) {
           this.msagedata3 = res.data.data
+//          console.log(this.$route.params.id)
         },
         failed: function (err) {
           console.log(err)
@@ -144,6 +153,14 @@
     },
     methods: {
       transform: function (index) {
+        let idL = window.location.href.split('=')[1]
+        let idA = this.$route.params.id
+        if (idL === undefined) {
+          idL = ''
+        }
+        if (idA === undefined) {
+          idA = ''
+        }
         this.xiabiao = index
         for (let i in this.msagedata4.item) {
           this.$refs.thisstyle[i].style.border = '1px solid rgba(0, 0, 0, 0.3)'
@@ -151,10 +168,9 @@
         }
         this.$refs.thisstyle[index].style.border = '1px solid #ff5000'
         this.$refs.thisstyle[index].style.color = '#ff5000'
-        let idL = window.location.href.split('=')[1]
         this.$request({
           type: 'get',
-          url: 'app/item?id=' + idL,
+          url: '/app/item?id=' + idA + idL,
           headers: {},
           params: {},
           success: function (res) {
