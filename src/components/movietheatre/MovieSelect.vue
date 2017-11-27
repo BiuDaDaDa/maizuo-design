@@ -3,10 +3,10 @@
     <swiper :options="swiperOption"  ref="mySwiper" class="main">
       <swiper-slide v-for="(film, index) in filmList" :key="index" class="main-slide" ref="slideDiv">
         <div class="slide-img">
-          <img :src="film.posterAddress" alt="" v-if="" ref="slideImg">
+          <img :src="film.posterAddress" alt="" ref="slideImg" :class="{liang :index === 0}">
         </div>
         <div class="slide-text">
-          <p ref="slideText">{{film.filmName}}</p>
+          <p ref="slideText" :class="{liangzi: index === 0}">{{film.filmName}}</p>
         </div>
       </swiper-slide>
     </swiper>
@@ -15,16 +15,15 @@
       <div class="selectDay">
         <div class="today" v-for="(day,index) in weekday" @click="clickTab(index)" :class="{active:index === num}">
           <div>
-            <span style="display: none" ref="topIndex">{{index}}</span>
             <span>{{weekdaytext[index]}}({{day}})</span>
           </div>
         </div>
       </div>
       <div class="day">
         <div v-for="(film, filmindex) in Arr" v-if="filmindex === Ifirst">
-          <div v-for="(day, dayindex) in film.filmlist" v-if="dayindex === filmindexshow">
+          <div v-for="(day, dayindex) in film.filmlist" v-if="dayindex === English[num]">
             <span style="display: none;" ref="oneday">{{dayindex}}</span>
-            <div class="session" v-for="session in day">
+            <div class="session" v-for="session in day" @click="GoToSelectSeat(session)">
               <div class="session_wrap">
                 <div class="top">
                   <div class="top_first">{{getLocalHours(session.stopSellingAt)}}</div>
@@ -56,14 +55,14 @@
     },
     data () {
       return {
-        filmindexshow: 'today',
         weekday: [],
         weekdaytext: ['今天', '明天', '后天'],
+        English: ['today', 'tomorrow', 'afterTomorrow'],
         Arr: [],
         filmList: '',
         schedules: '',
         passShow: false,
-        Ifirst: '',
+        Ifirst: 0,
         num: 0,
         showeveryDay: '',
         swiperOption: {
@@ -88,12 +87,10 @@
               if (i === swiper.activeIndex) {
                 that.$refs.slideImg[i].style.opacity = '1'
                 that.$refs.slideText[i].style.display = 'block'
-//                that.$refs.pName[i].style.display = 'block'
                 that.Ifirst = i
               } else {
                 that.$refs.slideImg[i].style.opacity = '0.6'
                 that.$refs.slideText[i].style.display = 'none'
-//                that.$refs.pName[i].style.display = 'none'
               }
             }
           }
@@ -104,22 +101,14 @@
       that = this
     },
     methods: {
-      clickedDay () {
-        for (let i = 0; i < 3; i++) {
-          if (this.$refs.topIndex[i].innerHTML === 1) {
-            this.$set('today', this.filmindexshow)
-          }
-          if (this.$refs.topIndex[i].innerHTML === 2) {
-            this.$set('tomorrow', this.filmindexshow)
-          }
-          if (this.$refs.topIndex[i].innerHTML === 3) {
-            this.$set('afterTomorrow', this.filmindexshow)
-          }
-        }
+      GoToSelectSeat (session) {
+//        this.$router.push({name: 'Chooseseat', query: {shopId: session.id, cinemaId: session.cinema.id, filmId: session.film.id}})
+        console.log(session.id)
+        console.log(session.cinema.id)
+        console.log(session.film.id)
       },
       clickTab (index) {
         this.num = index
-        this.clickedDay()
       },
       filmSort () {
         let filmTimeArr = []
@@ -185,7 +174,7 @@
             }
           }
         }
-        console.log(this.weekday)
+        console.log(this.showeveryDay)
       }
     },
     computed: {
@@ -202,7 +191,6 @@
         success (res) {
           this.filmList = res.data.data.filmList
           this.Arr = this.filmSort()
-          this.clickedDay()
         },
         failed (err) {
           console.log(err)
@@ -265,7 +253,12 @@
     white-space: nowrap;
     display: none;
   }
+  .slide-img .liang{
+    opacity: 1;
+  }
 
-
+  .slide-text .liangzi{
+    display: block;
+  }
 
 </style>

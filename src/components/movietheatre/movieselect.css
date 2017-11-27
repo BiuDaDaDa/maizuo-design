@@ -80,17 +80,16 @@
 }
 
 .selectDay{
-  display: flex;
-  justify-content: space-between;
+  overflow: hidden;
 }
 .today{
-  /*border-bottom: 5px solid #e9681f;*/
   border-bottom: 1px solid #e9681f;
+  float: left;
+  width: 33%;
 }
 
 .today div{
   height: 25px;
-  width: 96px;
   margin: 5px 15px;
   display: inline-block;
   font-size: 10px;
@@ -101,5 +100,6 @@
 }
 
 .active{
+  margin-top: -4px;
   border-bottom: 5px solid #e9681f;
 }
