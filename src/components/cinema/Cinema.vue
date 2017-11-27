@@ -49,7 +49,7 @@
                   <span v-if="aftertomorrow != ''">后天({{thismonth + 1}}/{{thisday + 2}})</span>
                   <span v-if="showat - thisday > 3">{{showat - thisday}}天后</span>
                 </div>
-                <div class="showlist" v-for="val in today">
+                <div class="showlist" v-for="val in today" @click="isBusSelect">
                   <div class="showlist_top">
                     <div class="showlist_top_left">
                       <span>{{filmhours(val.showAt)}}</span>:<span>{{filmminutes(val.showAt)}}</span>
@@ -91,7 +91,10 @@
         later: [],
         showat: '',
         thisday: '',
-        thismonth: ''
+        thismonth: '',
+        filmId: 0, // 电影id
+        cinemaId: 0, // 影院影厅id
+        shopId: 0 // 门店id
       }
     },
     methods: {
@@ -122,9 +125,11 @@
             type: 'get',
             url: '/api/schedule?__t=' + this.time + '&film=' + this.$route.params.id + '&cinema=' + this.cinemas[index].id,
             success: function (res) {
+              console.log(res.data.data.schedules[index].id)
+              this.shopId = res.data.data.schedules[index].id // 门店id
+              this.filmId = this.$route.params.id // 电影id
+              this.cinemaId = this.cinemas[index].id // 影院id
               this.cinemasPrice = res.data.data.schedules
-              console.log(this.cinemas[index].id)
-//            console.log(this.cinemasPrice)
               this.thismonth = new Date(parseInt(this.time)).getMonth()
               this.today = []
               for (let i = 0; i < this.cinemasPrice.length; i++) {
@@ -133,7 +138,6 @@
                 if (this.showat === this.thisday) {
                   this.today.push(this.cinemasPrice[i])
                 }
-                console.log(this.today)
                 if (this.showat === this.thisday + 1) {
                   this.tomorrow.push(this.cinemasPrice[i])
                 }
@@ -174,10 +178,10 @@
         }
         return quyu
       },
-//      为districtObj的cinemaList添加数据
+//    为districtObj的cinemaList添加数据
       GetDistrictCinemaFenqu () {
         let fenqu = this.GetDistrictCinema()
-//        console.log('dianying:' + this.cinemas.length)
+//      console.log('dianying:' + this.cinemas.length)
         for (let i = 0; i < this.cinemas.length; i++) {
           for (let j = 0; j < fenqu.length; j++) {
             if (this.cinemas[i].district.name === fenqu[j].name) {
@@ -186,6 +190,9 @@
           }
         }
         return fenqu
+      },
+      isBusSelect: function () {
+        this.$router.push({name: 'Chooseseat', query: {shopId: this.shopId, cinemaId: this.cinemaId, filmId: this.filmId}})
       }
     },
     mounted () {

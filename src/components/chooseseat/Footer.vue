@@ -8,43 +8,70 @@
       </div>
       <!--场次列表-->
       <ul class="schedule-list">
-        <li v-for="item in allData[0]">
+        <li v-for="(item, index) in allData" @click="changeP(index)">
           <div class="schedule-list-left">
-            <span class="show-time">14:30</span>
-            <span class="desc">预计16:16结束/{{item.film.language}}{{item.imagery}}/5号厅</span>
+            <span class="show-time">{{getStartTime(allData,index)}}</span>
+            <span class="desc">预计{{getStopTime(allData,index)}}结束/{{item.film.language}}{{item.imagery}}/{{item.maxSeatsPerOrder}}号厅</span>
           </div>
           <div class="schedule-list-right">
             <div class="price">
               <span>￥{{item.price.min}}.00</span>
               <span class="origin-price">￥{{item.price.cinema}}.00</span>
             </div>
+            <i class="iconfont icon-xiayibu right"></i>
           </div>
+
         </li>
       </ul>
       <!--end-->
     </div>
   </article>
-
 </template>
 
 <script>
+  import bus from '../../common/js/eventBus'
   export default {
     props: ['isBus'],
     name: '',
     data () {
       return {
-        allData: {} // 换场数据
+        allData: {}, // 换场数据
+        sTime: 0,
+        stopTime: 0
       }
     },
     methods: {
       changeShow: function () {
         this.$emit('changeMask')
+      },
+      getStartTime: function (data, index) {
+        let nowDate = new Date(data[index].showAt)
+        let hour = nowDate.getHours()
+        var min = nowDate.getMinutes()
+        if (min < 10) {
+          min = '0' + min
+        }
+        return hour + ':' + min
+      },
+      getStopTime: function (data, index) {
+        let addTime = (data[index].film.mins) * 60 * 1000 + data[index].stopSellingAt
+        let nowDate = new Date(addTime)
+        let hour = nowDate.getHours()
+        let min = nowDate.getMinutes()
+        if (min < 10) {
+          min = '0' + min
+        }
+        return hour + ':' + min
+      },
+      changeP: function (index) {
+        console.log(this.allData[index].id)
+        this.$emit('changePbus', this.allData[index].id)
+        bus.$emit('go')
       }
     },
     watch: {
       isBus (newValue) {
-        this.allData = newValue
-        console.log(this.allData)
+        this.allData = newValue[0]
       }
     }
   }
@@ -55,13 +82,11 @@
     margin: 0;
     padding: 0;
     line-height: 1.42857143;
-
   }
-
   .schedule-panel {
     position: fixed;
     width: 100%;
-    height:100%;
+    height: 100%;
     z-index: 5;
   }
   .mask {
@@ -103,6 +128,12 @@
     padding-top: 8px;
     box-sizing: border-box;
     border-bottom: 1px dashed #ededed;
+    position: relative;
+  }
+  .right {
+    position: absolute;
+    right: 10px;
+    top: 22px;
   }
 
   .schedule-list-left {
