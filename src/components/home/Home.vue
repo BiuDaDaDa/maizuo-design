@@ -43,8 +43,6 @@
 </template>
 
 <script>
-  import bus from '../../common/js/eventBus'
-
   export default {
     name: 'Home',
     data () {
@@ -70,15 +68,9 @@
         this.$router.push('/film/' + this.thisid)
       },
       showingclicked: function () {
-        this.layout = 'header-left'
-        bus.$emit('showinglist', this.layout)
         this.$router.push('/film/now-playing')
-      }
-    },
-    ngOnDestory: {
+      },
       aboutclicked: function () {
-        this.layout = 'header-right'
-        bus.$emit('showinglist', this.layout)
         this.$router.push('film/coming-soon')
       }
     },
@@ -196,6 +188,7 @@
     color: #616161;
     outline: none;
     background-color: #ebebeb;
+    outline: none;
   }
 
   .upcoming {

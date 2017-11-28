@@ -43,7 +43,6 @@
 
 <script>
   import md5 from 'md5'
-
   export default {
     name: '',
     data () {
@@ -59,7 +58,7 @@
         isImgCode: false, // 是否显示图片验证码
         imgData: '', // 验证码的图片数据
         loginType: 0, //  判断是手机验证码登录还是账号密码登录
-        codeKey: '',  // 验证码的key
+        codeKey: '',  // 图片验证码的key
         code: '', // 输入的验证码
         isSendTime: true, // 发送时间
         isRepeatSend: false,
@@ -167,7 +166,7 @@
           }
         })
       },
-      // 验证码的网络请求
+      // 手机短信验证码的网络请求
       requestInitCode () {
         let phone = this.$refs.getPhoneEmail.value
         let time = new Date().getTime()

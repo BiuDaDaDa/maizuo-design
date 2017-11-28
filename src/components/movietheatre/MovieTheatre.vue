@@ -13,16 +13,39 @@
           <h3>订座票</h3>
           <span>选好场次及座位，到影院自助机取票</span>
         </div>
+        <button class="buy buyBook" @click="GoToMovieSelect">立即订座</button>
+      </div>
+      <!--通兑票-->
+      <div class="ticket" v-if="showticket">
+        <div class="ticket-left">
+          <i class="iconfont icon-piaoquan"></i>
+        </div>
+        <div class="ticket-right">
+          <h3>通兑票</h3>
+          <span>有效期内到影院前台兑换影票</span>
+        </div>
+        <button class="buy buyticket" @click="GoToItem">立即订票</button>
+      </div>
+      <!--小卖品-->
+      <div class="goods" v-if="showgoods">
+        <div class="goods-left">
+          <i class="iconfont icon-iconfontcola"></i>
+        </div>
+        <div class="goods-right">
+          <h3>小卖品</h3>
+        </div>
+        <button class="buy buygoods">购买</button>
       </div>
       <!--电影院地址框-->
       <div class="address">
-        <div class="address-left">
-          <i class="iconfont icon-dingwei"></i>
-        </div>
-        <div class="address-right">
-          <h4>{{msg.address}}</h4>
-        </div>
+      <div class="address-left">
+        <i class="iconfont icon-dingwei"></i>
       </div>
+      <div class="address-right">
+        <h4>{{msg.address}}</h4>
+      </div>
+    </div>
+
       <!--电话框-->
       <div class="phone">
         <div class="phone-left">
@@ -34,7 +57,6 @@
           </h4>
         </div>
       </div>
-      <button class="buy" @click="GoToMovieSelect">立即订座</button>
     </div>
 
     <div class="TabTag">
@@ -50,7 +72,7 @@
       </ul>
       <div class="tabcontainer">
         <div class="selectTab" v-for="(item,index) in 5" v-show="index === num">
-          <p></p>
+          {{container[index]}}
         </div>
       </div>
     </div>
@@ -62,34 +84,50 @@
     name: '',
     data () {
       return {
+        showticket: false,
+        showgoods: false,
         msg: '',
-        iName: ['icon-piaowu', 'icon-piaowu', 'icon-wode-tingche', 'icon-shengrilibao-copy', 'icon-piaowu'],
+        itemMsg: '',
+        iName: ['icon-piaowu', 'icon-Dyanjing', 'icon-wode-tingche', 'icon-shengrilibao-copy', 'icon-piaowu'],
         spanName: ['取票', '3D', '停车', '优惠', '交通'],
+        spanNameCopy: ['取票', '3D', '停车', '优惠', '公交'],
         container: [],
         num: 0,
         bodyContainer: ''
       }
     },
     methods: {
+      setshow () {
+        for (let i = 0; i < this.itemMsg.length; i++) {
+          if (this.itemMsg[i].type === 1 || this.itemMsg[i].type === 17) {
+            this.showticket = true
+          }
+          if (this.itemMsg[i].type === 6) {
+            this.showgoods = true
+          }
+        }
+      },
       clickTab (index) {
         this.num = index
       },
       GetData () {
         let arr = this.msg.services
-        let arrshow = []
-        console.log(arr)
-        for (let j = 0; j < this.spanName.length; j++) {
-          for (let i = 0; i < arr.length; i++) {
-            if (arr[i].name === this.spanName[j]) {
-              arrshow.push(this.spanName[j])
+        for (let i = 0; i < this.spanNameCopy.length; i++) {
+          for (let j = 0; j < arr.length; j++) {
+            if (this.spanNameCopy[i] === arr[j].name) {
+              this.container[i] = arr[j].description
             }
           }
-          arrshow.push('暂无信息')
+          if (this.container[i] === undefined) {
+            this.container[i] = '暂无信息'
+          }
         }
-        console.log(arrshow)
       },
       GoToMovieSelect () {
         this.$router.push(`/cinema/${this.$route.params.id}/film`)
+      },
+      GoToItem () {
+        this.$router.push(`/cinema/${this.$route.params.id}/film/item`)
       }
     },
     mounted () {
@@ -100,6 +138,18 @@
         success: function (res) {
           this.msg = res.data.data.cinema
           this.GetData()
+        },
+        failed: function (error) {
+          console.log(error)
+        }
+      })
+      this.$request({
+        type: 'get',
+        url: `/api/cinema/${this.$route.params.id}/item?__t=${time}`,
+        success: function (res) {
+          this.itemMsg = res.data.data.items
+          console.log(this.itemMsg)
+          this.setshow()
         },
         failed: function (error) {
           console.log(error)
@@ -129,7 +179,6 @@
   .wrapMiddle {
     background-color: #f9f9f9;
     min-width: 286px;
-    position: relative;
   }
 
   /*购票按钮*/
@@ -140,11 +189,27 @@
     border: none;
     font-size: 13px;
     position: absolute;
-    top: 35px;
-    right: 15px;
     background-color: #fe8233;
     color: @background-color-white;
     outline: none;
+  }
+
+  .buyticket{
+    top: 35px;
+    right: 50px;
+    color: #fe8233;
+    background-color: #fff;
+    border: 1px solid #fe8233;
+  }
+
+  .buyBook{
+    top: 35px;
+    right: 50px;
+  }
+
+  .buygoods{
+    top: 35px;
+    right: 50px;
   }
 
   .wrapMiddle > div {
@@ -156,6 +221,9 @@
   }
 
   /*订座位*/
+  .Book{
+    position: relative;
+  }
   .Book-left {
     color: #ff8160;
     font-size: 25px;
@@ -173,6 +241,61 @@
   }
 
   .Book-right h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #000;
+  }
+
+  /*通兑票*/
+  .ticket{
+    position: relative;
+  }
+  .ticket-left {
+    color: #7bafe1;
+    font-size: 25px;
+    width: 10%;
+    margin: 23px 17px 0 0;
+  }
+
+  .ticket-right {
+    width: 85%;
+    text-align: left;
+    font-size: 12px;
+    color: #737373;
+    padding-bottom: 25px;
+    border-bottom: 1px #d6d6d6 dotted;
+  }
+
+  .ticket-right h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    font-size: 15px;
+    color: #000;
+  }
+
+
+  /*小卖品*/
+  .goods{
+    position: relative;
+  }
+  .goods-left {
+    color: #7bafe1;
+    font-size: 28px;
+    width: 10%;
+    margin: 23px 17px 0 0;
+  }
+
+  .goods-right {
+    width: 85%;
+    text-align: left;
+    font-size: 12px;
+    color: #737373;
+    padding-bottom: 25px;
+    border-bottom: 1px #d6d6d6 dotted;
+  }
+
+  .goods-right h3 {
     margin-top: 20px;
     margin-bottom: 10px;
     font-size: 15px;
@@ -200,6 +323,7 @@
     font-size: 14px;
     color: #000;
     margin: 10px 0;
+    width: 90%;
   }
 
   /*电话*/
@@ -222,6 +346,7 @@
     margin: 10px 0;
   }
 
+  /*切换*/
   .TabTag {
     width: 100%;
     margin-top: 15px;
@@ -259,6 +384,7 @@
   .liwrap i {
     font-size: 38px;
     color: #ccc;
+    border-radius: 50%;
   }
 
   .liwrap div {
@@ -270,6 +396,12 @@
 
   .tabcontainer {
     margin-top: 15px;
+  }
+
+  .selectTab{
+    font-size: 12px;
+    margin: 0 0 10px;
+    color: #333;
   }
 
 

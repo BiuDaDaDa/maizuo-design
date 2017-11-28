@@ -32,14 +32,15 @@
           <div v-for="Item in cityItem">
             <ul>
               <li class="CitySort CityBody" v-for="cityLetter in Item.letter">
-                <a @click="naver(cityLetter, $event)" ref="LetterPos">
+                <div @click="naver(cityLetter, $event)" ref="LetterPos">
                   {{cityLetter}}
-                </a>
+                </div>
               </li>
             </ul>
           </div>
         </div>
       </div>
+      <!--分类好的城市-->
       <div>
         <div v-for="Item in cityItem">
           <ul class="cityItemLetterParent ">
@@ -123,13 +124,13 @@
         let nowTop = event.target.offsetTop
         console.log(nowTop)
         let timer = setInterval(function () {
-          nowTop += 50
-          if (nowTop >= oPos) {
+          nowTop += 45
+          if (nowTop + 40 >= oPos) {
             clearInterval(timer)
           } else {
             return window.scrollTo(0, nowTop)
           }
-        }, 1)
+        }, 0)
       },
       setCookie (e) {
         window.document.cookie = `cityId=${e.target.parentNode.lastChild.innerHTML}`
@@ -194,21 +195,22 @@
   }
 
   .CityTitle {
-    margin-top: -1px;
     padding-left: 15px;
-    line-height: 40px;
+    line-height: 45px;
     cursor: pointer;
     font-size: 14px;
     background-color: #ebebeb;
+    box-sizing: border-box;
   }
 
   .CityBody {
     text-align: center;
     width: 25%;
-    line-height: 46px;
+    line-height: 45px;
     color: #838383;
     font-size: 16px;
     border-bottom: #ebebeb 1px solid;
+    box-sizing: border-box;
   }
 
   .GPS-city {

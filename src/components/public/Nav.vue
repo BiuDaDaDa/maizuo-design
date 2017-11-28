@@ -5,6 +5,9 @@
       <div class="nav_content" @click="list_show">
         <div class="title">{{title}}</div>
         <div @click="userclicked" class="me"></div>
+        <router-link to="/login">
+          <div class="me"></div>
+        </router-link>
         <router-link to="/cityselect">
           <div class="city" ref="city" @click="cityTitle">{{city}}</div>
         </router-link>
@@ -14,7 +17,7 @@
     <div class="list-content" :style="list_style">
       <ul v-for="(val, index) in lists">
         <router-link :to="val.url">
-            <li @click="list_show" :style="li_style"><div @click="changeNavTitle(val.title)"><span>{{val.content}}</span></div></li>
+          <li @click="list_show" :style="li_style"><div @click="changeNavTitle(val.title)"><span>{{val.content}}</span></div></li>
         </router-link>
       </ul>
     </div>

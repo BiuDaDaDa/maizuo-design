@@ -3,11 +3,10 @@ import Vuex from 'vuex'
 import router from '../src/router/index'
 
 Vue.use(Vuex)
-
 export default new Vuex.Store({
   state: {
     count: 1,
-    city: '大连',
+    city: '深圳',
     title: '卖座电影',
     lists: [
       {'content': '首页', 'url': '/', 'title': '卖座电影'},

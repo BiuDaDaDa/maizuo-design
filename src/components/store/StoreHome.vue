@@ -72,7 +72,6 @@
         type: 'get',
         url: '/app/ad/list',
         success: function (res) {
-          // console.log(res.data.data)
           this.slider = res.data.data[8].imageSrc
           let allData = res.data.data
           for (var i = 0; i < 8; i++) {
