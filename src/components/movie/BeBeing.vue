@@ -7,7 +7,8 @@
             <div class="select" :class="{'active': layout == 'header-left'}" @click="layout = 'header-left'">正在热映</div>
           </router-link>
           <router-link :to="beabouttoPath">
-            <div class="select" :class="{'active': layout == 'header-right'}" @click="layout = 'header-right'">即将上映</div>
+            <div class="select" :class="{'active': layout == 'header-right'}" @click="layout = 'header-right'">即将上映
+            </div>
           </router-link>
           <div style="clear: both"></div>
           <router-view></router-view>
@@ -18,6 +19,7 @@
 </template>
 
 <script>
+  import bus from '../../common/js/eventBus'
   export default {
     name: 'BeBeing',
     computed: {
@@ -33,8 +35,16 @@
         userPath: '/film',
         myHohtshowing: 'now-playing',
         myBeaboutto: 'coming-soon',
-        layout: 'header-left'
+        layout: 'header-left',
+        zhuangtai: false
       }
+    },
+    mounted () {
+      let _this = this
+      bus.$on('showinglist', function (layout) {
+        _this.layout = layout
+      })
+      console.log(_this.layout)
     }
   }
 </script>

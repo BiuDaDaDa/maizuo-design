@@ -43,6 +43,7 @@
       return {
         showing: '',
         showing1: '',
+        showing2: '',
         lists: 1,
         loading: false,
         update: [],
@@ -57,6 +58,7 @@
         params: {},
         success: function (res) {
           this.showing = res.data.data.films
+          this.showing2 = res.data.data.page
           this.update = this.showing
         },
         failed: function (res) {
@@ -66,23 +68,27 @@
     },
     methods: {
       loadMore () {
-        this.loading = true
-        this.lists++
-        console.log(this.lists)
-        this.$request({
-          type: 'get',
-          url: '/api/film/now-playing?page=' + this.lists + '&count=7',
-          headers: {},
-          params: {},
-          success: function (res) {
-            this.showing1 = res.data.data.films
-            this.update = this.update.concat(this.showing1)
-          },
-          failed: function (res) {
-            console.log(res)
-          }
-        })
-        this.loading = false
+        if (this.lists === this.showing2.total) {
+          this.lists = this.showing2.total
+        } else {
+          this.loading = true
+          this.lists++
+          console.log(this.lists)
+          this.$request({
+            type: 'get',
+            url: '/api/film/now-playing?page=' + this.lists + '&count=7',
+            headers: {},
+            params: {},
+            success: function (res) {
+              this.showing1 = res.data.data.films
+              this.update = this.update.concat(this.showing1)
+            },
+            failed: function (res) {
+              console.log(res)
+            }
+          })
+          this.loading = false
+        }
       },
       clicked: function (index) {
         this.indexid = this.update[index].id

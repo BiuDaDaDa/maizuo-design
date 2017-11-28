@@ -4,7 +4,7 @@
       <div class="list" @click="list_content_clicked"></div>
       <div class="nav_content" @click="list_show">
         <div class="title">{{title}}</div>
-        <div class="me"></div>
+        <div @click="userclicked" class="me"></div>
         <router-link to="/cityselect">
           <div class="city" ref="city" @click="cityTitle">{{city}}</div>
         </router-link>
@@ -81,6 +81,9 @@
           this.li_style.paddingLeft = 0
           this.li_style.paddingRight = 0
         }
+      },
+      userclicked: function () {
+        this.$router.push('/login')
       }
     },
     created () {

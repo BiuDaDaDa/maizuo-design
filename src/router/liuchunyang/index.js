@@ -5,6 +5,7 @@ import MyCard from '@/components/movie/MyCard'
 import MyStore from '@/components/movie/store/MyStore'
 import MyStore2 from '@/components/movie/store/MyStore2'
 import MyStoremsage from '@/components/movie/store/MyStoremsage'
+import MyOrder from '@/components/movie/store/MyOrder'
 
 export default [
   {
@@ -41,5 +42,10 @@ export default [
     path: '/mymsage/:id',
     name: 'MyStoremsage',
     component: MyStoremsage
+  },
+  {
+    path: '/preorder',
+    name: 'MyOrder',
+    component: MyOrder
   }
 ]

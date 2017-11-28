@@ -79,10 +79,11 @@
           <div class="item-footer-left">
             <div class="item-footer-home">
               <img class="iconfont icon-home" src="../store/img/shouye.png" alt="">
-              <div class="foot-icon-text">首页</div>
+              <div @click="HomePage" class="foot-icon-text">首页</div>
             </div>
           </div>
           <div class="item-footer-right" :style="StatusStyle">{{Status}}</div>
+          <div v-if="" @click="clickstatus" class="clickgm"></div>
         </div>
       </div>
     </div>
@@ -90,6 +91,7 @@
 </template>
 
 <script>
+  import bus from '../../../common/js/eventBus'
   export default {
     name: 'MyStoremsage',
     data () {
@@ -104,11 +106,13 @@
         amount: 0,
         Status: '',
         StatusStyle: '',
-        jianstyle: 'border: 1px solid rgba(0, 0, 0, .4);color: #000;border-right: none;'
+        jianstyle: 'border: 1px solid rgba(0, 0, 0, .4);color: #000;border-right: none;',
+        transmit1: '',
+        transmit2: '',
+        jieshou: '你好'
       }
     },
     mounted () {
-//      this.$router.go()
       let idL = window.location.href.split('=')[1]
       let idA = this.$route.params.id
       if (idL === undefined) {
@@ -144,7 +148,6 @@
         params: {},
         success: function (res) {
           this.msagedata3 = res.data.data
-//          console.log(this.$route.params.id)
         },
         failed: function (err) {
           console.log(err)
@@ -176,6 +179,8 @@
           success: function (res) {
             this.msagedata2 = res.data.data.skuList[this.xiabiao]
             this.msagedata5 = res.data.data.options[0].item[this.xiabiao]
+            this.transmit2 = res.data.data.skuList[this.xiabiao].price
+            this.transmit1 = res.data.data.skuList[this.xiabiao].images[0]
           },
           failed: function (err) {
             console.log(err)
@@ -193,6 +198,19 @@
       styleclick: function () {
         this.amount++
         this.jianstyle = 'border: 1px solid rgba(0, 0, 0, .4);color: #000;border-right: none;'
+      },
+      HomePage: function () {
+        this.$router.push('/store')
+      },
+      clickstatus: function () {
+        let busbyvalue = [this.msagedata5, this.transmit2, this.transmit1, this.amount]
+//        console.log('类型' + this.msagedata5)
+//        console.log('价钱' + this.transmit2)
+//        console.log('图片' + this.transmit1)
+//        console.log('数量' + this.amount)
+        console.log('我是发送' + busbyvalue)
+        bus.$emit('infoChange', busbyvalue)
+        this.$router.push('/preorder')
       }
     }
   }
@@ -516,9 +534,10 @@
     border-top-right-radius: 2px;
   }
 
-  /*.count-body .count-type .disable {*/
-  /*color: rgba(0, 0, 0, .3);*/
-  /*border: 1px solid rgba(0, 0, 0, .3);*/
-  /*border-right: none;*/
-  /*}*/
+  .clickgm {
+    width: 33%;
+    height: 100%;
+    position: relative;
+    left: 66.90821%;
+  }
 </style>
