@@ -67,7 +67,7 @@
         return (new Date(parseInt(nS)).getMonth() + 1) + '月' + (new Date(parseInt(nS)).getDate() + '日')
       },
       cinemaclicked: function (e) {
-        window.document.cookie = `cityName=${e.target.innerHTML}`
+//        window.document.cookie = `cityName=${e.target.innerHTML}`
         this.$router.push('/film/' + this.thisid + '/cinema')
       }
     }

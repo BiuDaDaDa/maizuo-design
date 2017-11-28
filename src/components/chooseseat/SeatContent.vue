@@ -114,11 +114,7 @@
         }
       }
       MouseWheel(document, function (down) {
-        if (down) {
-          let control = _this.$refs.contentWH.style.width
-          console.log(control)
-        } else {
-        }
+        if (down) {} else {}
       })
       let _this = this
       bus.$on('go', function () {

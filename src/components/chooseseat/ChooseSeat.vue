@@ -77,8 +77,6 @@
       // 换场按钮
       changePlace: function () {
         document.cookie = 'co=maizuo'
-        document.cookie = 'cityId=13'
-        document.cookie = 'cityName=广州;'
         let nowDate = new Date()
         let timeT = nowDate.getTime()
         this.changeShow = true
