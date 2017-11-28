@@ -15,7 +15,8 @@
       <div class="selectDay">
         <div class="today" v-for="(day,index) in weekday" @click="clickTab(index)" :class="{active:index === num}">
           <div>
-            <span>{{weekdaytext[index]}}({{day}})</span>
+            {{index}}
+            <span ref="empty">{{weekdaytext[index]}}({{day}})</span>
           </div>
         </div>
       </div>
@@ -55,6 +56,7 @@
     },
     data () {
       return {
+//
         weekday: [],
         weekdaytext: ['今天', '明天', '后天'],
         English: ['today', 'tomorrow', 'afterTomorrow'],
@@ -82,6 +84,7 @@
             el: '.swiper-pagination',
             clickable: true
           },
+//          swiper回调函数,滑动结束后触发
           onSlideChangeEnd: function (swiper) {
             for (let i = 0; i < that.$refs.slideDiv.length; i++) {
               if (i === swiper.activeIndex) {
@@ -101,15 +104,18 @@
       that = this
     },
     methods: {
+//      跳转选座
       GoToSelectSeat (session) {
-//        this.$router.push({name: 'Chooseseat', query: {shopId: session.id, cinemaId: session.cinema.id, filmId: session.film.id}})
-        console.log(session.id)
-        console.log(session.cinema.id)
-        console.log(session.film.id)
+        this.$router.push({name: 'Chooseseat', query: {shopId: session.id, cinemaId: session.cinema.id, filmId: session.film.id}})
+//        console.log(session.id)
+//        console.log(session.cinema.id)
+//        console.log(session.film.id)
       },
+//      tab切换
       clickTab (index) {
         this.num = index
       },
+//      获取影片个数
       filmSort () {
         let filmTimeArr = []
         for (let i = 0; i < this.filmList.length; i++) {
@@ -125,17 +131,23 @@
         }
         return filmTimeArr
       },
+//      转换时间戳
       getLocalTime: function (nS) {
         return (new Date(parseInt(nS)).getMonth() + 1) + '/' + (new Date(parseInt(nS)).getDate())
       },
+//      时间戳转换
       getLocalHours: function (nS) {
         let hour = new Date(parseInt(nS)).getHours()
         let mins = (new Date(parseInt(nS)).getMinutes() + 1)
+        if (hour < 10) {
+          hour = '0' + hour
+        }
         if (mins < 10) {
           mins = '0' + mins
         }
         return hour + ':' + mins
       },
+//      通过电影ID寻找场次
       GetSortDay () {
         for (let j = 0; j < this.Arr.length; j++) {
           for (let i = 0; i < this.schedules.length; i++) {
@@ -145,6 +157,7 @@
           }
         }
       },
+//      将电影场次分成三天
       GetFilmSession () {
 //        let tomorrow = []
 //        let afterTomorrow = []
@@ -190,6 +203,7 @@
         url: `/api/cinema/${this.$route.params.id}/film?__t=${time}`,
         success (res) {
           this.filmList = res.data.data.filmList
+          console.log(this.filmList)
           this.Arr = this.filmSort()
         },
         failed (err) {

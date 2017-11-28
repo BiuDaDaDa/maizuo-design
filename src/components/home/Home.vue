@@ -180,6 +180,7 @@
     font-size: 12px;
     color: #616161;
     background-color: #ebebeb;
+    outline: none;
   }
 
   .upcoming {
