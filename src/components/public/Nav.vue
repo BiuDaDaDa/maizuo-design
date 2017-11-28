@@ -199,6 +199,5 @@
     bottom: 0;
     transition: all ease 0.4s;
     display: none;
-    z-index: 2;
   }
 </style>
