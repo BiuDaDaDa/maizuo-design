@@ -222,7 +222,7 @@
         this.sendCodeTime() // 时间函数
         this.loginType = 1
       },
-      // 密码实时获取
+      // 密码获取
       getInputCode () {},
       // 图片验证码切换图片
       changImg () {

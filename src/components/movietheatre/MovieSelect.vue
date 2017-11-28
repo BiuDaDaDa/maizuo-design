@@ -15,7 +15,6 @@
       <div class="selectDay">
         <div class="today" v-for="(day,index) in weekday" @click="clickTab(index)" :class="{active:index === num}">
           <div>
-            {{index}}
             <span ref="empty">{{weekdaytext[index]}}({{day}})</span>
           </div>
         </div>
