@@ -128,7 +128,7 @@
     },
     created () {
       this.userData = JSON.parse(window.localStorage['user'])
-      //   console.log(JSON.parse(window.localStorage['user']))
+      // console.log(JSON.parse(window.localStorage['user']))
     },
     methods: {
       // 登出

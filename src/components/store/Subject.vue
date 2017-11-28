@@ -63,10 +63,12 @@
       })
     },
     methods: {
+       // 跳转
       subjectGo (index) {
         this.$router.push({name: 'MyStore2', query: {Id: this.id[index]}})
       },
       detailGotoD (index, key) {
+        // 跳转
         let idL = this.subjectDataT[index].products[key].id
         this.$router.push({name: 'MyStoremsage', query: {Id: idL}})
       }

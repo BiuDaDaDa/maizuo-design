@@ -81,7 +81,6 @@
 </script>
 
 <style scoped lang="less">
-
   .products-contain {
     padding-left: 10px;
     padding-right: 10px;
@@ -109,9 +108,4 @@
     margin-bottom: 9px;
     padding-left: 5px;
   }
-
-  .bottom {
-
-  }
-
 </style>

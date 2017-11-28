@@ -78,7 +78,7 @@
         }
         return district
       },
-//      创建districtObj对象
+//    创建districtObj对象
       GetDistrictCinema () {
         let districtLength = this.GetDistrict().length
         let districtName = this.GetDistrict()
@@ -94,7 +94,7 @@
 //      为districtObj的cinemaList添加数据
       GetDistrictCinemaFenqu () {
         let fenqu = this.GetDistrictCinema()
-//        console.log('dianying:' + this.cinemas.length)
+//      console.log('dianying:' + this.cinemas.length)
         for (let i = 0; i < this.cinemas.length; i++) {
           for (let j = 0; j < fenqu.length; j++) {
             if (this.cinemas[i].district.name === fenqu[j].name) {
