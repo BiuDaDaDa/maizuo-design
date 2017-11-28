@@ -4,7 +4,6 @@
       <div class="list" @click="list_content_clicked"></div>
       <div class="nav_content" @click="list_show">
         <div class="title">{{title}}</div>
-        <div @click="userclicked" class="me"></div>
         <router-link to="/login">
           <div class="me"></div>
         </router-link>
