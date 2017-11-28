@@ -83,6 +83,9 @@
           this.li_style.paddingLeft = 0
           this.li_style.paddingRight = 0
         }
+      },
+      userclicked: function () {
+        this.$router.push('/login')
       }
     },
     created () {

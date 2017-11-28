@@ -22,21 +22,21 @@
             <h2 class="film_grade">{{val.grade}}</h2>
           </li>
         </ul>
-        <button class="now_playing">更多热映电影</button>
+        <button class="now_playing" @click="showingclicked">更多热映电影</button>
         <div class="coming_line">
           <div class="upcoming">即将上映</div>
         </div>
         <ul>
           <li v-for="(val, index) in thiscoming" @click="comingclicked(index)">
-              <img :src="val.cover.origin" alt="">
-              <div class="film_coming">
-                <div v-html="val.name" style="font-size: 13px;float: left;margin-left: 10px"></div>
-                <div v-html="getLocalTime(val.premiereAt) + '上映'"
-                     style="font-size: 14px;color: rgb(245, 162, 125);float: right;margin-right: 50px"></div>
-              </div>
+            <img :src="val.cover.origin" alt="">
+            <div class="film_coming">
+              <div v-html="val.name" style="font-size: 13px;float: left;margin-left: 10px"></div>
+              <div v-html="getLocalTime(val.premiereAt) + '上映'"
+                   style="font-size: 14px;color: rgb(245, 162, 125);float: right;margin-right: 50px"></div>
+            </div>
           </li>
         </ul>
-        <button class="now_playing">更多即将上映电影</button>
+        <button class="now_playing" @click="aboutclicked">更多即将上映电影</button>
       </div>
     </div>
   </div>
@@ -51,7 +51,8 @@
         time: '',
         thisfilm: '',
         thiscoming: '',
-        thisid: ''
+        thisid: '',
+        layout: 'header-right'
       }
     },
     methods: {
@@ -65,6 +66,12 @@
       comingclicked: function (index) {
         this.thisid = this.thiscoming[index].id
         this.$router.push('/film/' + this.thisid)
+      },
+      showingclicked: function () {
+        this.$router.push('/film/now-playing')
+      },
+      aboutclicked: function () {
+        this.$router.push('film/coming-soon')
       }
     },
     mounted () {
@@ -179,6 +186,7 @@
     line-height: 25px;
     font-size: 12px;
     color: #616161;
+    outline: none;
     background-color: #ebebeb;
     outline: none;
   }

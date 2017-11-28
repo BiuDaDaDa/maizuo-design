@@ -21,9 +21,10 @@
         <div class="being-intro">{{as.intro}}</div>
 
         <div class="premiere-data">
-          <span class="">{{getLocalTime(as.premiereAt)}}上映</span>
+          <span class="getweek">
+            {{getLocalTime(as.premiereAt)}}上映</span>
           &nbsp;&nbsp;
-          <span>{{week.content}}</span>
+          <span>{{getWeekTime(as.premiereAt)}}</span>
         </div>
 
       </div>
@@ -43,13 +44,13 @@
         loading: false,
         update: [],
         newday: [
-          {'content': '星期一'},
-          {'content': '星期二'},
-          {'content': '星期三'},
-          {'content': '星期四'},
-          {'content': '星期五'},
-          {'content': '星期六'},
-          {'content': '星期日'}
+          '星期一',
+          '星期二',
+          '星期三',
+          '星期四',
+          '星期五',
+          '星期六',
+          '星期日'
         ],
         week: '',
         urly: '',
@@ -66,6 +67,7 @@
           this.showing = res.data.data.films
           this.showing2 = res.data.data.page
           this.update = this.showing
+//          this.getLocalTime(this.showing.premiereAt)
         },
         failed: function (res) {
           console.log(res)
@@ -101,8 +103,10 @@
       },
       // 时间戳转换
       getLocalTime: function (nS) {
-        this.week = this.newday[(new Date(parseInt(nS)).getDay()) - 1]
         return (new Date(parseInt(nS)).getMonth() + 1) + '月' + (new Date(parseInt(nS)).getDate() + '日')
+      },
+      getWeekTime (nS) {
+        return this.newday[(new Date(parseInt(nS)).getDay() - 1)]
       }
     }
   }

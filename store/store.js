@@ -21,14 +21,13 @@ export default new Vuex.Store({
       {'content': '卖座卡', 'url': '/card', 'title': '查询/绑定/激活卖座卡'}
     ],
     storeLists: [
-      {'content': '首页', 'url': '/store', 'title': '卖座电影'},
+      {'content': '首页', 'url': '/store', 'title': '卖座商城'},
       {'content': '影票', 'url': '/', 'title': '卖座电影'},
       {'content': '我的', 'url': '/login', 'title': '我的'},
       {'content': '卖座卡', 'url': '/card', 'title': '查询/绑定/激活卖座卡'}
     ]
   },
   mutations: {
-    // state.storeS = state.lists
     changeNavTitle (state, val) {
       state.title = val
       if (state.title === '卖座商城') {
