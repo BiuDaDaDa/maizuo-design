@@ -24,7 +24,7 @@
           <span class="getweek">
             {{getLocalTime(as.premiereAt)}}上映</span>
           &nbsp;&nbsp;
-          <span>{{getWeekTime(as.premiereAt)}}</span>
+          <span>{{getWeekTim(as.premiereAt)}}</span>
         </div>
 
       </div>
@@ -67,7 +67,6 @@
           this.showing = res.data.data.films
           this.showing2 = res.data.data.page
           this.update = this.showing
-//          this.getLocalTime(this.showing.premiereAt)
         },
         failed: function (res) {
           console.log(res)
@@ -105,7 +104,7 @@
       getLocalTime: function (nS) {
         return (new Date(parseInt(nS)).getMonth() + 1) + '月' + (new Date(parseInt(nS)).getDate() + '日')
       },
-      getWeekTime (nS) {
+      getWeekTim (nS) {
         return this.newday[(new Date(parseInt(nS)).getDay() - 1)]
       }
     }
