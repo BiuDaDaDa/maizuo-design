@@ -25,8 +25,8 @@
                 </div>
                 <!--电影院的优惠活动-->
                 <div class="liLeft-middle">
-                  <span v-for="(label,index) in cinema.labels">
-                    <span>{{label.name}}</span>
+                  <span class="labels" v-for="(label,index) in cinema.labels" :class="{orange: label.type === 'SUNDRY'}" >
+                    <span>{{showLabel(label.name)}}</span>
                   </span>
                 </div>
                 <!--电影院的地址-->
@@ -61,6 +61,12 @@
     },
     methods: {
       ...mapMutations(['changeTitle']),
+      showLabel (label) {
+        if (label === '观影小食') {
+          return '可乐爆米花'
+        }
+        return label
+      },
       ShowCinema (index) {
         if (this.$refs.show[index].style.display === 'block') {
           this.$refs.show[index].style.display = 'none'
@@ -113,6 +119,7 @@
         success: function (res) {
           this.cinemas = res.data.data.cinemas
           this.districts = this.GetDistrictCinemaFenqu()
+          console.log(this.cinemas)
         },
         failed: function (error) {
           console.log(error)
@@ -194,7 +201,7 @@
     color: @background-color-white;
   }
 
-  .liLeft-middle span {
+  .liLeft-middle .labels {
     display: inline-block;
     width: 58px;
     height: 15px;
@@ -202,6 +209,10 @@
     text-align: center;
     line-height: 15px;
     margin: 0 5px;
+    background-color: #ff9658;
+  }
+  .liLeft-middle .orange{
+    width: 70px;
     background-color: #51add0;
   }
 
