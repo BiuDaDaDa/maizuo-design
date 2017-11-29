@@ -4,6 +4,7 @@
       <swiper-slide v-for="(film, index) in filmList" :key="index" class="main-slide" ref="slideDiv">
         <div class="slide-img">
           <img :src="film.posterAddress" alt="" ref="slideImg" :class="{liang :index === 0}">
+          <img src="../../common/img/youhui.png" alt="" class="discounts">
         </div>
         <div class="slide-text">
           <p ref="slideText" :class="{liangzi: index === 0}">{{film.filmName}}</p>
@@ -252,13 +253,23 @@
 
   .slide-img{
     width: 100%;
-
+    position: relative;
   }
 
   .slide-img img {
     width:100%;
     border: 1px solid #ccc;
     opacity: 0.6;
+  }
+
+  .slide-img .discounts{
+    position: absolute;
+    top: -2px;
+    right: -5px;
+    width: 40px;
+    height: 40px;
+    border: 0 solid #fff;
+    z-index: 10;
   }
 
   .slide-text{
@@ -276,6 +287,7 @@
   .slide-img .liang{
     opacity: 1;
   }
+
 
   .slide-text .liangzi{
     display: block;
