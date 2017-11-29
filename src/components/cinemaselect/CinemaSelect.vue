@@ -25,7 +25,7 @@
                 </div>
                 <!--电影院的优惠活动-->
                 <div class="liLeft-middle">
-                  <span class="labels" v-for="(label,index) in cinema.labels" :class="{orange: label.type === 'SUNDRY'}" >
+                  <span class="labels" v-for="(label,index) in cinema.labels" :class="{orange: label.type === 'SUNDRY', red: label.type === 'TEHUI', white: label.type === 'REFUNDABLE_SEAT_TICKET'}" >
                     <span>{{showLabel(label.name)}}</span>
                   </span>
                 </div>
@@ -214,6 +214,12 @@
   .liLeft-middle .orange{
     width: 70px;
     background-color: #51add0;
+  }
+  .liLeft-middle .red{
+    background-color: #ff7674;
+  }
+  .liLeft-middle .white{
+    display: none;
   }
 
   /*地址*/
