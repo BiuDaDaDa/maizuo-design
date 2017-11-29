@@ -132,7 +132,16 @@
       },
 //      转换时间戳
       getLocalTime: function (nS) {
-        return (new Date(parseInt(nS)).getMonth() + 1) + '/' + (new Date(parseInt(nS)).getDate())
+//        return (new Date(parseInt(nS)).getMonth() + 1) + '/' + (new Date(parseInt(nS)).getDate())
+        let month = new Date(parseInt(nS)).getMonth() + 1
+        let day = new Date(parseInt(nS)).getDate()
+        if (month < 10) {
+          month = '0' + month
+        }
+        if (day < 10) {
+          day = '0' + day
+        }
+        return `${month}/${day}`
       },
 //      时间戳转换
       getLocalHours: function (nS) {
@@ -232,7 +241,7 @@
     background-color: #38403e;
     padding-top: 10px;
     padding-bottom: 5px;
-    height: 137px;
+    height: 145px;
   }
 
   .main-slide{
