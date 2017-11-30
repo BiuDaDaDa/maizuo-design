@@ -144,7 +144,7 @@
             document.cookie = item + ';expries=' + newDate.toGMTString().trim()
             console.log(item + ';expries=' + newDate.toGMTString())
           }
-          document.cookie = 'isMainAccount' + '=' + true + ';expries=' + newDate.toGMTString()
+          document.cookie = 'isMainAccount' + '=' + ''
         }
       }
     }

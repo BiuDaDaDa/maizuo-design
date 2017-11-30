@@ -12,7 +12,7 @@ Vue.component(SwipeItem.name, SwipeItem)
 Vue.use(Router)
 export default [
   {
-    path: '/login',
+    path: '/login/:id?',
     name: 'Login',
     component: Login
   },
