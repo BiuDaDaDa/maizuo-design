@@ -7,11 +7,11 @@
         <!--表示一个地区的名字-->
         <div class="disTitle">
           <ul>
-            <li @click="ShowCinema(index)">{{districts[index].name}}</li>
+            <li @click="ShowCinema(index)" >{{districts[index].name}}</li>
           </ul>
         </div>
         <!--地区的所有电影院-->
-        <div class="disBody" ref="show" v-show="false">
+        <div class="disBody" ref="show">
           <ul>
             <li class="box" v-for="(cinema,index) in district.cinemaList"
                 @click="changeTitle(cinema)">
@@ -146,13 +146,13 @@
   }
 
   .disBody {
-    cursor: pointer
+    cursor: pointer;
+    display: none;
   }
 
   .disBody ul {
     overflow: hidden;
   }
-
   /*一个地区的全部电影院信息*/
   .box {
     padding: 10px 0 12px 16px;

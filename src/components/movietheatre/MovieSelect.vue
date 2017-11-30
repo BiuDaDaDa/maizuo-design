@@ -106,12 +106,7 @@
     methods: {
 //      跳转选座
       GoToSelectSeat (session) {
-        let isLogin = this.getCookie('isMainAccount')
-        if (isLogin) {
-          this.$router.push({name: 'Chooseseat', query: {shopId: session.id, cinemaId: session.cinema.id, filmId: session.film.id}})
-        } else {
-          this.$router.push({name: 'Login', query: {pageId: 12138}})
-        }
+        this.$router.push({name: 'Chooseseat', query: {shopId: session.id, cinemaId: session.cinema.id, filmId: session.film.id}})
 //        console.log(session.id)
 //        console.log(session.cinema.id)
 //        console.log(session.film.id)
