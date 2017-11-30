@@ -149,7 +149,7 @@
   .item {
     position: relative;
     float: left;
-    width: 49.3%;
+    width: 48.3%;
     text-align: center;
     padding-top: 5px;
     padding-right: 2.5px;

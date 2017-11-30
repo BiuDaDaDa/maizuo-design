@@ -6,6 +6,7 @@ import MyStore from '@/components/movie/store/MyStore'
 import MyStore2 from '@/components/movie/store/MyStore2'
 import MyStoremsage from '@/components/movie/store/MyStoremsage'
 import MyOrder from '@/components/movie/store/MyOrder'
+import LoginExercise from '@/components/movie/exerciselogin/LoginExercise'
 
 export default [
   {
@@ -47,5 +48,10 @@ export default [
     path: '/preorder',
     name: 'MyOrder',
     component: MyOrder
+  },
+  {
+    path: '/loginecs',
+    name: 'LoginExercise',
+    component: LoginExercise
   }
 ]
