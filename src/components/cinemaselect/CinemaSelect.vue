@@ -7,11 +7,11 @@
         <!--表示一个地区的名字-->
         <div class="disTitle">
           <ul>
-            <li @click="ShowCinema(index)">{{districts[index].name}}</li>
+            <li @click="ShowCinema(index)" >{{districts[index].name}}</li>
           </ul>
         </div>
         <!--地区的所有电影院-->
-        <div class="disBody" ref="show" v-show="false">
+        <div class="disBody" ref="show">
           <ul>
             <li class="box" v-for="(cinema,index) in district.cinemaList"
                 @click="changeTitle(cinema)">
@@ -25,8 +25,8 @@
                 </div>
                 <!--电影院的优惠活动-->
                 <div class="liLeft-middle">
-                  <span v-for="(label,index) in cinema.labels">
-                    <span>{{label.name}}</span>
+                  <span class="labels" v-for="(label,index) in cinema.labels" :class="{orange: label.type === 'SUNDRY', red: label.type === 'TEHUI', white: label.type === 'REFUNDABLE_SEAT_TICKET'}" >
+                    <span>{{showLabel(label.name)}}</span>
                   </span>
                 </div>
                 <!--电影院的地址-->
@@ -61,6 +61,12 @@
     },
     methods: {
       ...mapMutations(['changeTitle']),
+      showLabel (label) {
+        if (label === '观影小食') {
+          return '可乐爆米花'
+        }
+        return label
+      },
       ShowCinema (index) {
         if (this.$refs.show[index].style.display === 'block') {
           this.$refs.show[index].style.display = 'none'
@@ -113,6 +119,7 @@
         success: function (res) {
           this.cinemas = res.data.data.cinemas
           this.districts = this.GetDistrictCinemaFenqu()
+          console.log(this.cinemas)
         },
         failed: function (error) {
           console.log(error)
@@ -139,13 +146,13 @@
   }
 
   .disBody {
-    cursor: pointer
+    cursor: pointer;
+    display: none;
   }
 
   .disBody ul {
     overflow: hidden;
   }
-
   /*一个地区的全部电影院信息*/
   .box {
     padding: 10px 0 12px 16px;
@@ -194,7 +201,7 @@
     color: @background-color-white;
   }
 
-  .liLeft-middle span {
+  .liLeft-middle .labels {
     display: inline-block;
     width: 58px;
     height: 15px;
@@ -202,7 +209,17 @@
     text-align: center;
     line-height: 15px;
     margin: 0 5px;
+    background-color: #ff9658;
+  }
+  .liLeft-middle .orange{
+    width: 70px;
     background-color: #51add0;
+  }
+  .liLeft-middle .red{
+    background-color: #ff7674;
+  }
+  .liLeft-middle .white{
+    display: none;
   }
 
   /*地址*/

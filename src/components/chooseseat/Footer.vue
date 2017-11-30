@@ -27,7 +27,6 @@
     </div>
   </article>
 </template>
-
 <script>
   import bus from '../../common/js/eventBus'
   export default {
@@ -63,6 +62,7 @@
         }
         return hour + ':' + min
       },
+      // 点击事件将请求的id传给ChooseSeat
       changeP: function (index) {
         console.log(this.allData[index].id)
         this.$emit('changePbus', this.allData[index].id)

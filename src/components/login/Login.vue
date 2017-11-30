@@ -18,14 +18,14 @@
         <!--end-->
         <!--密码和手机验证码-->
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="输入密码/验证码" ref="postCode" @input="getInputCode"/>
+          <input type="password" class="form-control" placeholder="输入密码/验证码" ref="postCode" @input="getInputCode"/>
           <div class="input-bg"></div>
         </div>
         <!--end-->
         <!--图片验证码-->
         <div class="form-group" v-show="isImgCode" @click="changImg">
           <input type="text" class="form-control" placeholder="图形验证码" ref="getInputImgCode"/>
-          <img :src="this.imgData" width="100px" height="30px" title="网络问题" alt="网络问题">
+          <img :src="this.imgData" width="100px" height="30px" title="网络问题" alt="网络">
           <div class="input-bg"></div>
         </div>
         <!--end-->
@@ -65,6 +65,7 @@
         time: ''
       }
     },
+    mounted () {},
     methods: {
       // 登入按钮
       LoginData () {
@@ -266,10 +267,6 @@
     width: @bgwidth;
     min-height: @bgHight;
     background-color: #f6f6f6;
-  }
-
-  .login-view-box {
-
   }
 
   /*手机号密码*/

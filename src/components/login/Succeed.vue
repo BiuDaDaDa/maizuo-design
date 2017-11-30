@@ -139,12 +139,12 @@
           var cookieArr = document.cookie.split(';')
           for (var i = 0; i < cookieArr.length; i++) {
             var newDate = new Date()
-            newDate.setDate(newDate.getDate() - 100)
+            newDate.setDate(newDate.getDate() - 100) // 过期时间
             var item = cookieArr[i]
-            document.cookie = item + ';expries=' + newDate.toGMTString()
+            document.cookie = item + ';expries=' + newDate.toGMTString().trim()
             console.log(item + ';expries=' + newDate.toGMTString())
           }
-          document.cookie = 'isMainAccount' + '=' + true + ';expries=' + newDate.toGMTString()
+          document.cookie = 'isMainAccount' + '=' + ''
         }
       }
     }

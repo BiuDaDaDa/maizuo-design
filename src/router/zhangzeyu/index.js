@@ -7,13 +7,12 @@ import Chooseseat from '@/components/chooseseat/ChooseSeat'
 import Vue from 'vue'
 import Router from 'vue-router'
 import {Swipe, SwipeItem} from 'mint-ui'
-
 Vue.component(Swipe.name, Swipe)
 Vue.component(SwipeItem.name, SwipeItem)
 Vue.use(Router)
 export default [
   {
-    path: '/login',
+    path: '/login/:id?',
     name: 'Login',
     component: Login
   },

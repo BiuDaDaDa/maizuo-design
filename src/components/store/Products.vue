@@ -52,7 +52,6 @@
           for (var i = 11; i < 14; i++) {
             this.productsData.push(allData[i])
           }
-          console.log(allData[13].url)
           let str = allData[12].url
           let strL = allData[11].url
           let strD = allData[13].url

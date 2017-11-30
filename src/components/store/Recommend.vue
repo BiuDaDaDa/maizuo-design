@@ -101,7 +101,6 @@
     font-weight: normal;
     vertical-align: baseline;
   }
-
   .clear {
     clear: both;
   }

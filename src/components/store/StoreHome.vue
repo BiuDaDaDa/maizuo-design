@@ -139,7 +139,6 @@
     text-align: center;
     color: #323232;
   }
-
   .app-products {
 
   }

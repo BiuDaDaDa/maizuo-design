@@ -86,7 +86,6 @@
           type: 'get',
           url: '/api/schedule?__t=' + timeT + '&film=' + filmId + '&cinema=' + cinemaId,
           success: function (res) {
-            console.log(res.data.data)
             this.changePriceData = res.data.data.schedules
           },
           failed: function (res) {
@@ -97,6 +96,7 @@
       changePlaceMask: function () {
         this.changeShow = false
       },
+      // 换场信息
       changePbus: function (num) {
       //  console.log(data) // 从footer传过来换场信息
         this.changeNum = num
