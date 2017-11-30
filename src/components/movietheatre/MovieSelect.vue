@@ -14,15 +14,15 @@
     <!--下方电影场次-->
     <div class="container">
       <div class="selectDay">
-        <div class="today" v-for="(day,index) in weekday" @click="clickTab(index)" :class="{active:index === num}">
+        <div class="today" v-for="(day,index) in weekDay" @click="clickTab(index)" :class="{active:index === num}">
           <div>
-            <span ref="empty">{{weekdaytext[index]}}({{day}})</span>
+            <span ref="empty">{{weekDayText[index]}}({{day}})</span>
           </div>
         </div>
       </div>
       <div class="day">
         <div v-for="(film, filmindex) in Arr" v-if="filmindex === Ifirst">
-          <div v-for="(day, dayindex) in film.filmlist" v-if="dayindex === English[num]">
+          <div v-for="(day, dayindex) in film.filmlist" v-if="dayindex === engLish[num]">
             <span style="display: none;" ref="oneday">{{dayindex}}</span>
             <div class="session" v-for="session in day" @click="GoToSelectSeat(session)">
               <div class="session_wrap">
@@ -57,16 +57,16 @@
     data () {
       return {
 //
-        weekday: [],
-        weekdaytext: ['今天', '明天', '后天'],
-        English: ['today', 'tomorrow', 'afterTomorrow'],
+        weekDay: [],
+        weekDayText: ['今天', '明天', '后天'],
+        engLish: ['today', 'tomorrow', 'afterTomorrow'],
         Arr: [],
         filmList: '',
         schedules: '',
         passShow: false,
         Ifirst: 0,
         num: 0,
-        showeveryDay: '',
+//        showeveryDay: '',
         swiperOption: {
 //          允许通过计算属性获取当前Swiper对象
           notNextTick: true,
@@ -115,6 +115,16 @@
       clickTab (index) {
         this.num = index
       },
+//      获取cookie
+      getCookie (name) {
+        let arr
+        let reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
+        if (arr === document.cookie.match(reg)) {
+          return unescape(arr[2])
+        } else {
+          return null
+        }
+      },
 //      获取影片个数
       filmSort () {
         let filmTimeArr = []
@@ -136,25 +146,17 @@
 //        return (new Date(parseInt(nS)).getMonth() + 1) + '/' + (new Date(parseInt(nS)).getDate())
         let month = new Date(parseInt(nS)).getMonth() + 1
         let day = new Date(parseInt(nS)).getDate()
-        if (month < 10) {
-          month = '0' + month
-        }
-        if (day < 10) {
-          day = '0' + day
-        }
+        month = month < 10 ? '0' + month : month
+        day = day < 10 ? '0' + day : day
         return `${month}/${day}`
       },
 //      时间戳转换
       getLocalHours: function (nS) {
         let hour = new Date(parseInt(nS)).getHours()
         let mins = (new Date(parseInt(nS)).getMinutes() + 1)
-        if (hour < 10) {
-          hour = '0' + hour
-        }
-        if (mins < 10) {
-          mins = '0' + mins
-        }
-        return hour + ':' + mins
+        hour = hour < 10 ? '0' + hour : hour
+        mins = mins < 10 ? '0' + mins : mins
+        return `${hour}/${mins}`
       },
 //      通过电影ID寻找场次
       GetSortDay () {
@@ -178,25 +180,25 @@
 //            console.log('电影时间' + furTime)
             if (furTime === this.getLocalTime(curTime)) {
               this.Arr[j].filmlist.today.push(this.Arr[j].listArr[i])
-              if (this.weekday.indexOf(furTime) === -1) {
-                this.weekday.push(furTime)
+              if (this.weekDay.indexOf(furTime) === -1) {
+                this.weekDay.push(furTime)
               }
             }
             if (furTime === this.getLocalTime(curTime + 3600 * 24 * 1000)) {
               this.Arr[j].filmlist.tomorrow.push(this.Arr[j].listArr[i])
-              if (this.weekday.indexOf(furTime) === -1) {
-                this.weekday.push(furTime)
+              if (this.weekDay.indexOf(furTime) === -1) {
+                this.weekDay.push(furTime)
               }
             }
             if (furTime === this.getLocalTime(curTime + 3600 * 24 * 1000 * 2)) {
               this.Arr[j].filmlist.afterTomorrow.push(this.Arr[j].listArr[i])
-              if (this.weekday.indexOf(furTime) === -1) {
-                this.weekday.push(furTime)
+              if (this.weekDay.indexOf(furTime) === -1) {
+                this.weekDay.push(furTime)
               }
             }
           }
         }
-        console.log(this.weekday)
+        console.log('显示日期: ' + this.weekDay)
       }
     },
     computed: {
@@ -205,7 +207,6 @@
       }
     },
     mounted () {
-      console.log(this.Arr)
       let time = new Date().getTime()
       this.$request({
         type: 'get',
@@ -224,9 +225,9 @@
         url: `/api/schedule?__t=${time}&film=0&cinema=${this.$route.params.id}`,
         success (res) {
           this.schedules = res.data.data.schedules
+          console.log(this.schedules)
           this.GetSortDay()
           this.GetFilmSession()
-          console.log(this.Arr)
         },
         failed (err) {
           console.log(err)
