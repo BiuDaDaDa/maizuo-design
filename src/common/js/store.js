@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import router from '../src/router/index'
+import router from '../../router/index'
 import createPersistedState from 'vuex-persistedstate'
 // import * as Cookies from 'js-cookie'
 

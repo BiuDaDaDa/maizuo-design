@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import store from '../store/store'
+import store from './common/js/store'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import { InfiniteScroll } from 'mint-ui'
 import request from './common/js/requestServerSetting'
